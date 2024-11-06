@@ -1,0 +1,88 @@
+html,body {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+
+}
+
+.navbar {
+  display: flex;
+  align-items: center;
+  height: 40px;
+  padding: 0 ;
+  background-color: #dd84a0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width:100%;
+  position: relative;
+}
+
+
+
+.nav-links {
+  display: flex;
+  gap: 15px;
+  flex-grow: 1;
+}
+
+.nav-links a {
+  color: #333;
+  text-decoration: none;
+  font-size: 18px;
+}
+
+.nav-links a:hover {
+  color: #c23864;
+}
+
+.navLogo{
+  margin-right: 20px;
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+}
+
+.auth-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.btn {
+  white-space: nowrap;
+  width: 130px;
+  height: 25px;
+  color: #fff;
+  border-radius: 5px;
+  padding: 3px 25px;
+  font-family: 'Lato', sans-serif;
+  font-weight: 500;
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  display: inline-block;
+  box-shadow: inset 2px 2px 2px 0px rgba(255, 255, 255, .5),
+    7px 7px 20px 0px rgba(0, 0, 0, .1),
+    4px 4px 5px 0px rgba(0, 0, 0, .1);
+  outline: none;
+  background: #c23864;
+  background: linear-gradient(0deg, #f4d3dd 0%, #e9abbf 100%);
+  border: none;
+}
+
+
+
+
+
+.btn:before {
+  height: 0%;
+  width: 2px;
+}
+
+.btn:hover {
+  box-shadow: 4px 4px 6px 0 rgba(255, 255, 255, .5),
+    -4px -4px 6px 0 rgba(116, 125, 136, .5),
+    inset -4px -4px 6px 0 rgba(255, 255, 255, .2),
+    inset 4px 4px 6px 0 rgba(0, 0, 0, .4);
+}
+
