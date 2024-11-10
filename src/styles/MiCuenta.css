@@ -1,0 +1,78 @@
+.form-modificar{
+    max-width: 1500px;
+    font-family: Arial, sans-serif;
+    background-color: #f8e3e9;
+    color: #333;
+    padding: 60px 20px;
+    min-height: 100vh;
+}
+
+.form-modificar h1{
+    text-align: center;
+    margin: 0 auto;
+    width: 70%;
+    padding-bottom: 20px;
+    color: #c23864;
+}
+
+.form-modificar form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding-top: 50px;
+    background-color: #f9e8ef;
+    padding-bottom: 40px;
+    border-radius: 10px;
+    width: 70%;
+    margin: 0 auto;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    gap: 5px;
+}
+
+.form-modificar input{
+    display: block;
+    width: 60%;
+    margin-bottom: 15px;
+    padding: 10px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.form-modificar button{
+    background-color: #f8bbd0;
+    border: 1px solid #f06292;
+    color: #f06292;
+    border-radius: 5px;
+    cursor: pointer;
+    padding: 10px 10px;
+    width: 300px;
+    height: 50px;
+    margin: 0 auto;
+}
+
+.form-modificar button:hover{
+    background-color: #f06292;
+    color: white
+}
+
+.form-modificar label{
+    color: #c23864;
+    max-width: 600px;
+    display: block;
+    text-align: left;
+    width: 60%;
+    margin-bottom: 5px;
+}
+
+.mensaje-exito {
+  color: green;
+  font-weight: bold;
+  margin-top: 10px;
+  padding: 10px;
+  background-color: #d4edda;
+  border: 1px solid #c3e6cb;
+  border-radius: 5px;
+}

@@ -1,0 +1,53 @@
+.navalu{
+  max-width: 1500px;
+  font-family: Arial, sans-serif;
+  background-color: #f8e3e9;
+  color: #333;
+  padding: 0px 20px;
+  min-height: 100vh;
+}
+
+.cursos-list {
+  padding-top: 30px;
+  margin-top: 10px;
+}
+
+.items-cursos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  list-style-type: none;
+  padding: 0;
+}
+
+.items-cursos li {
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 16px;
+  width: 200px;
+  height:200px;
+  text-align: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.items-cursos li:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+}
+
+.items-cursos h3 {
+  font-size: 18px;
+  margin: 8px 0;
+}
+
+.items-cursos p {
+  font-size: 16px;
+  color: #555;
+  margin-top: 0;
+  padding: 20px 8px;
+}
