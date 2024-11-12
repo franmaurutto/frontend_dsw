@@ -1,6 +1,6 @@
-import React from 'react'
-import { useEffect,useState } from 'react';
-import { getCursosAlumno } from '../services/AlumnoServices.js';
+import React, { useEffect, useState } from 'react';
+import { getInscripcionesAlumno } from '../services/AlumnoServices.js';
+import { getCursoDeInscripcion, deleteInscripcion, updateInscripcion } from '../services/InscripcionServices.js';
 import { useUser } from './UsuarioContext.js';
 import '../styles/MisCursos.css';
 import NavBar from './NavBar.js';
@@ -9,12 +9,11 @@ import { useNavigate } from 'react-router-dom';
 export const MisCursos = () => {
 
   const navigate= useNavigate
+  const { usuario } = useUser();
+  const [cursos, setCursos] = useState([]);
+  const [mensajeExito, setMensajeExito] = useState('');
 
-  const { usuario } = useUser(); 
-  const [cursos, setCursos] = useState([]); 
-  const [mail] = useState(usuario ? usuario.mail : '');
-
-  const links = usuario && mail.includes('@educatech')
+  const links = usuario && usuario.mail.includes('@educatech')
     ? [
         { label: 'Mi cuenta', path: '/mi-cuenta' },
         { label: 'Mis Cursos', path: '/nav-prof' },
@@ -27,13 +26,28 @@ export const MisCursos = () => {
       ];
 
   useEffect(() => {
-    if (usuario && usuario.id) { 
+    if (usuario && usuario.id) {
       const fetchCursos = async () => {
         try {
-          const data = await getCursosAlumno(usuario.id); 
-          setCursos(data.data); 
+          const inscripcionesData = await getInscripcionesAlumno(usuario.id);
+          if (Array.isArray(inscripcionesData)) {
+            const cursosData = await Promise.all(
+              inscripcionesData.map(async (inscripcion) => {
+                const cursoData = await getCursoDeInscripcion(inscripcion.id, inscripcion.curso);
+                return {
+                  ...cursoData,
+                  inscripcionId: inscripcion.id,
+                  fechaInscripcion: inscripcion.fechaInscripcion,
+                };
+              })
+            );
+            setCursos(cursosData);
+          } else {
+            setCursos([]);
+          }
         } catch (error) {
           console.error('Error al obtener los cursos:', error);
+          setCursos([]);
         }
       };
 
@@ -41,22 +55,74 @@ export const MisCursos = () => {
     }
   }, [usuario]);
 
-  const handleClick=()=>{
-    navigate('/nav-alu')
-  }
+  const handleAnularInscripcion = async (inscripcionId) => {
+    const confirmation = window.confirm('¿Estás seguro de que quieres anular la inscripción a este curso? Esta acción no se puede deshacer.');
+    if (confirmation) {
+      try {
+        await deleteInscripcion(inscripcionId);
+        setMensajeExito('Inscripción borrada correctamente.');
+        setTimeout(() => setMensajeExito(''), 5000);
 
+        // Eliminar el curso de la lista en lugar de hacer una nueva solicitud
+        setCursos((prevCursos) => prevCursos.filter(curso => curso.inscripcionId !== inscripcionId));
+      } catch (error) {
+        console.error('Error al eliminar la inscripción:', error);
+      }
+    }
+  };
+
+  const handleModificarInscripcion = async (inscripcionId) => {
+    const confirmation = window.confirm('¿Estás seguro de que quieres modificar la fecha de inscripción? Esta acción cambiará la fecha a la fecha actual.');
+    if (confirmation) {
+      try {
+        const today = new Date().toISOString().split('T')[0]; // Obtener la fecha actual en formato YYYY-MM-DD
+        await updateInscripcion(inscripcionId, { fechaInscripcion: today });
+        
+        setMensajeExito('Fecha de inscripción actualizada correctamente.');
+        setTimeout(() => setMensajeExito(''), 5000);
+
+        // Actualizar solo la inscripción modificada en la lista
+        setCursos((prevCursos) =>
+          prevCursos.map(curso =>
+            curso.inscripcionId === inscripcionId
+              ? { ...curso, fechaInscripcion: today } // Actualizar la fecha de inscripción del curso
+              : curso
+          )
+        );
+      } catch (error) {
+        console.error('Error al modificar la inscripción:', error);
+      }
+    }
+  };
 
   return (
     <div className='mis-cursos'>
       <NavBar links={links}></NavBar>
       <div className='lista-mis-cursos'>
-        <h1>MisCursos</h1>
-        {cursos.length > 0 ? (
+        <h1>Mis Cursos</h1>
+        {mensajeExito && <p className="mensaje-exito">{mensajeExito}</p>}
+        {Array.isArray(cursos) && cursos.length > 0 ? (
           <ul className='list-cursos'>
             {cursos.map((curso, index) => (
               <li key={index}>
                 <h3>{curso.nombre}</h3>
                 <p>{curso.descripcion}</p>
+                <div>
+                  {/* Botón de modificar inscripción */}
+                  <button
+                    className="boton-cursos"
+                    onClick={() => handleModificarInscripcion(curso.inscripcionId)} // Usamos el ID de la inscripción
+                  >
+                    Modificar Fecha Inscripción
+                  </button>
+                  {/* Botón de anular inscripción */}
+                  <button
+                    className="boton-cursos"
+                    onClick={() => handleAnularInscripcion(curso.inscripcionId)} // Usamos el ID de la inscripción
+                  >
+                    Anular Inscripción
+                  </button>
+                </div>
               </li>
             ))}
           </ul>
@@ -68,6 +134,10 @@ export const MisCursos = () => {
         )}
       </div>
     </div>
-  )
-}
+  );
+};
+
 export default MisCursos;
+
+
+

@@ -27,12 +27,36 @@ export const updateInscripcion = async (inscripcionId, inscripcion) => {
     },
     body: JSON.stringify(inscripcion),
   });
-  return response.json();
+  
+  if (!response.ok) {
+    throw new Error('Error al actualizar la inscripción');
+  }
+  
+  return response.json();  
 };
 
 export const deleteInscripcion = async (inscripcionId) => {
   const response = await fetch(`${API_URL}/${inscripcionId}`, {
     method: 'DELETE',
   });
+  if (!response.ok) {
+    throw new Error('Error al eliminar la inscripcion');
+  }
   return response.json();
+  };
+export const getCursoDeInscripcion = async (inscripcionId, cursoId) => {
+  try {
+    console.log(`Obteniendo curso con ID: ${cursoId}`);  // Verifica el valor de cursoId
+    console.log(`Haciendo solicitud a: ${API_URL}/${inscripcionId}/curso/${cursoId}`);
+
+    const response = await fetch(`${API_URL}/${inscripcionId}/curso/${cursoId}`);
+    if (!response.ok) {
+      throw new Error('Error al obtener el curso de la inscripción');
+    }
+    return response.json();  // Retorna el curso asociado a la inscripción
+  } catch (error) {
+    console.error('Error al obtener el curso:', error);
+    throw error;
+  }
 };
+

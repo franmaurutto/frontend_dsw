@@ -9,6 +9,7 @@ import { MisCursos } from './components/MisCursos.js';
 import { MiCuenta } from './components/MiCuenta.js';
 import { UsuarioProvider } from './components/UsuarioContext.js';
 import { NavegacionProf } from './components/NavegacionProf.js';
+import CursoDetalle from './components/CursoDetalle.js';
 import {CrearCurso} from './components/CrearCurso.js'
 import {DatosCurso} from './components/DatosCurso.js'
 import { CursoProvider } from './components/CursoContext.js';
@@ -30,6 +31,7 @@ function App() {
             <Route path="/mi-cuenta" element={<MiCuenta />} />
             <Route path="/mis-cursos" element={<MisCursos />} />
             <Route path="/nav-prof" element={<NavegacionProf />} />
+            <Route path="/curso/:cursoId" element={<CursoDetalle />} />
             <Route path="/crear-curso" element={<CrearCurso />} />
             <Route path="/datos-curso" element={<DatosCurso />} />
             <Route path="/parcial" element={<Parcial />} />
