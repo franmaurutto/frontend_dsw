@@ -1,12 +1,13 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import NavBar from './NavBar.js';
 import '../styles/NavegacionAlu.css';
-import { useState,  useEffect } from 'react';
 import { getCursos } from '../services/CursoServices.js';
+
 export const NavegacionAlu = () => {
 
   const [cursos, setCursos] = useState([]);
-
+  const navigate = useNavigate();
 
   const aluLinks = [
   { label: 'Mi cuenta', path: '/mi-cuenta' },
@@ -27,6 +28,9 @@ export const NavegacionAlu = () => {
     fetchCursos();
   }, []);
 
+  const handleCursoClick = (cursoId) => {
+    navigate(`/curso/${cursoId}`); 
+  };
   return (
     <div className='navalu'>
       <NavBar links={aluLinks}></NavBar>
@@ -34,8 +38,8 @@ export const NavegacionAlu = () => {
         <h2>Cursos</h2>
         <ul className='items-cursos'>
             {cursos.map((curso) => (
-              <li key={curso.id}>
-                <h3>{curso.nombre}</h3>
+              <li key={curso.id} onClick={() => handleCursoClick(curso.id)}>       
+                  <h3>{curso.nombre}</h3>
                 <p>{curso.descripcion}</p>
               </li>
             ))}

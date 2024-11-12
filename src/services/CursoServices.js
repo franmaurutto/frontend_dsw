@@ -50,3 +50,21 @@ export const deleteCurso = async (cursoId) => {
   }
   return response.json();
 };
+
+// CursoServices.js
+export const getCursoDetalle = async (cursoId) => {
+  try {
+    const response = await fetch(`/api/cursos/${cursoId}`);  // Verifica la URL de la API
+    if (!response.ok) {
+      throw new Error('No se pudo obtener los detalles del curso');
+    }
+    const data = await response.json();
+    console.log(data);  // Agrega esto para ver la respuesta del servidor
+    return data;  // Asegúrate de que la estructura de datos sea la correcta
+  } catch (error) {
+    console.error('Error al obtener el detalle del curso:', error);
+    throw error;  // Lanza el error para que lo maneje el componente
+  }
+};
+
+

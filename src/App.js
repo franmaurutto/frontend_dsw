@@ -9,6 +9,7 @@ import { MisCursos } from './components/MisCursos.js';
 import { MiCuenta } from './components/MiCuenta.js';
 import { UsuarioProvider } from './components/UsuarioContext.js';
 import { NavegacionProf } from './components/NavegacionProf.js';
+import CursoDetalle from './components/CursoDetalle.js';
 
 function App() {
 
@@ -25,6 +26,7 @@ function App() {
             <Route path="/mi-cuenta" element={<MiCuenta />} />
             <Route path="/mis-cursos" element={<MisCursos />} />
             <Route path="/nav-prof" element={<NavegacionProf />} />
+            <Route path="/curso/:cursoId" element={<CursoDetalle />} />
           </Routes>
         </div>
       </Router>
