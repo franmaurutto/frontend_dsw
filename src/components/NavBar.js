@@ -45,7 +45,7 @@ const NavBar = ({ links = [] }) => {
 
 
   const renderButton=()=>{
-    if(location.pathname ==='/'){
+    if(location.pathname ==='/' || location.pathname==='/sign-up-form'){
       return(
         <button className="btn" onClick={handleSignUp}>Crear Cuenta</button>
       )

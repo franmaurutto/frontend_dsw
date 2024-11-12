@@ -4,8 +4,11 @@ import { getCursosAlumno } from '../services/AlumnoServices.js';
 import { useUser } from './UsuarioContext.js';
 import '../styles/MisCursos.css';
 import NavBar from './NavBar.js';
+import { useNavigate } from 'react-router-dom';
 
 export const MisCursos = () => {
+
+  const navigate= useNavigate
 
   const { usuario } = useUser(); 
   const [cursos, setCursos] = useState([]); 
@@ -27,8 +30,8 @@ export const MisCursos = () => {
     if (usuario && usuario.id) { 
       const fetchCursos = async () => {
         try {
-          const data = await getCursosAlumno(usuario.id); // Usamos el id del usuario
-          setCursos(data.data); // Guardamos los cursos en el estado
+          const data = await getCursosAlumno(usuario.id); 
+          setCursos(data.data); 
         } catch (error) {
           console.error('Error al obtener los cursos:', error);
         }
@@ -37,6 +40,10 @@ export const MisCursos = () => {
       fetchCursos();
     }
   }, [usuario]);
+
+  const handleClick=()=>{
+    navigate('/nav-alu')
+  }
 
 
   return (
@@ -54,7 +61,10 @@ export const MisCursos = () => {
             ))}
           </ul>
         ) : (
-          <p>No tienes cursos inscritos.</p>
+          <div className='inscribirse'>
+            <p>No se ha inscripto a ningun curso.</p>
+            <button onClick={handleClick}>Inscribirse</button>
+          </div>
         )}
       </div>
     </div>

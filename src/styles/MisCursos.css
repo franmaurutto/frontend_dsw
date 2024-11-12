@@ -56,3 +56,32 @@
 .lista-mis-cursos h1{
   color: #c23864;
 }
+
+.inscribirse p{
+  color: #c23864;
+  font-size: 28px;
+}
+
+.inscribirse button {
+  background-color: #f8bbd0;
+  border: 1px solid #f06292;
+  color: #f06292;
+  border-radius: 5px;
+  cursor: pointer;
+  padding: 10px 10px;
+  width: 200px;
+  height: 50px;
+  margin: 0 auto;
+}
+
+.inscribirse button:hover {
+  background-color: #f06292;
+  color: white
+}
+
+.inscribirse{
+  background-color: #f5f5f5;
+  padding: 30px 40px;
+  border-radius: 5px;
+  height: 250px
+}

@@ -16,6 +16,14 @@ export const createParcial = async (parcial) => {
   return response.json();
 };
 
+export const getParcial = async (id) => {
+  const response = await fetch(`${API_URL}/${id}`);
+  if (!response.ok) {
+    throw new Error('Error al obtener el parcial');
+  }
+  return response.json();
+};
+
 export const updateParcial = async (parcialId, parcial) => {
   const response = await fetch(`${API_URL}/${parcialId}`, {
     method: 'PUT',
