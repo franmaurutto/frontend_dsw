@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { getInscripcionesAlumno } from '../services/AlumnoServices.js';
 import { getCursoDeInscripcion, deleteInscripcion, updateInscripcion } from '../services/InscripcionServices.js';
+import { getCursosProfesor } from '../services/ProfesorServices.js'; 
 import { useUser } from './UsuarioContext.js';
 import '../styles/MisCursos.css';
 import NavBar from './NavBar.js';
@@ -23,9 +24,14 @@ export const MisCursos = () => {
       ];
 
   useEffect(() => {
-    if (usuario && usuario.id) {
-      const fetchCursos = async () => {
-        try {
+    const fetchCursos = async () => {
+      try {
+        if (usuario && usuario.mail.includes('@educatech')) {
+          // Si el usuario es profesor, obtenemos los cursos que enseña
+          const cursosData = await getCursosProfesor(usuario.id);
+          setCursos(cursosData);
+        } else if (usuario && usuario.id) {
+          // Si el usuario es alumno, obtenemos sus inscripciones
           const inscripcionesData = await getInscripcionesAlumno(usuario.id);
           if (Array.isArray(inscripcionesData)) {
             const cursosData = await Promise.all(
@@ -42,14 +48,14 @@ export const MisCursos = () => {
           } else {
             setCursos([]);
           }
-        } catch (error) {
-          console.error('Error al obtener los cursos:', error);
-          setCursos([]);
         }
-      };
+      } catch (error) {
+        console.error('Error al obtener los cursos:', error);
+        setCursos([]);
+      }
+    };
 
-      fetchCursos();
-    }
+    fetchCursos();
   }, [usuario]);
 
   const handleAnularInscripcion = async (inscripcionId) => {
@@ -104,22 +110,22 @@ export const MisCursos = () => {
               <li key={index}>
                 <h3>{curso.nombre}</h3>
                 <p>{curso.descripcion}</p>
-                <div>
-                  {/* Botón de modificar inscripción */}
-                  <button
-                    className="boton-cursos"
-                    onClick={() => handleModificarInscripcion(curso.inscripcionId)} // Usamos el ID de la inscripción
-                  >
-                    Modificar Fecha Inscripción
-                  </button>
-                  {/* Botón de anular inscripción */}
-                  <button
-                    className="boton-cursos"
-                    onClick={() => handleAnularInscripcion(curso.inscripcionId)} // Usamos el ID de la inscripción
-                  >
-                    Anular Inscripción
-                  </button>
-                </div>
+                {usuario && !usuario.mail.includes('@educatech') && (
+                  <div>
+                    <button
+                      className="boton-cursos"
+                      onClick={() => handleModificarInscripcion(curso.inscripcionId)}
+                    >
+                      Modificar Fecha Inscripción
+                    </button>
+                    <button
+                      className="boton-cursos"
+                      onClick={() => handleAnularInscripcion(curso.inscripcionId)}
+                    >
+                      Anular Inscripción
+                    </button>
+                  </div>
+                )}
               </li>
             ))}
           </ul>
@@ -132,6 +138,7 @@ export const MisCursos = () => {
 };
 
 export default MisCursos;
+
 
 
 
