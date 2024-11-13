@@ -78,7 +78,7 @@ export const MisCursos = () => {
   };
 
   const handleClick =()=>{
-    
+    navigate('/nav-alu')
   }
 
   const handleModificarInscripcion = async (inscripcionId) => {

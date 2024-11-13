@@ -1,3 +1,131 @@
+@media (max-width: 767px) {
+
+  .form-parcial {
+    margin-top:20px;
+    font-family: Arial, sans-serif;
+    background-color: #f8e3e9;
+    color: #333;
+    padding: 20px 10px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .form-parcial h1 {
+    font-size: 1.8em;
+    margin-bottom: 20px;
+    color: #c23864;
+    width: 100%;
+  }
+
+  .form-parcial form {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: center;
+    gap: 15px;
+    padding: 20px;
+    background-color: #f9e8ef;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+  }
+
+  .form-parcial input {
+    font-size: 1rem;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 100%;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+  }
+
+  .form-parcial button {
+    background-color: #f06292;
+    color: white;
+    border: none;
+    padding: 15px;
+    font-size: 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    transition: background-color 0.3s ease;
+  }
+
+  .form-parcial button:hover {
+    background-color: #c23864;
+  }
+
+  .form-parcial label {
+    font-size: 0.9rem;
+    color: #c23864;
+    margin-bottom: 5px;
+    text-align: left;
+  }
+
+
+  .mensaje-exito {
+    font-size: 0.9rem;
+    color: green;
+    font-weight: bold;
+    margin-top: 10px;
+    padding: 10px;
+    background-color: #d4edda;
+    border: 1px solid #c3e6cb;
+    border-radius: 5px;
+    text-align: center;
+  }
+
+
+  .acciones-parcial {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    margin: 20px auto;
+  }
+
+  .acciones-parcial button {
+    background-color: #f06292;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 15px;
+    font-size: 1rem;
+    cursor: pointer;
+    width: 100%;
+    height: auto;
+    transition: background-color 0.3s ease;
+  }
+
+  .acciones-parcial button:hover {
+    background-color: #c23864;
+  }
+
+  .formProf .error-box,
+  .formAlu .error-box {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    display: block;
+    width: 100%;
+  }
+
+  .formAlu .error-box::before {
+    content: "⚠️ ";
+    margin-right: 10px;
+  }
+}
+@media (min-width: 1024px) {
 .form-parcial {
   max-width: 1500px;
   font-family: Arial, sans-serif;
@@ -76,4 +204,48 @@
   background-color: #d4edda;
   border: 1px solid #c3e6cb;
   border-radius: 5px;
+}
+
+.acciones-parcial button {
+  background-color: #f8bbd0;
+  border: 1px solid #f06292;
+  color: #f06292;
+  border-radius: 5px;
+  cursor: pointer;
+  padding: 10px;
+  width: 47% !important;
+  height: 50px !important;
+  margin: auto !important;
+
+}
+
+.acciones-parcial button:hover {
+  background-color: #f06292;
+  color: white;
+}
+
+.acciones-parcial {
+  display: flex;
+  flex-direction: row;
+  max-width: 70%;
+  margin: 0px auto;
+}
+
+.formProf .error-box {
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+  padding: 10px;
+  margin-bottom: 15px;
+  border-radius: 5px;
+  font-size: 14px;
+  display: block;
+  align-items: center;
+  width:70%
+}
+
+.formAlu .error-box::before {
+  content: "⚠️ ";
+  margin-right: 10px;
+}
 }

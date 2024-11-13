@@ -1,6 +1,98 @@
+@media(max-width:767px){
+.form-container {
+  display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    flex-direction: column;
+    padding: 30px;
+    background-color: #f8e3e9;
+    flex-grow: 0;
+}
 
+.form-container form {
+  display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    max-width: 350px;
+    width: 100%;
+    margin-top: 20px;
+    height: auto;
+    margin-left: auto;
+    margin-right: auto;
 
+}
 
+.form-container input {
+  padding: 10px;
+    margin: 10px 0;
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.separadorAlu,
+.separadorProf {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  height: auto;
+}
+
+.separadorAlu button,
+.separadorProf button {
+  background-color: #f8bbd0;
+  border: 1px solid #f06292;
+  color: #f06292;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.form-container h2 {
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.formAlu .error-box,
+.formProf .error-box {
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+  padding: 10px;
+  margin-bottom: 15px;
+  border-radius: 5px;
+  font-size: 1
+  
+  2px;
+}
+
+.visible {
+  display: block;
+}
+
+.oculto {
+  display: none;
+}
+
+.formProf button,
+.formAlu button {
+  background-color: #f8bbd0;
+  border: 1px solid #f06292;
+  color: #f06292;
+  border-radius: 5px;
+  cursor: pointer;
+  padding: 5px 10px;
+}
+}
+
+@media (min-width: 1024px) {
 .navbar {
   display: flex;
   align-items: center;
@@ -124,4 +216,5 @@
 .formAlu .error-box::before {
   content: "⚠️ ";
   margin-right: 10px;
+}
 }

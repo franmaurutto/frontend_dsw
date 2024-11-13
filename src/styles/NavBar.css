@@ -1,11 +1,123 @@
-html,body {
-  height: 100%;
-  width: 100%;
-  margin: 0;
-  padding: 0;
+@media(max-width:767px){
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 50px;
+    padding: 0 10px;
+    background-color: #dd84a0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    box-sizing: border-box;
+  }
+
+  .navLogo {
+    font-size: 20px;
+    font-weight: bold;
+    color: #333;
+    margin-right: 10px;
+    white-space: nowrap;
+  }
+
+  .nav-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    flex-grow: 1;
+    justify-content: flex-start;
+    overflow-x: hidden;
+  }
+
+  .nav-links a {
+    color: #333;
+    text-decoration: none;
+    font-size: 14px;
+    padding: 5px 10px;
+    transition: color 0.3s ease;
+  }
+
+  .nav-links a:hover {
+    color: #c23864;
+  }
+
+
+  .auth-buttons {
+    display: flex;
+    gap: 5px;
+  }
+
+  .btn {
+    width: auto;
+    height: 40px;
+    color: #fff;
+    border-radius: 5px;
+    padding: 5px 15px;
+    font-family: 'Lato', sans-serif;
+    font-weight: 500;
+    background: linear-gradient(0deg, #f4d3dd 0%, #e9abbf 100%);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: none;
+    box-shadow: inset 2px 2px 2px 0px rgba(255, 255, 255, 0.5),
+      7px 7px 20px 0px rgba(0, 0, 0, 0.1),
+      4px 4px 5px 0px rgba(0, 0, 0, 0.1);
+  }
+
+
+  .btn:hover {
+    box-shadow: 4px 4px 6px 0 rgba(255, 255, 255, 0.5),
+      -4px -4px 6px 0 rgba(116, 125, 136, 0.5),
+      inset -4px -4px 6px 0 rgba(255, 255, 255, 0.2),
+      inset 4px 4px 6px 0 rgba(0, 0, 0, 0.4);
+  }
+
+    .nav-links {
+      display: none;
+      flex-direction: column;
+      background-color: #dd84a0;
+      position: absolute;
+      top: 50px; 
+      left: 0;
+      right: 0;
+      padding: 10px;
+      gap: 10px;
+    }
+  
+    .nav-links a {
+      font-size: 16px;
+      text-align: center;
+      padding: 10px;
+      color: white;
+      background: #c23864;
+      border-radius: 5px;
+    }
+  
+    .nav-links a:hover {
+      background: #e9abbf;
+    }
+  
+
+    .nav-links.active {
+      display: flex;
+    }
+  
+    .menu-toggle {
+      background: none;
+      border: none;
+      font-size: 24px;
+      cursor: pointer;
+      color: #333;
+      display: block;
+      margin-right: 40px;
+    }
 
 }
 
+@media(min-width:1024px){
 .navbar {
   display: flex;
   align-items: center;
@@ -89,3 +201,8 @@ html,body {
     inset 4px 4px 6px 0 rgba(0, 0, 0, .4);
 }
 
+.menu-toggle {
+  display: none;
+  
+}
+}

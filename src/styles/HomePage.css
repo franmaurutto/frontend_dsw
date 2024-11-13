@@ -1,113 +1,125 @@
+@media(max-width:767px){
+body,
+  html {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    width: 100%;
+    overflow-x: hidden;
+  }
 
-.home-page {
-  width: 100%;
-  font-family: Arial, sans-serif;
-  background-color: #f8e3e9;
-  color: #333;
-  padding: 20px;
-  min-height: 100vh;
+  .home-page {
+    max-width:100%;
+    width: 1005;
+    font-family: Arial, sans-serif;
+    background-color: #f8e3e9;
+    color: #333;
+    padding: 10px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow-x: hidden;
+    box-sizing: border-box;
+  }
+
+  .home-content {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+    margin:0;
+    padding: 0;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    box-sizing: border-box;
+  }
+
+  h2 {
+    font-size: 20px;
+    color: #c23864;
+    margin: 10px 0;
+    text-align: center;
+    word-wrap: break-word;
+  }
+
+  .form_inicio {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.9);
+    width: 100%;
+    max-width: 280px;
+    border-radius: 10px;
+    padding: 10px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  }
+
+  .btn_is {
+    width: 100%;
+    height: 40px;
+    color: #fff;
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 14px;
+    background: linear-gradient(0deg, #f4d3dd 0%, #e9abbf 100%);
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .inp {
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 10px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+  }
+
+  .form_inicio h3 {
+    font-family: 'Lato', sans-serif;
+    color: #c23864;
+    margin-bottom: 15px;
+    font-size: 16px;
+    text-align: center;
+  }
+
+  .home-content p {
+    color: #fff;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+    max-width: 90%;
+    text-align: center;
+    font-size: 14px;
+    line-height: 1.4;
+  }
+
+  .form_inicio h5 {
+    margin-bottom: 10px;
+    color: #c23864;
+    font-size: 14px;
+    text-align: center;
+  }
+
+  .form_inicio a {
+    cursor: pointer;
+    color: #d15d82;
+    font-size: 14px;
+  }
+
+  .home-image {
+    width: 70%;
+    max-width: 250px;
+    height: auto;
+    margin-top:40px;
+    text-align: center;
+  }
 }
-
-.home-content {
-  max-width: 100%;
-  margin: 0 auto;
-  padding: 0px;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: auto;
-  transform: translateX(0);
-  margin-top: 40px;
-}
-
-h2 {
-  font-size: 28px;
-  color: #c23864;
-  margin-bottom: 10px;
-  text-align: left;
-  white-space: nowrap;
-}
-
-.form_inicio {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: rgba(255, 255, 255, 0.8);
-  width: 90%;
-  max-width: 400px;
-  height: auto;
-  border-radius: 10px;
-  padding: 20px;
-}
-
-.btn_is {
-  white-space: nowrap;
-  width: 100%;
-  height: 40px;
-  color: #fff;
-  border-radius: 5px;
-  padding: 5px 25px;
-  font-family: 'Lato', sans-serif;
-  font-weight: 500;
-  background: transparent;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  position: relative;
-  display: inline-block;
-  background: #c23864;
-  background: linear-gradient(0deg, #f4d3dd 0%, #e9abbf 100%);
-  border: none;
-}
-
-.inp {
-  display: block;
-  width: 100%;
-  margin-bottom: 15px;
-  padding: 10px;
-  box-sizing: border-box;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  font-size: 16px;
-}
-
-.form_inicio h3 {
-  font-family: 'Lato', sans-serif;
-  color: #c23864;
-  margin-bottom: 80px;
-  font-size: 22px;
-}
-
-.home-content p {
-  color: #fff;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 1);
-  max-width: 600px;
-  text-align: center;
-}
-
-.form_inicio h5 {
-  margin-bottom: 0;
-  color: #c23864;
-}
-
-.form_inicio a {
-  cursor: pointer;
-  color: #d15d82;
-}
-
-.home-image {
-  width: 100%;
-  /* Se ajusta al 100% en móviles */
-  height: auto;
-  margin: 0;
-  position: relative;
-  top: 20px;
-  text-align: center;
-}
-
-/* Estilos para pantallas grandes (computadoras) */
-@media (min-width: 768px) {
+@media (min-width: 1024px) {
 .home-page {
     max-width: 1500px;
     font-family: Arial, sans-serif;

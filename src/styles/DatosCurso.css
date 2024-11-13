@@ -1,3 +1,118 @@
+@media (max-width: 767px) {
+
+
+  .mod-curso {
+    margin-top: 20px;
+    font-family: Arial, sans-serif;
+    background-color: #f8e3e9;
+    color: #333;
+    padding: 20px 10px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+
+
+  .mod-curso h1 {
+    font-size: 1.8em;
+    margin-bottom: 20px;
+    color: #c23864;
+    width: 100%;
+  }
+
+
+  .mod-curso form {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: center;
+    gap: 12px;
+    padding: 20px;
+    background-color: #f9e8ef;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+  }
+
+  .mod-curso input {
+    font-size: 1rem;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 100%;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+  }
+
+
+  .mod-curso button {
+    background-color: #f06292;
+    color: white;
+    border: none;
+    padding: 15px;
+    font-size: 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    transition: background-color 0.3s ease;
+  }
+
+  .mod-curso button:hover {
+    background-color: #c23864;
+  }
+
+
+  .mod-curso label {
+    font-size: 0.9rem;
+    color: #c23864;
+    margin-bottom: 5px;
+    text-align: left;
+  }
+
+
+  .mensaje-exito {
+    font-size: 0.9rem;
+    color: green;
+    font-weight: bold;
+    margin-top: 10px;
+    padding: 10px;
+    background-color: #d4edda;
+    border: 1px solid #c3e6cb;
+    border-radius: 5px;
+    text-align: center;
+  }
+
+  .btns-curso {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    margin: 20px auto;
+  }
+
+  .btns-curso button {
+    background-color: #f06292;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 15px;
+    font-size: 1rem;
+    cursor: pointer;
+    width: 100%;
+    height: auto;
+    transition: background-color 0.3s ease;
+  }
+
+  .btns-curso button:hover {
+    background-color: #c23864;
+  }
+}
+
+@media (min-width: 1024px) {
 .mod-curso {
   max-width: 1500px;
   font-family: Arial, sans-serif;
@@ -101,4 +216,5 @@
   flex-direction: row;
   max-width: 70%;
   margin:0px auto;
+}
 }

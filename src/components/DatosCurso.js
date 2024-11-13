@@ -18,7 +18,7 @@ export const DatosCurso = () => {
   const [horaInicio, setHoraInicio] = useState(curso ? curso.horaInicio : '');
   const [horaFin, sethoraFin] = useState(curso ? curso.horaFin : '');
   const [dias, setDias] = useState(curso ? curso.dias : '');
-  const [parcialId]=useState(curso? curso.parcialId:'')
+  const [parcialId]=useState(curso? curso.parcial:'')
   const [profesor] = useState(curso?.profesor || null);
   const [mensajeExito, setMensajeExito] = useState('');
 
@@ -81,9 +81,12 @@ export const DatosCurso = () => {
       }
     }
   }
-
-  const handleParcial=(Id)=>{
-    navigate('/parcial')
+  const handleParcial = () => {
+    if (parcialId) {
+      navigate('/parcial', { state: { id: parcialId } });
+    } else {
+      navigate('/parcial');
+    }
   }
   const handleSubmit = (e) => {
     e.preventDefault();
