@@ -4,10 +4,12 @@ import '../styles/NavBar.css';
 import { useUser } from './UsuarioContext.js';
 import { deleteAlumno } from '../services/AlumnoServices.js';
 import { deleteProfesor } from '../services/ProfesorServices.js';
+import { useState } from 'react';
 const NavBar = ({ links = [] }) => {
 
   const navigate = useNavigate();
   const location = useLocation();
+  const [menuActive, setMenuActive] = useState(false);
   const { usuario, logout } = useUser();
 
   const handleSignUp = () => {
@@ -42,6 +44,10 @@ const NavBar = ({ links = [] }) => {
     }
   };
 
+  const toggleMenu = () => {
+    setMenuActive(!menuActive);
+  };
+
 
 
   const renderButton=()=>{
@@ -62,9 +68,12 @@ const NavBar = ({ links = [] }) => {
   return(
   <nav className="navbar">
     <h1 className='navLogo'>EducaTech</h1>
-    <div className="nav-links">
+      <button className="menu-toggle" onClick={toggleMenu}>
+        &#9776; 
+      </button>
+    <div className={`nav-links ${menuActive ? 'active' : ''}`}>
         {links.map((link, index) => (
-          <Link key={index} to={link.path}>{link.label}</Link>
+          <Link key={index} to={link.path} onClick={() => setMenuActive(false)}>{link.label} </Link>
         ))}
     </div>
     <div className="auth-buttons">

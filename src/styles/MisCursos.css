@@ -1,3 +1,128 @@
+@media(max-width:767px){
+  .mis-cursos {
+      max-width: 1500px;
+      font-family: Arial, sans-serif;
+      background-color: #f8e3e9;
+      color: #333;
+      padding: 0px 20px;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+  
+    .lista-mis-cursos {
+      padding-top: 30px;
+      margin-top: 10px;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+  
+    .list-cursos {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      list-style-type: none;
+      padding: 0;
+      justify-content: center;
+    }
+  
+    .list-cursos li {
+      background-color: #f9f9f9;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      padding: 16px;
+      width: 200px;
+      height: auto;
+      text-align: center;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 300px;
+    }
+  
+    .list-cursos li:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+    }
+  
+    .list-cursos h3 {
+      font-size: 18px;
+      margin: 8px 0;
+    }
+  
+    .list-cursos p {
+      font-size: 16px;
+      color: #555;
+      margin-top: 0;
+      padding: 20px 8px;
+    }
+  
+    .lista-mis-cursos h1 {
+      color: #c23864;
+      text-align: center;
+    }
+  
+    .inscribirse p {
+      color: #c23864;
+      font-size: 28px;
+      text-align: center;
+    }
+  
+    .inscribirse button {
+      background-color: #f8bbd0;
+      border: 1px solid #f06292;
+      color: #f06292;
+      border-radius: 5px;
+      cursor: pointer;
+      padding: 10px 10px;
+      width: 200px;
+      height: 50px;
+      margin: 0 auto;
+    }
+  
+    .inscribirse button:hover {
+      background-color: #f06292;
+      color: white;
+    }
+  
+    .inscribirse {
+      background-color: #f5f5f5;
+      padding: 30px 40px;
+      border-radius: 5px;
+      height: 250px;
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    .boton-cursos {
+      background-color: #f8bbd0;
+      border: 1px solid #f06292;
+      color: #f06292;
+      padding: 10px 20px;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+      width: 100%;
+      max-width: 180px;
+      align-self: center;
+      margin-top: auto;
+    }
+  
+    .boton-cursos:hover {
+      background-color: #f06292;
+      color: white;
+    }
+}
+
+@media (min-width: 1024px) {
 .list-cursos {
   display: flex;
   flex-wrap: wrap;
@@ -87,7 +212,6 @@
   height: 250px
 }
 
-/* Estilos comunes para ambos botones */
 .boton-cursos {
   background-color: #f8bbd0;
   border: 1px solid #f06292;
@@ -106,4 +230,4 @@
   background-color: #f06292;
   color: white;
 }
-
+}

@@ -17,6 +17,7 @@ export const DatosCurso = () => {
   const [horaInicio, setHoraInicio] = useState(curso ? curso.horaInicio : '');
   const [horaFin, sethoraFin] = useState(curso ? curso.horaFin : '');
   const [dias, setDias] = useState(curso ? curso.dias : '');
+  const [parcialId]=useState(curso? curso.parcial:'')
   const [profesor] = useState(curso?.profesor || null);
   const [mensajeExito, setMensajeExito] = useState('');
   const [materiales, setMateriales] = useState([]); // Estado para los materiales
@@ -105,16 +106,18 @@ export const DatosCurso = () => {
         alert('Hubo un error al intentar eliminar el material. Intenta nuevamente.');
       }
     }
-  };
-  
-  
+  }
   const handleAgregarMaterial = () => {
     setCurso(curso);
     navigate('/agregar-material');
   };
-
-  
-
+  const handleParcial = () => {
+    if (parcialId) {
+      navigate('/parcial', { state: { id: parcialId } });
+    } else {
+      navigate('/parcial');
+    }
+  }
   const handleSubmit = (e) => {
     e.preventDefault();
     const updatedCurso = ({
@@ -146,10 +149,6 @@ export const DatosCurso = () => {
       .catch((error) => {
         console.error('Error al actualizar los datos del curso:', error);
       });
-  };
-
-  const handleParcial = (parcialId) => {
-    navigate(`/parcial/${parcialId}`);
   };
 
   return (

@@ -71,7 +71,7 @@ const handleSubmit = async (e) => {
     try {
       const response = await createAlumno(formData);
       console.log('Alumno registrado:', response);
-      navigate('/nav-alu'); 
+      navigate('/home-page'); 
     } catch (err) {
       setError('Hubo un error al registrar al alumno');
       console.error('Error al registrar alumno:', err);
@@ -81,7 +81,7 @@ const handleSubmit = async (e) => {
     try{
     const response = await createProfesor(formDataProf);
     console.log('Profesor registrado:', response);
-    navigate('/nav-prof'); 
+    navigate('/home-page'); 
     
     } catch (err) {
       setError('Hubo un error al registrar al profesor');
