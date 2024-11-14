@@ -9,9 +9,11 @@ export const CrearCurso = () => {
   const { usuario } = useUser();
 
   const profLinks = [
-  { label: 'Mi cuenta', path: '/mi-cuenta' },
-  { label: 'Mis Cursos', path: '/nav-prof' },
-  { label: 'Crear Curso', path: '' },
+    { label: 'Mi cuenta', path: '/mi-cuenta' },
+    { label: 'Mis Cursos', path: '/nav-prof' },
+    { label: 'Crear Curso', path: '/crear-curso' },
+    { label: 'Crear Material', path: '/crear-material' },
+    { label: 'Materiales', path: '/materiales' },
   ];
 
   const[error,setError]= useState()
@@ -75,7 +77,7 @@ const handleInputChange = (e) => {
           <input type='date' placeholder='Fecha fin curso' value={formData.fechaFin} name='fechaFin' onChange={handleInputChange} required></input>
           <label>Hora de inicio:</label>
           <input type='text' placeholder='Hora incio' value={formData.horaInicio} name='horaInicio' onChange={handleInputChange} required></input>
-          <label>Horda de finalizacion:</label>
+          <label>Hora de finalizacion:</label>
           <input type='text' placeholder='Hora fin' value={formData.horaFin} name='horaFin' onChange={handleInputChange} required></input>
           <label>Dia de cursado:</label>
           <input type='text' placeholder='Dia de cursado'></input>

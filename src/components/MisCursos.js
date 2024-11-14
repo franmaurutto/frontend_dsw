@@ -13,7 +13,7 @@ export const MisCursos = () => {
   const { usuario } = useUser();
   const [cursos, setCursos] = useState([]);
   const [mensajeExito, setMensajeExito] = useState('');
-
+  
   const links = usuario && usuario.mail.includes('@educatech')
     ? [
         { label: 'Mi cuenta', path: '/mi-cuenta' },

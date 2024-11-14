@@ -35,6 +35,8 @@ export const NavegacionProf = () => {
   { label: 'Mi cuenta', path: '/mi-cuenta' },
   { label: 'Mis Cursos', path: '/nav-prof' },
   { label: 'Crear Curso', path: '/crear-curso' },
+  { label: 'Crear Material', path: '/crear-material' },
+  { label: 'Materiales', path: '/materiales' },
   ];
 
   const handleCursoClick = (curso) => {

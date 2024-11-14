@@ -67,4 +67,12 @@ export const getCursoDetalle = async (cursoId) => {
   }
 };
 
+export const getMaterialesCurso = async (cursoId) => {
+  const response = await fetch(`${API_URL}/${cursoId}/materiales`);
+  if (!response.ok) {
+    throw new Error('Error al obtener los materiales');
+  }
+  const { data } = await response.json(); 
+  return data;
+};
 

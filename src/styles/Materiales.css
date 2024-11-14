@@ -1,0 +1,98 @@
+.navprof {
+    max-width: 1500px;
+    font-family: Arial, sans-serif;
+    background-color: #f8e3e9;
+    color: #333;
+    padding: 0px 20px;
+    min-height: 100vh;
+  }
+  
+  .materiales-list {
+    padding-top: 30px;
+    margin-top: 10px;
+  }
+  
+  .items-materiales {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .items-materiales li {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 16px;
+    width: 200px;
+    height: auto;
+    text-align: center;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 300px;
+    cursor: pointer;
+  }
+  
+  .items-materiales li:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+  }
+  
+  .items-materiales h3 {
+    font-size: 18px;
+    margin: 8px 0;
+  }
+  
+  .items-materiales p {
+    font-size: 16px;
+    color: #555;
+    margin-top: 0;
+    padding: 20px 8px;
+  }
+  
+  /* Estilos para los mensajes de éxito */
+  .mensaje-exito {
+    background-color: #d4edda;
+    color: #155724;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #c3e6cb;
+    font-size: 16px;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  /* Estilos para los botones de modificar y eliminar */
+  .boton-material {
+    background-color: #f8bbd0;
+    border: 1px solid #f06292;
+    color: #f06292;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    width: 100%;
+    max-width: 180px;
+    margin: 10px 0;
+    transition: background-color 0.3s, color 0.3s;
+  }
+  
+  .boton-material:hover {
+    background-color: #f06292;
+    color: white;
+  }
+  
+  /* Estilo para el contenedor de botones */
+  .items-materiales div {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 10px;
+  }
+  
+  

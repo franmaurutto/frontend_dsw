@@ -9,15 +9,29 @@ export const getInscripciones = async () => {
 };
 
 export const createInscripcion = async (inscripcion) => {
-  const response = await fetch(API_URL, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(inscripcion),
-  });
-  return response.json();
+  try {
+    const response = await fetch(API_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(inscripcion),
+    });
+
+    // Verificar si la respuesta es correcta
+    if (!response.ok) {
+      // Extraer el mensaje de error del backend si está disponible
+      const errorData = await response.json();
+      throw new Error(errorData.message || 'Error en la inscripción');
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error('Error en createInscripcion:', error.message);
+    throw error; // Relanzar el error para que sea manejado por quien llame a esta función
+  }
 };
+
 
 export const updateInscripcion = async (inscripcionId, inscripcion) => {
   const response = await fetch(`${API_URL}/${inscripcionId}`, {

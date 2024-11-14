@@ -6,10 +6,10 @@
   padding: 60px 20px;
   min-height: 100vh;
   text-align: center;
+  position: relative; /* Necesario para la posición absoluta del botón de eliminar material */
 }
 
 .mod-curso h1 {
-  text-align: center;
   margin: 0 auto;
   width: 70%;
   padding-bottom: 20px;
@@ -28,7 +28,7 @@
   width: 70%;
   margin: 0 auto;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  gap: 5px;
+  gap: 15px;
 }
 
 .mod-curso input {
@@ -48,10 +48,10 @@
   color: #f06292;
   border-radius: 5px;
   cursor: pointer;
-  padding: 10px 10px;
+  padding: 10px;
   width: 300px;
   height: 50px;
-  margin: 0 auto;
+  margin: 10px auto;
 }
 
 .mod-curso button:hover {
@@ -78,6 +78,14 @@
   border-radius: 5px;
 }
 
+.btns-curso {
+  display: flex;
+  justify-content: space-between;
+  width: 70%;
+  margin: 20px auto;
+  gap: 20px; /* Espacio entre los botones */
+}
+
 .btns-curso button {
   background-color: #f8bbd0;
   border: 1px solid #f06292;
@@ -85,10 +93,9 @@
   border-radius: 5px;
   cursor: pointer;
   padding: 10px;
-  width: 47% !important;
-  height: 50px !important;
-  margin: auto !important;
-
+  width: 30%; /* Los tres botones ocupan el 30% */
+  height: 50px;
+  box-sizing: border-box;
 }
 
 .btns-curso button:hover {
@@ -96,9 +103,82 @@
   color: white;
 }
 
-.btns-curso{
+/* Alineación del botón de "Eliminar Material" fuera del contenedor principal */
+.eliminar-material {
+  position: right;
+  right: 20px; /* Coloca el botón en la esquina derecha */
+  bottom: 20px; /* Ajusta la distancia desde la parte inferior */
+  background-color: #f06292;
+  border: 1px solid #f06292;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  padding: 10px 20px;
+  width: auto;
+  height: 50px;
+}
+
+.eliminar-material:hover {
+  background-color: #c23864;
+}
+
+.materiales-curso {
+  margin-top: 30px;
+  padding: 20px;
+  background-color: #f9e8ef;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   display: flex;
-  flex-direction: row;
-  max-width: 70%;
-  margin:0px auto;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.materiales-curso ul {
+  list-style-type: none;
+  padding-left: 0;
+  width: 100%;
+}
+
+.materiales-curso li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #fff;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.materiales-curso li button {
+  background-color: #f06292;
+  border: 1px solid #f06292;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  padding: 5px 10px;
+  width: 120px;
+  box-sizing: border-box;
+}
+
+.materiales-curso li button:hover {
+  background-color: #c23864;
+}
+
+@media (max-width: 768px) {
+  .btns-curso {
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+
+  .btns-curso button {
+    width: 80%; /* Los botones ocupan el 80% del ancho en pantallas pequeñas */
+    margin-bottom: 10px;
+  }
+
+  .materiales-curso {
+    padding: 15px;
+  }
 }

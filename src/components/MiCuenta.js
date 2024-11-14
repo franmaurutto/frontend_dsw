@@ -18,9 +18,11 @@ export const MiCuenta = () => {
 
   const links = usuario && mail.includes('@educatech')
     ? [
-        { label: 'Mi cuenta', path: '/mi-cuenta' },
-        { label: 'Mis Cursos', path: '/nav-prof' },
-        { label: 'Crear Curso', path: '' },
+      { label: 'Mi cuenta', path: '/mi-cuenta' },
+      { label: 'Mis Cursos', path: '/nav-prof' },
+      { label: 'Crear Curso', path: '/crear-curso' },
+      { label: 'Crear Material', path: '/crear-material' },
+      { label: 'Materiales', path: '/materiales' },
       ]
     : [
         { label: 'Mi cuenta', path: '/mi-cuenta' },
