@@ -32,7 +32,6 @@ export const MiCuenta = () => {
 
   useEffect(() => {
     if (usuario) {
-      console.log("Datos del usuario:", usuario);
       setNombreCompleto(usuario.nombre_y_apellido || usuario.nombreCompleto);
       setMail(usuario.mail);
       setTelefono(usuario.telefono);

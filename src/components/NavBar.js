@@ -45,9 +45,12 @@ const NavBar = ({ links = [] }) => {
   };
 
   const toggleMenu = () => {
-    setMenuActive(!menuActive);
+    setMenuActive((prevState) => !prevState);
   };
 
+  const handleLinkClick = () => {
+    setMenuActive(false); 
+  };
 
 
   const renderButton=()=>{
@@ -73,7 +76,7 @@ const NavBar = ({ links = [] }) => {
       </button>
     <div className={`nav-links ${menuActive ? 'active' : ''}`}>
         {links.map((link, index) => (
-          <Link key={index} to={link.path} onClick={() => setMenuActive(false)}>{link.label} </Link>
+          <Link key={index} to={link.path} onClick={handleLinkClick}>{link.label} </Link>
         ))}
     </div>
     <div className="auth-buttons">

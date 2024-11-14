@@ -21,10 +21,7 @@ export const ModificarMaterial = () => {
   ];
 
   useEffect(() => {
-    console.log("Material desde contexto:", material);
-    
     if (material) {
-      console.log("Datos del material:", material);
       setTitulo(material.titulo || '');
       setDescripcion(material.descripcion || '');
     }

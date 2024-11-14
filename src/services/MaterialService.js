@@ -47,7 +47,6 @@ export const findMatSinCurso = async () => {
 };
 export const addMaterialToCurso = async (materialId, cursoId) => {
   try {
-    // Verifica si los IDs están presentes y son válidos
     if (!materialId || !cursoId || isNaN(materialId) || isNaN(cursoId)) {
       throw new Error('Material ID o Curso ID no proporcionados o inválidos');
     }
@@ -61,7 +60,7 @@ export const addMaterialToCurso = async (materialId, cursoId) => {
     }
 
     const result = await response.json();
-    return result; // Regresa el resultado
+    return result; 
   } catch (error) {
     console.error('Error al agregar material al curso:', error);
     throw new Error('Error al agregar material al curso');

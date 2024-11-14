@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useCurso } from './CursoContext.js';
 import { deleteCurso, updateCurso, getMaterialesCurso } from '../services/CursoServices.js';
-import { updateMaterial } from '../services/MaterialService.js'; // Importar getMaterialesCurso
+import { updateMaterial } from '../services/MaterialService.js'; 
 import NavBar from './NavBar.js';
 import '../styles/DatosCurso.css';
 
@@ -20,7 +20,7 @@ export const DatosCurso = () => {
   const [parcialId]=useState(curso? curso.parcial:'')
   const [profesor] = useState(curso?.profesor || null);
   const [mensajeExito, setMensajeExito] = useState('');
-  const [materiales, setMateriales] = useState([]); // Estado para los materiales
+  const [materiales, setMateriales] = useState([]); 
 
   const navigate = useNavigate();
 
@@ -32,16 +32,14 @@ export const DatosCurso = () => {
     { label: 'Materiales', path: '/materiales' },
   ];
 
-  // Obtener materiales del curso cuando se carga el componente
   useEffect(() => {
     if (curso) {
       getMaterialesCurso(curso.id)
         .then((materialesData) => {
-          setMateriales(materialesData); // Establecer los materiales obtenidos
+          setMateriales(materialesData); 
         })
         .catch((error) => {
           console.error('Error al obtener materiales del curso:', error);
-          alert('Hubo un error al obtener los materiales del curso.');
         });
     }
   }, [curso]);
@@ -97,9 +95,7 @@ export const DatosCurso = () => {
     const confirmation = window.confirm('¿Estás seguro de que quieres eliminar este material del curso?');
     if (confirmation) {
       try {
-        // Llama a la función para actualizar el material y poner el curso como undefined
         updateMaterial(materialId, { curso: undefined });
-        // Actualiza la vista del frontend
         setMateriales(prevMateriales => prevMateriales.filter(material => material.id !== materialId));
       } catch (error) {
         console.error('Error al eliminar el material:', error);

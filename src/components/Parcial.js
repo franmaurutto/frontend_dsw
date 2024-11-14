@@ -12,7 +12,7 @@ export const Parcial = () => {
   const id = state?.id; 
   const [parcial, setParcial] = useState(null);
   const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(true); // Nuevo estado de carga
+  const [loading, setLoading] = useState(true); 
   const [consigna, setConsigna] = useState('');
   const [fecha, setFecha] = useState('');
   const [horaComienzo, setHoraComienzo] = useState('');
@@ -90,7 +90,7 @@ export const Parcial = () => {
         horaComienzo,
         horaFin,
         cursoId: curso?.id,
-        habilitado: !parcial.habilitado, // Cambiar el estado de habilitación
+        habilitado: !parcial.habilitado, 
       };
 
       try {

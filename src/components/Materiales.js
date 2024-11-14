@@ -40,8 +40,6 @@ export const Materiales = () => {
         await deleteMaterial(materialId);
         setMensajeExito('Material eliminado correctamente.');
         setTimeout(() => setMensajeExito(''), 5000);
-
-        // Eliminar el material de la lista sin hacer una nueva solicitud
         setMateriales((prevMateriales) => prevMateriales.filter(material => material.id !== materialId));
       } catch (error) {
         console.error('Error al eliminar el material:', error);

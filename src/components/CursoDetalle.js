@@ -8,7 +8,7 @@ import { createInscripcion } from '../services/InscripcionServices.js';
 
 export const CursoDetalle = () => {
   const { usuario } = useUser();
-  const { cursoId } = useParams();  // Obtenemos el cursoId de los parámetros de la URL
+  const { cursoId } = useParams();  
   const [curso, setCurso] = useState(null);
   const [mensajeExito, setMensajeExito] = useState('');
   const [mensajeError, setMensajeError] = useState('');
@@ -23,7 +23,7 @@ export const CursoDetalle = () => {
     };
 
     fetchCurso();
-  }, [cursoId]);  // Dependemos de cursoId para actualizar la información cuando cambie
+  }, [cursoId]);  
 
   const separarNombreApellido = (nombre_y_apellido) => {
     const [nombre, apellido] = nombre_y_apellido.split(' ');
@@ -48,20 +48,20 @@ export const CursoDetalle = () => {
       try {
         await createInscripcion(inscripcionData);
         setMensajeExito('Inscripción creada correctamente.');
-        setMensajeError(''); // Limpiamos cualquier mensaje de error
+        setMensajeError(''); 
       } catch (error) {
         if (error.response && error.response.status === 400 && error.response.data.message === 'El alumno ya está inscrito en este curso') {
           setMensajeError('Ya estás inscrito en este curso.');
-          setMensajeExito(''); // Limpiamos cualquier mensaje de éxito
+          setMensajeExito(''); 
         } else {
           setMensajeError('Error al intentar inscribirse. Intenta de nuevo más tarde.');
-          setMensajeExito(''); // Limpiamos cualquier mensaje de éxito
+          setMensajeExito(''); 
         }
       } finally {
         setTimeout(() => {
           setMensajeExito('');
           setMensajeError('');
-        }, 5000); // Limpiar los mensajes después de 5 segundos
+        }, 5000); 
       }
     }
   };
