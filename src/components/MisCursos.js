@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router-dom';
 
 export const MisCursos = () => {
 
-  const navigate= useNavigate
+  const navigate= useNavigate();
   const { usuario } = useUser();
   const [cursos, setCursos] = useState([]);
   const [mensajeExito, setMensajeExito] = useState('');

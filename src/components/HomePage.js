@@ -14,7 +14,6 @@ const HomePage = () => {
   const [error, setError] = useState(null);
   const homeLinks = [
   { label: 'Inicio', path: '/' },
-  { label: 'Cursos', path: '/cursos' },
   { label: 'Sobre Nosotros', path: '/sobre-nosotros' },
   { label: 'Contacto', path: '/contacto' },
   ];

@@ -23,6 +23,8 @@ export const Parcial = () => {
     { label: 'Mi cuenta', path: '/mi-cuenta' },
     { label: 'Mis Cursos', path: '/nav-prof' },
     { label: 'Crear Curso', path: '/crear-curso' },
+    { label: 'Crear Material', path: '/crear-material' },
+    { label: 'Materiales', path: '/materiales' },
   ];
 
   useEffect(() => {
@@ -33,9 +35,7 @@ export const Parcial = () => {
           const response = await getParcial(id || state?.id);
           console.log('Parcial recibido:', response.data);
           setParcial(response.data);
-        } else {
-          setError('ID de parcial inválido');
-        }
+        } 
       } catch (err) {
         setError('Parcial no cargado');
       } finally {
