@@ -25,24 +25,33 @@ const HomePage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError(null);
-
+  
     try {
+      let response;
       if (mail.includes('@educatech')) {
-        const response = await authProfesor(mail, contrasenia);
-        console.log('Inicio de sesión exitoso:', response);
-        setUsuario(response);
-        navigate('/nav-prof');  
+        response = await authProfesor(mail, contrasenia);
       } else {
-        const response = await authAlumno(mail, contrasenia);
-        console.log('Inicio de sesión exitoso:', response);
-        setUsuario(response); 
-        navigate('/nav-alu');   
+        response = await authAlumno(mail, contrasenia);
+      }
+  
+      const { token, usuario } = response;
+      if (!token) throw new Error('No se recibió token de autenticación.');
+
+      localStorage.setItem('authToken', token);
+
+      setUsuario(usuario);
+
+      if (usuario.rol === 'profesor') {
+        navigate('/nav-prof');
+      } else {
+        navigate('/nav-alu');
       }
     } catch (err) {
       setError('Correo o contraseña incorrecta');
       console.error('Error al iniciar sesión:', err);
     }
   };
+  
 
   return(
   <div className="home-page">
