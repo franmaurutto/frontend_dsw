@@ -30,7 +30,8 @@
       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
       padding: 16px;
       width: 200px;
-      height: 200px;
+      min-height: 200px;
+      height:auto;
       text-align: center;
       transition: transform 0.2s ease, box-shadow 0.2s ease;
       display: flex;
@@ -54,7 +55,70 @@
       color: #555;
       margin-top: 0;
       padding: 20px 8px;
+      white-space: normal;
+      word-wrap: break-word
     }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .navalu {
+    max-width: 1500px;
+    font-family: Arial, sans-serif;
+    background-color: #f8e3e9;
+    color: #333;
+    padding: 0px 30px;
+    min-height: 100vh;
+  }
+
+  .cursos-list {
+    padding-top: 40px;
+    margin-top: 20px;
+  }
+
+  .items-cursos {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+    list-style-type: none;
+    padding: 0 10px;
+    justify-content: space-evenly;
+  }
+
+  .items-cursos li {
+    background-color: #ffffff;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.12);
+    padding: 20px;
+    width: 240px;
+    min-height:200px;
+    height: auto;
+    text-align: center;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+  }
+
+  .items-cursos li:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.18);
+  }
+
+  .items-cursos h3 {
+    font-size: 20px;
+    margin: 10px 0;
+  }
+
+  .items-cursos p {
+    font-size: 16px;
+    color: #666;
+    margin-top: 0;
+    padding: 10px 8px;
+    white-space: normal;
+    word-wrap: break-word
+  }
 }
 
 @media (min-width: 1024px) {
@@ -87,7 +151,8 @@
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   padding: 16px;
   width: 200px;
-  height:200px;
+  min-height: 200px;
+  height: auto;
   text-align: center;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   display: flex;
@@ -111,5 +176,7 @@
   color: #555;
   margin-top: 0;
   padding: 20px 8px;
+  white-space: normal;
+  word-wrap: break-word
 }
 }

@@ -80,6 +80,85 @@
   }
 }
 
+@media (min-width: 768px) and (max-width: 1024px) {
+  .form-curso {
+    font-family: Arial, sans-serif;
+    background-color: #f8e3e9;
+    color: #333;
+    padding: 40px 15px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .form-curso h1 {
+    font-size: 2em;
+    text-align: center;
+    margin-bottom: 20px;
+    color: #c23864;
+    width: 100%;
+  }
+
+  .form-curso form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 25px;
+    background-color: #f9e8ef;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 90%;
+    max-width: 600px;
+  }
+
+  .form-curso input {
+    font-size: 1rem;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .form-curso button {
+    background-color: #f06292;
+    color: white;
+    border: none;
+    padding: 15px;
+    font-size: 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+
+    transition: background-color 0.3s ease;
+  }
+
+  .form-curso button:hover {
+    background-color: #c23864;
+  }
+
+  .form-curso label {
+    font-size: 0.9rem;
+    color: #c23864;
+    margin-bottom: 5px;
+  }
+
+  .form-curso .error-box {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    text-align: center;
+    margin-top: 15px;
+  }
+}
+
 @media (min-width: 1024px) {
 .form-curso .error-box {
   background-color: #f8d7da;

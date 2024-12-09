@@ -41,7 +41,6 @@ export const DatosCurso = () => {
         })
         .catch((error) => {
           console.error('Error al obtener materiales del curso:', error);
-          alert('Hubo un error al obtener los materiales del curso.');
         });
     }
   }, [curso]);
