@@ -69,6 +69,11 @@
     padding: 0px 30px;
     min-height: 100vh;
   }
+  .navalu h1 {
+    text-align: left;
+    margin-left: 0;
+    padding-left: 0;   
+  }
 
   .cursos-list {
     padding-top: 40px;
@@ -81,7 +86,7 @@
     gap: 24px;
     list-style-type: none;
     padding: 0 10px;
-    justify-content: space-evenly;
+    justify-content: flex-start;
   }
 
   .items-cursos li {

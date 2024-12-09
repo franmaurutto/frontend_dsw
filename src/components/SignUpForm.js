@@ -90,9 +90,6 @@ const handleSubmit = async (e) => {
   }
 };
 
-
-
-
   return (
     <div className="form-container">
       <NavBar links={homeLinks} />

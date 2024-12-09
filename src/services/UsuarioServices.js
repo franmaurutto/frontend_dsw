@@ -15,31 +15,31 @@ export const createAlumno = async (alumno) => {
   });
 
   if (!response.ok) {
-    throw new Error('Error al registrar alumno');
+    throw new Error('Error al registrar usuario');
   }
 
   return response.json();
 };
 
-export const updateAlumno = async (alumnoId, alumno) => {
-  const response = await fetch(`${API_URL}/${alumnoId}`, {
+export const updateUsuario = async (usuarioId, usuario) => {
+  const response = await fetch(`${API_URL}/${usuarioId}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify(alumno),
+    body: JSON.stringify(usuario),
   });
   return response.json();
 };
 
-export const deleteAlumno = async (alumnoId) => {
-  const response = await fetch(`${API_URL}/${alumnoId}`, {
+export const deleteUsuario = async (usuarioId) => {
+  const response = await fetch(`${API_URL}/${usuarioId}`, {
     method: 'DELETE',
   });
   return response.json();
 };
 
-export const authAlumno = async (mail, contrasenia) => {
+export const authUsuario = async (mail, contrasenia) => {
   const response = await fetch(`${API_URL}/login`, {
     method: 'POST',
     headers: {
@@ -54,9 +54,9 @@ export const authAlumno = async (mail, contrasenia) => {
   return response.json();
 };
 
-export const getInscripcionesAlumno = async (alumnoId) => {
+export const getInscripcionesAlumno = async (usuarioId) => {
   try {
-    const response = await fetch(`${API_URL}/${alumnoId}/inscripciones`);
+    const response = await fetch(`${API_URL}/${usuarioId}/inscripciones`);
     if (!response.ok) {
       throw new Error('No se pudieron obtener las inscripciones');
     }
@@ -67,3 +67,11 @@ export const getInscripcionesAlumno = async (alumnoId) => {
     throw new Error('Error al obtener inscripciones del alumno');
   }
 };
+
+export const getCursosProfesor = async (id) => {
+    const response = await fetch(`${API_URL}/${id}/cursos`); 
+    if (!response.ok) {
+      throw new Error('Error al obtener los cursos del profesor');
+    }
+    return response.json();
+  };

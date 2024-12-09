@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router-dom';
 
 export const MisCursos = () => {
 
-  const navigate= useNavigate
+  const navigate= useNavigate();
   const { usuario } = useUser();
   const [cursos, setCursos] = useState([]);
   const [mensajeExito, setMensajeExito] = useState('');
@@ -30,11 +30,9 @@ export const MisCursos = () => {
     const fetchCursos = async () => {
       try {
         if (usuario && usuario.mail.includes('@educatech')) {
-          // Si el usuario es profesor, obtenemos los cursos que enseña
           const cursosData = await getCursosProfesor(usuario.id);
           setCursos(cursosData);
         } else if (usuario && usuario.id) {
-          // Si el usuario es alumno, obtenemos sus inscripciones
           const inscripcionesData = await getInscripcionesAlumno(usuario.id);
           if (Array.isArray(inscripcionesData)) {
             const cursosData = await Promise.all(
@@ -68,8 +66,6 @@ export const MisCursos = () => {
         await deleteInscripcion(inscripcionId);
         setMensajeExito('Inscripción borrada correctamente.');
         setTimeout(() => setMensajeExito(''), 5000);
-
-        // Eliminar el curso de la lista en lugar de hacer una nueva solicitud
         setCursos((prevCursos) => prevCursos.filter(curso => curso.inscripcionId !== inscripcionId));
       } catch (error) {
         console.error('Error al eliminar la inscripción:', error);
@@ -85,17 +81,15 @@ export const MisCursos = () => {
     const confirmation = window.confirm('¿Estás seguro de que quieres modificar la fecha de inscripción? Esta acción cambiará la fecha a la fecha actual.');
     if (confirmation) {
       try {
-        const today = new Date().toISOString().split('T')[0]; // Obtener la fecha actual en formato YYYY-MM-DD
+        const today = new Date().toISOString().split('T')[0];
         await updateInscripcion(inscripcionId, { fechaInscripcion: today });
         
         setMensajeExito('Fecha de inscripción actualizada correctamente.');
         setTimeout(() => setMensajeExito(''), 5000);
-
-        // Actualizar solo la inscripción modificada en la lista
         setCursos((prevCursos) =>
           prevCursos.map(curso =>
             curso.inscripcionId === inscripcionId
-              ? { ...curso, fechaInscripcion: today } // Actualizar la fecha de inscripción del curso
+              ? { ...curso, fechaInscripcion: today } 
               : curso
           )
         );

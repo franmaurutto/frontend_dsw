@@ -12,7 +12,7 @@ export const Parcial = () => {
   const id = state?.id; 
   const [parcial, setParcial] = useState(null);
   const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(true); // Nuevo estado de carga
+  const [loading, setLoading] = useState(true); 
   const [consigna, setConsigna] = useState('');
   const [fecha, setFecha] = useState('');
   const [horaComienzo, setHoraComienzo] = useState('');
@@ -23,6 +23,8 @@ export const Parcial = () => {
     { label: 'Mi cuenta', path: '/mi-cuenta' },
     { label: 'Mis Cursos', path: '/nav-prof' },
     { label: 'Crear Curso', path: '/crear-curso' },
+    { label: 'Crear Material', path: '/crear-material' },
+    { label: 'Materiales', path: '/materiales' },
   ];
 
   useEffect(() => {
@@ -33,9 +35,7 @@ export const Parcial = () => {
           const response = await getParcial(id || state?.id);
           console.log('Parcial recibido:', response.data);
           setParcial(response.data);
-        } else {
-          setError('ID de parcial inválido');
-        }
+        } 
       } catch (err) {
         setError('Parcial no cargado');
       } finally {
@@ -90,7 +90,7 @@ export const Parcial = () => {
         horaComienzo,
         horaFin,
         cursoId: curso?.id,
-        habilitado: !parcial.habilitado, // Cambiar el estado de habilitación
+        habilitado: !parcial.habilitado, 
       };
 
       try {

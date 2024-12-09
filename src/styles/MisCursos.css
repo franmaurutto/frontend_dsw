@@ -1,148 +1,37 @@
-@media(max-width:767px){
-  .mis-cursos {
-      max-width: 1500px;
-      font-family: Arial, sans-serif;
-      background-color: #f8e3e9;
-      color: #333;
-      padding: 0px 20px;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-    }
-  
-    .lista-mis-cursos {
-      padding-top: 30px;
-      margin-top: 10px;
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
-  
-    .list-cursos {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 16px;
-      list-style-type: none;
-      padding: 0;
-      justify-content: center;
-    }
-  
-    .list-cursos li {
-      background-color: #f9f9f9;
-      border: 1px solid #ddd;
-      border-radius: 8px;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-      padding: 16px;
-      width: 200px;
-      height: auto;
-      text-align: center;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: space-between;
-      min-height: 300px;
-    }
-  
-    .list-cursos li:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
-    }
-  
-    .list-cursos h3 {
-      font-size: 18px;
-      margin: 8px 0;
-    }
-  
-    .list-cursos p {
-      font-size: 16px;
-      color: #555;
-      margin-top: 0;
-      padding: 20px 8px;
-    }
-  
-    .lista-mis-cursos h1 {
-      color: #c23864;
-      text-align: center;
-    }
-  
-    .inscribirse p {
-      color: #c23864;
-      font-size: 28px;
-      text-align: center;
-    }
-  
-    .inscribirse button {
-      background-color: #f8bbd0;
-      border: 1px solid #f06292;
-      color: #f06292;
-      border-radius: 5px;
-      cursor: pointer;
-      padding: 10px 10px;
-      width: 200px;
-      height: 50px;
-      margin: 0 auto;
-    }
-  
-    .inscribirse button:hover {
-      background-color: #f06292;
-      color: white;
-    }
-  
-    .inscribirse {
-      background-color: #f5f5f5;
-      padding: 30px 40px;
-      border-radius: 5px;
-      height: 250px;
-      display: flex;
-      justify-content: center;
-      flex-direction: column;
-      align-items: center;
-    }
-  
-    .boton-cursos {
-      background-color: #f8bbd0;
-      border: 1px solid #f06292;
-      color: #f06292;
-      padding: 10px 20px;
-      border-radius: 5px;
-      font-size: 16px;
-      cursor: pointer;
-      width: 100%;
-      max-width: 180px;
-      align-self: center;
-      margin-top: auto;
-    }
-  
-    .boton-cursos:hover {
-      background-color: #f06292;
-      color: white;
-    }
-}
-
-@media (min-width: 1024px) {
-.list-cursos {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 16px;
-  list-style-type: none;
-  padding: 0;
-}
 
 .mis-cursos {
   max-width: 1500px;
   font-family: Arial, sans-serif;
-  background-color: #f8e3e9;
+  background-color: #f8e3e9; 
   color: #333;
   padding: 0px 20px;
   min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  margin-top: 0; 
+  position: relative; 
+  z-index: 1;
 }
 
-.lista-mis-cursos {
-  padding-top: 30px;
-  margin-top: 10px;
+.lista-mis-cursos h1 {
+  color: #c23864;
+  text-align: left;
+  margin-top: 0; 
+  font-size: 36px;
+  width: 100%;
+  display: block;
+  z-index: 2;
+}
+
+.list-cursos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  list-style-type: none;
+  padding: 0;
+  justify-content: flex-start;
 }
 
 .list-cursos li {
@@ -151,83 +40,125 @@
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   padding: 16px;
-  width: 200px;
-  height: auto; 
+  width: 230px;
+  height: 350px; 
   text-align: center;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: space-between;
-  min-height: 300px;
 }
 
-.list-cursos li:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+.list-cursos li h3 {
+  font-size: 22px; 
+  margin: 10px 0;
 }
 
-.list-cursos h3 {
-  font-size: 18px;
-  margin: 8px 0;
-}
-
-.list-cursos p {
+.list-cursos li p {
   font-size: 16px;
-  color: #555;
-  margin-top: 0;
-  padding: 20px 8px;
+  margin-bottom: 10px;
 }
 
-.lista-mis-cursos h1 {
-  color: #c23864;
-}
-
-.inscribirse p{
-  color: #c23864;
-  font-size: 28px;
-}
-
-.inscribirse button {
+.inscribirse button, .boton-cursos {
   background-color: #f8bbd0;
   border: 1px solid #f06292;
   color: #f06292;
   border-radius: 5px;
   cursor: pointer;
-  padding: 10px 10px;
-  width: 200px;
-  height: 50px;
-  margin: 0 auto;
-}
-
-.inscribirse button:hover {
-  background-color: #f06292;
-  color: white
-}
-
-.inscribirse{
-  background-color: #f5f5f5;
-  padding: 30px 40px;
-  border-radius: 5px;
-  height: 250px
-}
-
-.boton-cursos {
-  background-color: #f8bbd0;
-  border: 1px solid #f06292;
-  color: #f06292;
-  padding: 10px 20px;
-  border-radius: 5px;
-  font-size: 16px;
-  cursor: pointer;
+  padding: 10px;
   width: 100%;
-  max-width: 180px;
-  align-self: center;
-  margin-top: auto;
+  height: 45px;
 }
 
-.boton-cursos:hover {
+.inscribirse button:hover, .boton-cursos:hover {
   background-color: #f06292;
   color: white;
 }
+
+
+@media(max-width: 767px) {
+  .mis-cursos {
+    margin-top: 0px; 
+    padding-top: 80px; 
+  }
+
+  .lista-mis-cursos h1 {
+    font-size: 24px;
+    margin-top: 0;
+    width: 100%;
+    z-index: 2; 
+  }
+
+  .list-cursos {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    justify-content: flex-start;
+    align-items: flex-start;
+  }
+
+  .list-cursos li {
+    width: 100%;
+    min-height: 250px;
+    margin-bottom: 10px;
+  }
+
+  .inscribirse button, .boton-cursos {
+    width: 100%;
+    margin: 10px 0;
+  }
+}
+
+@media(min-width: 768px) and (max-width: 1023px) {
+  .mis-cursos {
+    margin-top: 0px;
+    padding-top: 60px;
+  }
+
+  .lista-mis-cursos h1 {
+    font-size: 30px;
+    margin-top: 0;
+    width: 100%;
+  }
+
+  .list-cursos {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: flex-start;
+  }
+
+  .list-cursos li {
+    width: 45%;
+    height: 400px; 
+  }
+
+  .inscribirse button, .boton-cursos {
+    width: 80%;
+  }
+}
+
+@media(min-width: 1024px) {
+  .mis-cursos {
+    margin-top: 0px; 
+    padding-top: 60px; 
+  }
+
+  .lista-mis-cursos h1 {
+    font-size: 36px;
+    width: 100%;
+  }
+
+  .list-cursos {
+    justify-content: flex-start;
+    gap: 20px;
+  }
+
+  .list-cursos li {
+    width: 230px;
+  }
+
+  .inscribirse button, .boton-cursos {
+    width: 80%;
+  }
 }

@@ -1,0 +1,70 @@
+.contacto {
+    background-color: #f8e3e9;
+    color: #333;
+    font-family: 'Arial', sans-serif;
+    padding: 30px;
+    margin: 0 auto;
+    width: 100%;
+    min-height: 100vh;
+    max-width: 100%;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+  
+  .contacto h2 {
+    font-size: 2.5rem;
+    color: #c23864;
+    margin-bottom: 20px;
+  }
+  
+  .contacto p {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin-bottom: 15px;
+    color: #555;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .contacto .contact-info {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    max-width: 700px;
+    width: 100%;
+    margin-top: 30px;
+  }
+  
+  .contacto h3 {
+    font-size: 1.8rem;
+    color: #c23864;
+    margin-bottom: 15px;
+  }
+  
+  .contacto ul {
+    list-style-type: none;
+    padding-left: 0;
+  }
+  
+  .contacto li {
+    font-size: 1.1rem;
+    color: #555;
+    margin-bottom: 10px;
+  }
+  
+  .contacto .email {
+    color: #c23864;
+    text-decoration: underline;
+  }
+  
+  .contacto p:last-child {
+    margin-bottom: 0;
+  }
+  

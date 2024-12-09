@@ -80,7 +80,7 @@
   }
 }
 
-@media (min-width: 768px) and (max-width: 1024px) {
+@media (min-width: 768px) and (max-width: 1023px) {
   .form-curso {
     font-family: Arial, sans-serif;
     background-color: #f8e3e9;

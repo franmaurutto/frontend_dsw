@@ -1,9 +1,7 @@
-@media (min-width: 768px) and (max-width: 1024px) {
-
+@media (min-width: 768px) and (max-width: 1023px) {
 
   .home-page {
     max-width: 100%;
-    width:100%;
     padding: 20px;
     display: flex;
     flex-direction: column;
@@ -13,14 +11,11 @@
     font-family: 'Arial', sans-serif;
     color: #333;
     min-height: 100vh;
-    overflow-x: hidden;
-    box-sizing: border-box;
   }
-
 
   .home-content {
     width: 100%;
-    max-width: 100%;
+    max-width: 700px;
     margin: 0 auto;
     padding: 20px;
     text-align: center;
@@ -31,8 +26,6 @@
     background-color: rgba(255, 255, 255, 0.9);
     border-radius: 15px;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-    overflow-x: hidden;
-    box-sizing: border-box;
   }
 
   h2 {
@@ -51,7 +44,6 @@
     margin-bottom: 20px;
   }
 
-
   .home-image {
     width: 80%;
     max-width: 600px;
@@ -59,9 +51,10 @@
     margin: 20px 0;
     border-radius: 10px;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: none; 
+    border: none;
   }
 
- 
   .form_inicio {
     display: flex;
     flex-direction: column;
@@ -448,7 +441,7 @@
   }
 
   .error-box::before {
-    content: "⚠️ ";
+    content: "⚠ ";
     margin-right: 10px;
   }
 }
@@ -462,35 +455,27 @@
 
   .home-content {
     max-width: 90%;
-    /* Se ajusta mejor al espacio */
     transform: translateX(0);
-    /* Elimina el desplazamiento en tabletas */
   }
 
   h2 {
     font-size: 32px;
-    /* Ajusta el tamaño del texto */
   }
 
   .form_inicio {
     width: 80%;
-    /* Mayor ancho en tabletas */
     max-width: 500px;
-    /* Se adapta al tamaño de pantalla */
   }
 
   .home-image {
     width: 250px;
-    /* Ajusta el tamaño de la imagen */
     height: 250px;
     margin-top: 50px;
     float: none;
-    /* Centra la imagen */
     margin-bottom: 20px;
   }
 
   .btn_is {
     width: 80%;
-    /* Ajusta el tamaño del botón */
   }
 }

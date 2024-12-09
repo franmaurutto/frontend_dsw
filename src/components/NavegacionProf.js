@@ -20,8 +20,8 @@ export const NavegacionProf = () => {
     if (usuario && usuario.id) { 
       const fetchCursos = async () => {
         try {
-          const data = await getCursosProfesor(usuario.id); // Usamos el id del usuario
-          setCursos(data.data); // Guardamos los cursos en el estado
+          const data = await getCursosProfesor(usuario.id); 
+          setCursos(data.data); 
         } catch (error) {
           console.error('Error al obtener los cursos:', error);
         }

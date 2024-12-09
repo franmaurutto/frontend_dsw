@@ -1,4 +1,4 @@
-@media(min-width: 768px) and (max-width: 1024px) {
+@media(min-width: 768px) and (max-width: 1023px) {
   .navbar {
     display: flex;
     align-items: center;
@@ -7,7 +7,6 @@
     padding: 0 15px;
     background-color: #dd84a0;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    max-width: 100%;
     width: 100%;
     position: fixed;
     top: 0;
@@ -198,7 +197,6 @@
     background: #e9abbf;
   }
 
-
   .nav-links.active {
     display: flex;
   }
@@ -229,8 +227,6 @@
     left: 0;
     z-index: 1000;
   }
-
-
 
   .nav-links {
     display: flex;
@@ -282,10 +278,6 @@
     background: linear-gradient(0deg, #f4d3dd 0%, #e9abbf 100%);
     border: none;
   }
-
-
-
-
 
   .btn:before {
     height: 0%;

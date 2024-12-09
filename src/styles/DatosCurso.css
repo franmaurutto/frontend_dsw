@@ -121,7 +121,7 @@
   padding: 60px 20px;
   min-height: 100vh;
   text-align: center;
-  position: relative; /* Necesario para la posición absoluta del botón de eliminar material */
+  position: relative; 
 }
 
 .mod-curso h1 {
@@ -198,7 +198,7 @@
   justify-content: space-between;
   width: 70%;
   margin: 20px auto;
-  gap: 20px; /* Espacio entre los botones */
+  gap: 20px;
 }
 
 .btns-curso button {
@@ -208,7 +208,7 @@
   border-radius: 5px;
   cursor: pointer;
   padding: 10px;
-  width: 30%; /* Los tres botones ocupan el 30% */
+  width: 30%;
   height: 50px;
   box-sizing: border-box;
 }
@@ -218,11 +218,10 @@
   color: white;
 }
 
-/* Alineación del botón de "Eliminar Material" fuera del contenedor principal */
 .eliminar-material {
   position: right;
-  right: 20px; /* Coloca el botón en la esquina derecha */
-  bottom: 20px; /* Ajusta la distancia desde la parte inferior */
+  right: 20px; 
+  bottom: 20px; 
   background-color: #f06292;
   border: 1px solid #f06292;
   color: white;
@@ -289,7 +288,7 @@
   }
 
   .btns-curso button {
-    width: 80%; /* Los botones ocupan el 80% del ancho en pantallas pequeñas */
+    width: 80%; 
     margin-bottom: 10px;
   }
 
@@ -299,3 +298,180 @@
 }
 
 }
+@media (min-width: 768px) and (max-width: 1023px) {
+  .mod-curso {
+    font-family: Arial, sans-serif;
+    background-color: #f8e3e9;
+    color: #333;
+    padding: 20px 15px; 
+    min-height: 100vh;
+    text-align: center;
+    margin-top: 60px; 
+  }
+
+  .mod-curso h1 {
+    margin-bottom: 20px;
+    color: #c23864;
+    font-size: 2em;
+    width: 100%;
+    margin-top: 15px;
+  }
+
+  .mod-curso form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #f9e8ef;
+    padding: 30px 20px;
+    border-radius: 10px;
+    width: 80%;
+    max-width: 800px;
+    margin: 0 auto;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    gap: 20px; 
+  }
+
+  .mod-curso input {
+    font-size: 1rem;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 100%;
+    box-sizing: border-box;
+    margin-bottom: 15px; 
+  }
+
+  .mod-curso button {
+    background-color: #f06292;
+    color: white;
+    border: none;
+    padding: 12px;
+    font-size: 1.1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    transition: background-color 0.3s ease;
+  }
+
+  .mod-curso button:hover {
+    background-color: #c23864;
+  }
+
+  .mod-curso label {
+    font-size: 1rem;
+    color: #c23864;
+    margin-bottom: 5px;
+    text-align: left;
+    width: 100%;
+  }
+
+  .mensaje-exito {
+    font-size: 1rem;
+    color: green;
+    font-weight: bold;
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #d4edda;
+    border: 1px solid #c3e6cb;
+    border-radius: 5px;
+    text-align: center;
+  }
+
+  .btns-curso {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    width: 100%;
+    margin: 30px auto;
+  }
+
+  .btns-curso button {
+    background-color: #f06292;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 15px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    width: 45%; 
+    height: auto;
+    transition: background-color 0.3s ease;
+  }
+
+  .btns-curso button:hover {
+    background-color: #c23864;
+  }
+
+  .eliminar-material {
+    position: absolute;
+    right: 20px;
+    bottom: 20px;
+    background-color: #f06292;
+    border: 1px solid #f06292;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    padding: 12px 20px;
+    width: auto;
+    height: 50px;
+  }
+
+  .eliminar-material:hover {
+    background-color: #c23864;
+  }
+
+  .materiales-curso {
+    margin-top: 40px;
+    padding: 20px;
+    background-color: #f9e8ef;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+
+  .materiales-curso ul {
+    list-style-type: none;
+    padding-left: 0;
+    width: 100%;
+  }
+
+  .materiales-curso li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #fff;
+    padding: 12px;
+    margin-bottom: 12px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+
+  .materiales-curso li button {
+    background-color: #f06292;
+    border: 1px solid #f06292;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    padding: 6px 12px;
+    width: 120px;
+    box-sizing: border-box;
+  }
+
+  .materiales-curso li button:hover {
+    background-color: #c23864;
+  }
+
+  .materiales-curso {
+    padding: 15px;
+  }
+
+  .btns-curso button {
+    width: 48%;
+  }
+}
+
+

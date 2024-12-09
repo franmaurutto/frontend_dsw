@@ -121,12 +121,12 @@
   }
 
   .formAlu .error-box::before {
-    content: "⚠️ ";
+    content: "⚠ ";
     margin-right: 10px;
   }
 }
 
-@media (min-width: 768px) and (max-width: 1024px) {
+@media (min-width: 768px) and (max-width: 1023px) {
 
   .form-parcial {
     margin-top: 20px;
@@ -247,7 +247,7 @@
   }
 
   .formAlu .error-box::before {
-    content: "⚠️ ";
+    content: "⚠ ";
     margin-right: 10px;
   }
 }
@@ -372,7 +372,7 @@
   }
 
   .formAlu .error-box::before {
-    content: "⚠️ ";
+    content: "⚠ ";
     margin-right: 10px;
   }
 }

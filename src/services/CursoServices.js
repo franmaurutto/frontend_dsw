@@ -1,6 +1,5 @@
 const API_URL = 'http://localhost:3000/api/cursos';
 
-// Obtener todos los cursos
 export const getCursos = async () => {
   const response = await fetch(API_URL);
   if (!response.ok) {
@@ -10,7 +9,6 @@ export const getCursos = async () => {
   return data;
 };
 
-// Crear un nuevo curso
 export const createCurso = async (curso) => {
   const response = await fetch(API_URL, {
     method: 'POST',
@@ -25,7 +23,6 @@ export const createCurso = async (curso) => {
   return response.json();
 };
 
-// Actualizar un curso
 export const updateCurso = async (cursoId, curso) => {
   const response = await fetch(`${API_URL}/${cursoId}`, {
     method: 'PUT',
@@ -40,7 +37,6 @@ export const updateCurso = async (cursoId, curso) => {
   return response.json();
 };
 
-// Eliminar un curso
 export const deleteCurso = async (cursoId) => {
   const response = await fetch(`${API_URL}/${cursoId}`, {
     method: 'DELETE',
@@ -51,19 +47,17 @@ export const deleteCurso = async (cursoId) => {
   return response.json();
 };
 
-// CursoServices.js
 export const getCursoDetalle = async (cursoId) => {
   try {
-    const response = await fetch(`/api/cursos/${cursoId}`);  // Verifica la URL de la API
+    const response = await fetch(`/api/cursos/${cursoId}`); 
     if (!response.ok) {
       throw new Error('No se pudo obtener los detalles del curso');
     }
     const data = await response.json();
-    console.log(data);  // Agrega esto para ver la respuesta del servidor
-    return data;  // Asegúrate de que la estructura de datos sea la correcta
+    return data;  
   } catch (error) {
     console.error('Error al obtener el detalle del curso:', error);
-    throw error;  // Lanza el error para que lo maneje el componente
+    throw error;
   }
 };
 
