@@ -3,9 +3,7 @@ import NavBar from './NavBar';
 import { Link, useNavigate } from 'react-router-dom';
 import '../styles/HomePage.css';
 import { useState } from 'react';
-import { authAlumno } from '../services/AlumnoServices.js';
-import { useUser } from './UsuarioContext.js';
-import { authProfesor } from '../services/ProfesorServices.js';
+import { authUsuario } from '../services/UsuarioServices.js';
 
 const HomePage = () => {
 
@@ -17,29 +15,23 @@ const HomePage = () => {
   { label: 'Sobre Nosotros', path: '/sobre-nosotros' },
   { label: 'Contacto', path: '/contacto' },
   ];
-  const { setUsuario } = useUser(); 
+ 
   const navigate = useNavigate();
   const handleMailChange = (e) => setMail(e.target.value);
   const handleContraseniaChange = (e) => setContrasenia(e.target.value);
 
-  const handleSubmit = async (e) => {
+const handleSubmit = async (e) => {
     e.preventDefault();
     setError(null);
   
     try {
-      let response;
-      if (mail.includes('@educatech')) {
-        response = await authProfesor(mail, contrasenia);
-      } else {
-        response = await authAlumno(mail, contrasenia);
-      }
-  
+      const response = await authUsuario(mail, contrasenia);
       const { token, usuario } = response;
-      if (!token) throw new Error('No se recibió token de autenticación.');
 
+      if (!token) throw new Error('No se recibió token de autenticación.');
+      
       localStorage.setItem('authToken', token);
 
-      setUsuario(usuario);
 
       if (usuario.rol === 'profesor') {
         navigate('/nav-prof');

@@ -1,43 +1,5 @@
-const API_URL = 'http://localhost:3000/api/alumnos';
+const API_URL = 'http://localhost:3000/api/usuarios';
 
-export const getAlumnos = async () => {
-  const response = await fetch(API_URL);
-  return response.json();
-};
-
-export const createAlumno = async (alumno) => {
-  const response = await fetch(API_URL, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(alumno),
-  });
-
-  if (!response.ok) {
-    throw new Error('Error al registrar usuario');
-  }
-
-  return response.json();
-};
-
-export const updateUsuario = async (usuarioId, usuario) => {
-  const response = await fetch(`${API_URL}/${usuarioId}`, {
-    method: 'PUT',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(usuario),
-  });
-  return response.json();
-};
-
-export const deleteUsuario = async (usuarioId) => {
-  const response = await fetch(`${API_URL}/${usuarioId}`, {
-    method: 'DELETE',
-  });
-  return response.json();
-};
 
 export const authUsuario = async (mail, contrasenia) => {
   const response = await fetch(`${API_URL}/login`, {
@@ -51,12 +13,68 @@ export const authUsuario = async (mail, contrasenia) => {
   if (!response.ok) {
     throw new Error('Correo o contraseña incorrecta');
   }
+  const data = await response.json();
+  localStorage.setItem('token', data.token);
+  return data;
+};
+
+const getToken = () => localStorage.getItem('token');
+
+const getHeaders = () => {
+  const token = getToken();
+  return {
+    'Content-Type': 'application/json',
+    ...(token && { Authorization: `Bearer ${token}` }), 
+  };
+};
+
+export const getAlumnos = async () => {
+  const response = await fetch(API_URL);
   return response.json();
 };
 
+export const addUsuario = async (usuario) => {
+  const response = await fetch(`${API_URL}`, { 
+    method: 'POST',
+    headers: getHeaders(), 
+    body: JSON.stringify(usuario), 
+  });
+
+  if (!response.ok) {
+    throw new Error('Error al agregar el usuario');
+  }
+
+  return response.json();}
+
+
+
+
+
+export const updateUsuario = async (usuarioId, usuario) => {
+  const response = await fetch(`${API_URL}/${usuarioId}`, {
+    method: 'PUT',
+    headers:getHeaders(),
+    body: JSON.stringify(usuario),
+  });
+  return response.json();
+};
+
+export const deleteUsuario = async (usuarioId) => {
+  const response = await fetch(`${API_URL}/${usuarioId}`, {
+    method: 'DELETE',
+    headers:getHeaders()
+  });
+  return response.json();
+};
+
+
+
 export const getInscripcionesAlumno = async (usuarioId) => {
   try {
-    const response = await fetch(`${API_URL}/${usuarioId}/inscripciones`);
+      const response = await fetch(`${API_URL}/${usuarioId}/inscripciones`, {
+      method: 'GET',
+      headers: getHeaders(),
+    });
     if (!response.ok) {
       throw new Error('No se pudieron obtener las inscripciones');
     }
@@ -69,7 +87,10 @@ export const getInscripcionesAlumno = async (usuarioId) => {
 };
 
 export const getCursosProfesor = async (id) => {
-    const response = await fetch(`${API_URL}/${id}/cursos`); 
+    const response = await fetch(`${API_URL}/${id}/cursos`, {
+    method: 'GET',
+    headers: getHeaders(),
+    });
     if (!response.ok) {
       throw new Error('Error al obtener los cursos del profesor');
     }

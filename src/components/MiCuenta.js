@@ -3,6 +3,7 @@ import { useUser } from './UsuarioContext.js';
 import { useState, useEffect } from 'react';
 import '../styles/MiCuenta.css'
 import NavBar from './NavBar.js';
+import { updateUsuario } from './UsuarioService'; 
 import { updateAlumno } from '../services/AlumnoServices.js';
 import { updateProfesor } from '../services/ProfesorServices.js';
 
@@ -16,7 +17,7 @@ export const MiCuenta = () => {
   const [contrasenia, setContrasenia] = useState(usuario ? usuario.contrasenia : '');
   const [mensajeExito, setMensajeExito] = useState('');
 
-  const links = usuario && mail.includes('@educatech')
+  const links = usuario && usuario.rol==='profesor'
     ? [
       { label: 'Mi cuenta', path: '/mi-cuenta' },
       { label: 'Mis Cursos', path: '/nav-prof' },
