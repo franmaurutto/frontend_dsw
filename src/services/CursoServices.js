@@ -9,6 +9,35 @@ export const getCursos = async () => {
   return data;
 };
 
+const getToken = () => localStorage.getItem('cursoToken')
+
+const getHeaders = () => {
+  const token = getToken();
+  return {
+    'Content-Type': 'application/json',
+    ...(token && { Authorization: `Bearer ${token}` }), 
+  };
+};
+
+export const getCurso = async (cursoId) => {
+  try {
+    const response = await fetch(`${API_URL}/${cursoId}`, {
+      method: 'GET',
+      headers: getHeaders(), 
+    }); 
+    if (!response.ok) {
+      throw new Error('No se pudo obtener el curso');
+    }
+    const data = await response.json();
+    return data;  
+  } catch (error) {
+    console.error('Error al obtener el detalle del curso:', error);
+    throw error;
+  }
+};
+
+
+
 export const createCurso = async (curso) => {
   const response = await fetch(API_URL, {
     method: 'POST',
