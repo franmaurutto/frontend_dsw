@@ -5,6 +5,7 @@ import { deleteCurso, updateCurso, getMaterialesCurso } from '../services/CursoS
 import { updateMaterial } from '../services/MaterialService.js'; 
 import NavBar from './NavBar.js';
 import '../styles/DatosCurso.css';
+import  {jwtDecode} from 'jwt-decode';
 
 export const DatosCurso = () => {
   const {curso, setCurso} = useCurso(null); // aca va usestate(null)?????
@@ -15,8 +16,10 @@ export const DatosCurso = () => {
   const [fechaFin, setFechaFin] = useState('');
   const [duracion, setDuracion] = useState('');
   const [horaInicio, setHoraInicio] = useState('');
-  const [horaFin, sethoraFin] = useState('');
+  const [horaFin, setHoraFin] = useState('');
   const [dias, setDias] = useState('');
+  const [cursoToken, setCursoToken] = useState('');
+  const [cursoId, setCursoId] = useState('');
   const [parcialId]=useState('')
   const [profesor] = useState(null);
   const [mensajeExito, setMensajeExito] = useState('');
@@ -36,10 +39,9 @@ export const DatosCurso = () => {
     const cursoToken = localStorage.getItem('cursoToken');
     if (cursoToken) {
       const curso = jwtDecode(cursoToken);
-      const cursoId = decodedToken.id;
+      const cursoId = curso.id;
       setCursoToken(cursoToken); 
       setCursoId(cursoId)
-
       setNombre(curso.nombre || '');
       setDescripcion(curso.descripcion || '');
       setCantCupos(curso.cantCupos);
@@ -61,7 +63,7 @@ export const DatosCurso = () => {
           console.error('Error al obtener materiales del curso:', error);
         });
     }
-  }, [cursoToken]);
+  }, [cursoToken, cursoId]);
 
 
   useEffect(() => {
@@ -176,7 +178,7 @@ export const DatosCurso = () => {
           <label>Hora de inicio:</label>
           <input type="text" value={horaInicio} onChange={(e) => setHoraInicio(e.target.value)} />
           <label>Hora de finalización:</label>
-          <input type="text" value={horaFin} onChange={(e) => sethoraFin(e.target.value)} />
+          <input type="text" value={horaFin} onChange={(e) => setHoraFin(e.target.value)} />
           <div className="btns-curso">
             <button type="submit">Modificar Datos</button>
             <button onClick={() => handleParcial(curso.parcialId)}>Parcial</button>

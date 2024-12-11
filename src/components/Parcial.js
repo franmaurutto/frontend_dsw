@@ -5,13 +5,13 @@ import { updateParcial, createParcial } from '../services/ParcialServices.js';
 import '../styles/Parcial.css';
 import { useCurso } from './CursoContext.js';
 import {useLocation, useNavigate } from 'react-router-dom';
+import  {jwtDecode} from 'jwt-decode';
 
-const getCursoToken = () => JSON.parse(localStorage.getItem('cursoToken'));
-
+const cursoToken = localStorage.getItem('cursoToken'); 
+const decodedCursoToken = cursoToken ? jwtDecode(cursoToken) : null;
+const parcialId = decodedCursoToken ? decodedCursoToken.parcialId : null;
 
 export const Parcial = () => {
-  const cursoToken = getCursoToken();
-  const id = cursoToken?.idParcial;
 
   const { state } = useLocation();
   const [parcial, setParcial] = useState(null);
@@ -37,8 +37,8 @@ export const Parcial = () => {
     const fetchParcial = async () => {
       setLoading(true);
       try {
-        if (id) {
-          const response = await getParcial(id); 
+        if (parcialId) {
+          const response = await getParcial(parcialId); 
           setParcial(response.data);
         } else {
           throw new Error('No se encontró un idParcial en el token.');
@@ -51,7 +51,7 @@ export const Parcial = () => {
       }
     };
     fetchParcial();
-  }, [id]);
+  }, [parcialId]);
 
   useEffect(() => {
     if (parcial) {
@@ -65,11 +65,11 @@ export const Parcial = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const parcialData = { consigna, fecha, horaComienzo, horaFin, cursoId: curso?.id };
+    const parcialData = { consigna, fecha, horaComienzo, horaFin, cursoId: decodedCursoToken?.id };
 
     try {
       if (parcial) {
-        await updateParcial(id, parcialData);
+        await updateParcial(parcialId, parcialData);
         setMensajeExito('Parcial actualizado');
         setError('');
       } else {
@@ -86,7 +86,7 @@ export const Parcial = () => {
 
   const handleEliminar = async () => {
     try {
-      await deleteParcial(id);
+      await deleteParcial(parcialId);
       setMensajeExito('Parcial eliminado.');
       setTimeout(() => {
         navigate('/nav-prof');
@@ -108,7 +108,7 @@ export const Parcial = () => {
       };
 
       try {
-        await updateParcial(id, parcialData);
+        await updateParcial(parcialId, parcialData);
         setMensajeExito(parcialData.habilitado ? 'Parcial habilitado.' : 'Parcial deshabilitado.');
         setError('');
       } catch (error) {

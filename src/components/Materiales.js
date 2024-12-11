@@ -4,7 +4,7 @@ import NavBar from './NavBar.js';
 import '../styles/Materiales.css';
 import { getMateriales, deleteMaterial } from '../services/MaterialService.js';
 import { useMaterial } from './MaterialContext.js';
-import jwtDecode from 'jwt-decode';
+import  {jwtDecode} from 'jwt-decode';
 
 
 

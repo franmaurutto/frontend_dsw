@@ -4,6 +4,7 @@ import NavBar from './NavBar.js';
 import '../styles/NavegacionAlu.css';
 import { getCursos } from '../services/CursoServices.js';
 import { getCurso } from '../services/CursoServices.js';
+import  {jwtDecode} from 'jwt-decode';
 
 export const NavegacionAlu = () => {
 

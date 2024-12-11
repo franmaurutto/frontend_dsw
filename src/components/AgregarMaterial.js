@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import NavBar from './NavBar.js';
 import '../styles/AgregarMaterial.css';
 import { findMatSinCurso, addMaterialToCurso } from '../services/MaterialService.js';
-import jwt_decode from 'jwt-decode';
+import  {jwtDecode} from 'jwt-decode';
 
 export const AgregarMaterial = () => {
   const [materiales, setMateriales] = useState([]);
@@ -12,7 +12,7 @@ export const AgregarMaterial = () => {
   const usuarioToken = localStorage.getItem('usuarioToken'); 
 
   // Decodificar el cursoToken para obtener los datos del curso
-  const decodedCursoToken = cursoToken ? jwt_decode(cursoToken) : null;
+  const decodedCursoToken = cursoToken ? jwtDecode(cursoToken) : null;
   const cursoId = decodedCursoToken ? decodedCursoToken.id : null;
   const profLinks = [
     { label: 'Mi cuenta', path: '/mi-cuenta' },

@@ -6,6 +6,8 @@ import { useState,useEffect } from 'react';
 import { getCursosProfesor } from '../services/ProfesorServices.js';
 import { useNavigate } from 'react-router-dom';
 import { useCurso } from './CursoContext.js';
+import  {jwtDecode} from 'jwt-decode'; 
+import { getCurso } from '../services/CursoServices.js';
 
 
 export const NavegacionProf = () => {

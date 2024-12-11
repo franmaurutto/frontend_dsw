@@ -4,7 +4,7 @@ import { updateMaterial } from '../services/MaterialService.js';
 import { useState, useEffect } from 'react';
 import NavBar from './NavBar.js';
 import '../styles/ModificarMaterial.css';
-import jwt from 'jsonwebtoken';
+import  {jwtDecode} from 'jwt-decode';
 
 export const ModificarMaterial = () => {
   const [titulo, setTitulo] =useState( '');
@@ -24,7 +24,7 @@ export const ModificarMaterial = () => {
     const token = localStorage.getItem('materialToken');
     if (token) {
       try {
-        const decodedMaterial = jwt.decode(token);
+        const decodedMaterial = jwtDecode(token);
         if (decodedMaterial) {
           setTitulo(decodedMaterial.titulo || '');
           setDescripcion(decodedMaterial.descripcion || '');
