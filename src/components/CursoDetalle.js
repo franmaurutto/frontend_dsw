@@ -7,23 +7,22 @@ import { useParams } from 'react-router-dom';
 import { createInscripcion } from '../services/InscripcionServices.js';
 
 export const CursoDetalle = () => {
-  const { usuario } = useUser();
+  //const { usuario } = useUser();
   const { cursoId } = useParams();  
   const [curso, setCurso] = useState(null);
   const [mensajeExito, setMensajeExito] = useState('');
   const [mensajeError, setMensajeError] = useState('');
   useEffect(() => {
-    const fetchCurso = async () => {
-      try {
-        const data = await getCursoDetalle(cursoId);
-        setCurso(data.data);
-      } catch (error) {
-        console.error('Error al obtener los detalles del curso:', error);
-      }
-    };
+    const cursoToken = localStorage.getItem('cursoToken');
 
-    fetchCurso();
-  }, [cursoId]);  
+    if (cursoToken) {
+      
+      setCurso(JSON.parse(cursoToken)); 
+    } else {
+
+      setMensajeError('No se encontró información del curso.');
+    }
+  }, []);
 
   const separarNombreApellido = (nombre_y_apellido) => {
     const [nombre, apellido] = nombre_y_apellido.split(' ');
@@ -31,19 +30,21 @@ export const CursoDetalle = () => {
   };
 
   const handleInscripcion = async () => {
-    if (!usuario || !usuario.id) {
-      alert('No se ha encontrado un usuario válido');
-      return;
-    }
-  
-    const confirmation = window.confirm('¿Estás seguro de que quieres inscribirte a este curso?');
-    if (confirmation) {
-      const fechaInscripcion = new Date().toISOString().split('T')[0];
-      const inscripcionData = {
-        fechaInscripcion: fechaInscripcion, 
-        alumnoId: usuario.id, 
-        cursoId: curso.id, 
-      };
+    const usuarioToken = JSON.parse(localStorage.getItem('usuarioToken')); // Recuperar el token del usuario desde localStorage
+
+      if (!usuarioToken || !usuarioToken.id) {
+        alert('No se ha encontrado un usuario válido');
+        return;
+      }
+
+      const confirmation = window.confirm('¿Estás seguro de que quieres inscribirte a este curso?');
+      if (confirmation) {
+        const fechaInscripcion = new Date().toISOString().split('T')[0];
+        const inscripcionData = {
+          fechaInscripcion: fechaInscripcion, 
+          alumnoId: usuarioToken.id, 
+          cursoId: curso.id,  
+        };
   
       try {
         await createInscripcion(inscripcionData);
