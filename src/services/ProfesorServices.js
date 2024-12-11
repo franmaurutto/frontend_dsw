@@ -52,11 +52,3 @@ export const authProfesor = async (mail, contrasenia) => {
   }
   return response.json();
 };
-
-export const getCursosProfesor = async (id) => {
-  const response = await fetch(`${API_URL}/${id}/cursos`); 
-  if (!response.ok) {
-    throw new Error('Error al obtener los cursos del alumno');
-  }
-  return response.json();
-};

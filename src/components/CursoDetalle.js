@@ -5,6 +5,14 @@ import NavBar from './NavBar';
 import '../styles/CursoDetalle.css';
 import { useParams } from 'react-router-dom';
 import { createInscripcion } from '../services/InscripcionServices.js';
+import  {jwtDecode} from 'jwt-decode';
+
+const usuarioToken = localStorage.getItem('authToken');
+const decodedUsuarioToken = usuarioToken ? jwtDecode(usuarioToken) : null;
+const usuarioId = decodedUsuarioToken ? decodedUsuarioToken.id : null;
+const cursoToken = localStorage.getItem('cursoToken');
+const decodedCursoToken = cursoToken ? jwtDecode(cursoToken) : null;
+const cursoId = decodedCursoToken ? decodedCursoToken.id : null;
 
 export const CursoDetalle = () => {
   //const { usuario } = useUser();
@@ -13,37 +21,30 @@ export const CursoDetalle = () => {
   const [mensajeExito, setMensajeExito] = useState('');
   const [mensajeError, setMensajeError] = useState('');
   useEffect(() => {
-    const cursoToken = localStorage.getItem('cursoToken');
-
-    if (cursoToken) {
-      
-      setCurso(JSON.parse(cursoToken)); 
+    if (decodedCursoToken) {
+      setCurso(decodedCursoToken); 
     } else {
-
       setMensajeError('No se encontró información del curso.');
     }
   }, []);
 
-  const separarNombreApellido = (nombre_y_apellido) => {
-    const [nombre, apellido] = nombre_y_apellido.split(' ');
+  const separarNombreApellido = (nombreCompleto) => {
+    const [nombre, apellido] = nombreCompleto.split(' ');
     return { nombre, apellido };
   };
 
   const handleInscripcion = async () => {
-    const usuarioToken = JSON.parse(localStorage.getItem('usuarioToken')); // Recuperar el token del usuario desde localStorage
-
-      if (!usuarioToken || !usuarioToken.id) {
-        alert('No se ha encontrado un usuario válido');
+      if (!decodedUsuarioToken || !usuarioId) {
+        setMensajeError('No se encontró un usuario válido');
         return;
       }
-
       const confirmation = window.confirm('¿Estás seguro de que quieres inscribirte a este curso?');
       if (confirmation) {
         const fechaInscripcion = new Date().toISOString().split('T')[0];
         const inscripcionData = {
           fechaInscripcion: fechaInscripcion, 
-          alumnoId: usuarioToken.id, 
-          cursoId: curso.id,  
+          usuarioId: usuarioId, 
+          cursoId: cursoId,  
         };
   
       try {
@@ -84,9 +85,9 @@ export const CursoDetalle = () => {
             {mensajeError && <p className="mensaje-error">{mensajeError}</p>}
             <h1>{curso.nombre}</h1>
             <p><strong>Descripción:</strong> {curso.descripcion}</p>
-            {curso.profesor.nombre_y_apellido && (
+            {curso.profesor.nombreCompleto && (
               <>
-                <p><strong>Profesor:</strong> {separarNombreApellido(curso.profesor.nombre_y_apellido).nombre} {separarNombreApellido(curso.profesor.nombre_y_apellido).apellido}</p>
+                <p><strong>Profesor:</strong> {separarNombreApellido(curso.profesor.nombreCompleto).nombre} {separarNombreApellido(curso.profesor.nombreCompleto).apellido}</p>
               </>
             )}
             <p><strong>Email del Profesor:</strong> {curso.profesor.mail}</p>

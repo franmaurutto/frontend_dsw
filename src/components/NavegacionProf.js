@@ -3,25 +3,25 @@ import NavBar from './NavBar.js'
 import '../styles/NavegacionProf.css';
 import { useUser } from './UsuarioContext.js';
 import { useState,useEffect } from 'react';
-import { getCursosProfesor } from '../services/ProfesorServices.js';
+import { getCursosProfesor } from '../services/UsuarioServices.js';
 import { useNavigate } from 'react-router-dom';
 import { useCurso } from './CursoContext.js';
 import  {jwtDecode} from 'jwt-decode'; 
 import { getCurso } from '../services/CursoServices.js';
 
+const usuarioToken = localStorage.getItem('authToken');
+const decodedUsuarioToken = usuarioToken ? jwtDecode(usuarioToken) : null;
+const usuarioId = decodedUsuarioToken ? decodedUsuarioToken.id : null;
 
 export const NavegacionProf = () => {
   const [cursos, setCursos] = useState([]);
   const navigate = useNavigate(); 
 
   useEffect(() => {
-    const usuarioToken = localStorage.getItem('usuarioToken');
-    if (usuarioToken) {
-      const usuario = JSON.parse(usuarioToken); 
-      if (usuario.id) { 
+    if (decodedUsuarioToken && usuarioId) {
         const fetchCursos = async () => {
           try {
-            const data = await getCursosProfesor(usuario.id); 
+            const data = await getCursosProfesor(usuarioId); 
             setCursos(data.data); 
           } catch (error) {
             console.error('Error al obtener los cursos:', error);
@@ -30,7 +30,7 @@ export const NavegacionProf = () => {
         fetchCursos();
       }
     }
-  }, []);
+  , []);
 
   const profLinks = [
   { label: 'Mi cuenta', path: '/mi-cuenta' },
@@ -45,12 +45,12 @@ export const NavegacionProf = () => {
     try {
       if (!cursoId) throw new Error('ID de curso inválido');
       const data = await getCurso(cursoId);
-      const { token: cursoToken } = data;
-
-      if (!cursoToken) throw new Error('No se recibió token del curso.');
-      const decodedToken = jwtDecode(cursoToken);
+      console.log(data)
+      const decodedToken = jwtDecode(data);
+      console.log(decodedToken)
+      if (!decodedToken) throw new Error('No se recibió token del curso.');
       console.log('Información del token decodificado:', decodedToken);
-      localStorage.setItem('cursoToken', cursoToken);
+      localStorage.setItem('cursoToken', data);
       navigate('/datos-curso');
     } catch (error) {
       console.error('Error en handleCursoClick:', error.message);
@@ -66,7 +66,7 @@ export const NavegacionProf = () => {
         {cursos.length > 0 ? (
           <ul className='list-cursos-prof'>
             {cursos.map((curso,index) => (
-              <li key={index} onClick={() => handleCursoClick(curso)}>
+              <li key={index} onClick={() => handleCursoClick(curso.id)}>
                 <h3>{curso.nombre}</h3>
                 <p>{curso.descripcion}</p>
               </li>

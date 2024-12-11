@@ -6,6 +6,10 @@ import { getCursos } from '../services/CursoServices.js';
 import { getCurso } from '../services/CursoServices.js';
 import  {jwtDecode} from 'jwt-decode';
 
+const usuarioToken = localStorage.getItem('authToken');
+const decodedUsuarioToken = usuarioToken ? jwtDecode(usuarioToken) : null;
+const usuarioId = decodedUsuarioToken ? decodedUsuarioToken.id : null;
+
 export const NavegacionAlu = () => {
 
   const [cursos, setCursos] = useState([]);
@@ -18,36 +22,32 @@ export const NavegacionAlu = () => {
   ];
 
   useEffect(() => {
-    const usuarioToken = localStorage.getItem('usuarioToken');
-    if (usuarioToken) {
-      const usuario = JSON.parse(usuarioToken); 
-      if (usuario.id) { 
-        const fetchCursos = async () => {
-          try {
-            const data = await getCursos(usuario.id); 
-            setCursos(data.data); 
-          } catch (error) {
-            console.error('Error al obtener los cursos:', error);
-          }
-        };
-        fetchCursos();
-      }
+    if (usuarioId) { 
+      const fetchCursos = async () => {
+        try {
+          const data = await getCursos(); 
+          setCursos(data); 
+        } catch (error) {
+          console.error('Error al obtener los cursos:', error);
+        }
+      };
+      fetchCursos();
     }
-  }, []);
+  }
+  , []);
 
 
 
   const handleCursoClick = async (cursoId) => {
     try {
       const response = await getCurso(cursoId); 
-      const { cursoToken } = response;
+      const decodedToken = jwtDecode(response);
 
-    if (!cursoToken) {
+    if (!decodedToken) {
       throw new Error('No se recibió el token del curso.');
     }
-    const decodedToken = jwtDecode(cursoToken);
     console.log(decodedToken);
-    localStorage.setItem('cursoToken', cursoToken);
+    localStorage.setItem('cursoToken', response);
     navigate(`/curso/${cursoId}`); 
     } catch (error) {
       console.error('Error al manejar el clic en el curso:', error);

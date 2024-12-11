@@ -118,7 +118,7 @@ export const getInscripcionesAlumno = async (usuarioId) => {
         throw new Error(errorData.message || 'Error al actualizar el usuario');
     }
     const data = await response.json();
-    return data.data;  
+    return data;  
   } catch (error) {
     console.error('Error al obtener inscripciones:', error);
     throw new Error('Error al obtener inscripciones del alumno');

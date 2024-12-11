@@ -9,11 +9,10 @@ import  {jwtDecode} from 'jwt-decode';
 
 const cursoToken = localStorage.getItem('cursoToken'); 
 const decodedCursoToken = cursoToken ? jwtDecode(cursoToken) : null;
-const parcialId = decodedCursoToken ? decodedCursoToken.parcialId : null;
+const parcialId = decodedCursoToken.parcialId ? decodedCursoToken.parcialId : null;
+console.log(parcialId)
 
 export const Parcial = () => {
-
-  const { state } = useLocation();
   const [parcial, setParcial] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true); 
@@ -35,6 +34,7 @@ export const Parcial = () => {
 
   useEffect(() => {
     const fetchParcial = async () => {
+      console.log(parcialId)
       setLoading(true);
       try {
         if (parcialId) {

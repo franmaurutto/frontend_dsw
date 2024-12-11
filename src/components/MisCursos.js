@@ -1,63 +1,69 @@
 import React, { useEffect, useState } from 'react';
-import { getInscripcionesAlumno } from '../services/AlumnoServices.js';
 import { getCursoDeInscripcion, deleteInscripcion, updateInscripcion } from '../services/InscripcionServices.js';
-import { getCursosProfesor } from '../services/ProfesorServices.js'; 
+import { getInscripcionesAlumno, getCursosProfesor } from '../services/UsuarioServices.js';
 import { useUser } from './UsuarioContext.js';
 import '../styles/MisCursos.css';
 import NavBar from './NavBar.js';
 import { useNavigate } from 'react-router-dom';
+import  {jwtDecode} from 'jwt-decode';
 
+const usuarioToken = localStorage.getItem('authToken');
+const decodedUsuarioToken = usuarioToken ? jwtDecode(usuarioToken) : null;
+const usuarioId = decodedUsuarioToken ? decodedUsuarioToken.id : null;
 export const MisCursos = () => {
 
   const navigate= useNavigate();
-  const { usuario } = useUser();
   const [cursos, setCursos] = useState([]);
   const [mensajeExito, setMensajeExito] = useState('');
-  
-  const links = usuario && usuario.mail.includes('@educatech')
-    ? [
-        { label: 'Mi cuenta', path: '/mi-cuenta' },
-        { label: 'Mis Cursos', path: '/nav-prof' },
-        { label: 'Crear Curso', path: '' },
-      ]
-    : [
-        { label: 'Mi cuenta', path: '/mi-cuenta' },
-        { label: 'Mis Cursos', path: '/mis-cursos' },
-        { label: 'Cursos', path: '/nav-alu' },
-      ];
-
-  useEffect(() => {
-    const fetchCursos = async () => {
-      try {
-        if (usuario && usuario.mail.includes('@educatech')) {
-          const cursosData = await getCursosProfesor(usuario.id);
-          setCursos(cursosData);
-        } else if (usuario && usuario.id) {
-          const inscripcionesData = await getInscripcionesAlumno(usuario.id);
-          if (Array.isArray(inscripcionesData)) {
-            const cursosData = await Promise.all(
-              inscripcionesData.map(async (inscripcion) => {
-                const cursoData = await getCursoDeInscripcion(inscripcion.id, inscripcion.curso);
-                return {
-                  ...cursoData,
-                  inscripcionId: inscripcion.id,
-                  fechaInscripcion: inscripcion.fechaInscripcion,
-                };
-              })
-            );
-            setCursos(cursosData);
-          } else {
-            setCursos([]);
-          }
+  console.log("esta x entrar")
+  const aluLinks = [
+    { label: 'Mi cuenta', path: '/mi-cuenta' },
+    { label: 'Mis Cursos', path: '/mis-cursos' },
+    { label: 'Cursos', path: '/nav-alu' },
+    ];
+useEffect(() => {
+  const fetchCursos = async () => {
+    try {
+      console.log(decodedUsuarioToken);
+      console.log(usuarioId);
+      console.log(decodedUsuarioToken.rol);
+      if (decodedUsuarioToken.rol === 'alumno') {
+        const inscripcionesData = await getInscripcionesAlumno(usuarioId);
+        console.log(inscripcionesData);
+        if (Array.isArray(inscripcionesData.data)) {
+          const cursosData = await Promise.all(
+            inscripcionesData.data.map(async (inscripcion) => {
+              const cursoId = inscripcion.curso ? inscripcion.curso : null; 
+              if (!cursoId) {
+                console.error('No se encontró curso para esta inscripción:', inscripcion);
+                return null;
+              }
+              const cursoData = await getCursoDeInscripcion(inscripcion.id, cursoId);
+              return cursoData
+                ? {
+                    ...cursoData,
+                    inscripcionId: inscripcion.id,
+                    fechaInscripcion: inscripcion.fechaInscripcion,
+                  }
+                : null; 
+            })
+          );
+          const filteredCursosData = cursosData.filter((curso) => curso !== null); 
+          console.log(filteredCursosData);
+          setCursos(filteredCursosData);
+        } else {
+          setCursos([]);
         }
-      } catch (error) {
-        console.error('Error al obtener los cursos:', error);
-        setCursos([]);
       }
-    };
+    } catch (error) {
+      console.error('Error al obtener los cursos:', error);
+      setCursos([]);
+    }
+  };
 
-    fetchCursos();
-  }, [usuario]);
+  fetchCursos();
+}, []);
+
 
   const handleAnularInscripcion = async (inscripcionId) => {
     const confirmation = window.confirm('¿Estás seguro de que quieres anular la inscripción a este curso? Esta acción no se puede deshacer.');
@@ -101,7 +107,7 @@ export const MisCursos = () => {
 
   return (
     <div className='mis-cursos'>
-      <NavBar links={links}></NavBar>
+      <NavBar links={aluLinks}></NavBar>
       <div className='lista-mis-cursos'>
         <h1>Mis Cursos</h1>
         {mensajeExito && <p className="mensaje-exito">{mensajeExito}</p>}
@@ -111,7 +117,7 @@ export const MisCursos = () => {
               <li key={index}>
                 <h3>{curso.nombre}</h3>
                 <p>{curso.descripcion}</p>
-                {usuario && !usuario.mail.includes('@educatech') && (
+                {decodedUsuarioToken.rol==='alumno' && (
                   <div>
                     <button
                       className="boton-cursos"

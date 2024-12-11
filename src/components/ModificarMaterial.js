@@ -6,6 +6,11 @@ import NavBar from './NavBar.js';
 import '../styles/ModificarMaterial.css';
 import  {jwtDecode} from 'jwt-decode';
 
+const materialToken = localStorage.getItem('materialToken');
+const decodedMaterialToken = materialToken ? jwtDecode(materialToken) : null;
+const materialId = decodedMaterialToken ? decodedMaterialToken.id : null;
+
+
 export const ModificarMaterial = () => {
   const [titulo, setTitulo] =useState( '');
   const [descripcion, setDescripcion] = useState('');
@@ -21,20 +26,17 @@ export const ModificarMaterial = () => {
   ];
 
   useEffect(() => {
-    const token = localStorage.getItem('materialToken');
-    if (token) {
       try {
-        const decodedMaterial = jwtDecode(token);
-        if (decodedMaterial) {
-          setTitulo(decodedMaterial.titulo || '');
-          setDescripcion(decodedMaterial.descripcion || '');
-          setMaterialId(decodedMaterial.id || null);
+        if (decodedMaterialToken) {
+          setTitulo(decodedMaterialToken.titulo || '');
+          setDescripcion(decodedMaterialToken.descripcion || '');
+          setMaterialId(decodedMaterialToken.id || null);
         }
       } catch (error) {
         console.error('Error al decodificar el token:', error);
       }
     }
-  }, []);
+, []);
 
 
   const handleSubmit = (e) => {

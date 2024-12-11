@@ -54,16 +54,3 @@ export const authAlumno = async (mail, contrasenia) => {
   return response.json();
 };
 
-export const getInscripcionesAlumno = async (alumnoId) => {
-  try {
-    const response = await fetch(`${API_URL}/${alumnoId}/inscripciones`);
-    if (!response.ok) {
-      throw new Error('No se pudieron obtener las inscripciones');
-    }
-    const data = await response.json();
-    return data.data;  
-  } catch (error) {
-    console.error('Error al obtener inscripciones:', error);
-    throw new Error('Error al obtener inscripciones del alumno');
-  }
-};

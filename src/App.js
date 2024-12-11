@@ -22,34 +22,28 @@ import {AgregarMaterial} from './components/AgregarMaterial.js';
 function App() {
 
   return (
-    <UsuarioProvider>
-      <CursoProvider>
-      <MaterialProvider>
-        <Router>
-          <div className="App">
-            <Routes>
-              <Route path="/" element={<HomePage  />} />
-              <Route path="/sobre-nosotros" element={<SobreNosotros />} />
-              <Route path="/contacto" element={<Contacto />} />
-              <Route path="/sign-up-form" element={<SignUpForm />} />
-              <Route path="/nav-alu" element={<NavegacionAlu />} />
-              <Route path="/mi-cuenta" element={<MiCuenta />} />
-              <Route path="/mis-cursos" element={<MisCursos />} />
-              <Route path="/nav-prof" element={<NavegacionProf />} />
-              <Route path="/curso/:cursoId" element={<CursoDetalle />} />
-              <Route path="/crear-curso" element={<CrearCurso />} />
-              <Route path="/datos-curso" element={<DatosCurso />} />
-              <Route path="/parcial" element={<Parcial />} />
-              <Route path="/crear-material" element={<CrearMaterial />} />
-              <Route path="/materiales" element={<Materiales />} />
-              <Route path="/modificar-material" element={<ModificarMaterial />} />
-              <Route path="/agregar-material" element={<AgregarMaterial />} />
-            </Routes>
-          </div>
-        </Router>
-        </MaterialProvider>
-      </CursoProvider>
-    </UsuarioProvider>
+    <Router>
+      <div className="App">
+        <Routes>
+          <Route path="/" element={<HomePage  />} />
+          <Route path="/sobre-nosotros" element={<SobreNosotros />} />
+          <Route path="/contacto" element={<Contacto />} />
+          <Route path="/sign-up-form" element={<SignUpForm />} />
+          <Route path="/nav-alu" element={<NavegacionAlu />} />
+          <Route path="/mi-cuenta" element={<MiCuenta />} />
+          <Route path="/mis-cursos" element={<MisCursos />} />
+          <Route path="/nav-prof" element={<NavegacionProf />} />
+          <Route path="/curso/:cursoId" element={<CursoDetalle />} />
+          <Route path="/crear-curso" element={<CrearCurso />} />
+          <Route path="/datos-curso" element={<DatosCurso />} />
+          <Route path="/parcial" element={<Parcial />} />
+          <Route path="/crear-material" element={<CrearMaterial />} />
+          <Route path="/materiales" element={<Materiales />} />
+          <Route path="/modificar-material" element={<ModificarMaterial />} />
+          <Route path="/agregar-material" element={<AgregarMaterial />} />
+        </Routes>
+      </div>
+    </Router>
 
   );
 }

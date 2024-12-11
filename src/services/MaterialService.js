@@ -1,5 +1,5 @@
 const API_URL = 'http://localhost:3000/api/materiales';
-const getToken = () => localStorage.getItem('usuarioToken');
+const getToken = () => localStorage.getItem('authToken');
 
 const getHeaders = () => {
   const token = getToken();
@@ -81,7 +81,7 @@ export const addMaterialToCurso = async (materialId, cursoId) => {
 };
 export const getMaterial = async (materialId) => {
   try {
-    const response = await fetch(`/api/materiales/${materialId}`, {
+    const response = await fetch(`${API_URL}/${materialId}`, {
       method: 'GET',
       headers: getHeaders(), 
     }); 
@@ -89,7 +89,7 @@ export const getMaterial = async (materialId) => {
       throw new Error('No se pudo obtener el material');
     }
     const data = await response.json();
-    return data;  
+    return data.materialToken;  
   } catch (error) {
     console.error('Error al obtener el detalle del curso:', error);
     throw error;

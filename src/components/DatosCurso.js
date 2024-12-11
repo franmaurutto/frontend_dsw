@@ -7,9 +7,16 @@ import NavBar from './NavBar.js';
 import '../styles/DatosCurso.css';
 import  {jwtDecode} from 'jwt-decode';
 
+const usuarioToken = localStorage.getItem('authToken');
+const decodedUsuarioToken = usuarioToken ? jwtDecode(usuarioToken) : null;
+const usuarioId = decodedUsuarioToken ? decodedUsuarioToken.id : null;
+const cursoToken = localStorage.getItem('cursoToken');
+const decodedCursoToken = cursoToken ? jwtDecode(cursoToken) : null;
+const cursoId = decodedCursoToken ? decodedCursoToken.id : null;
+
 export const DatosCurso = () => {
-  const {curso, setCurso} = useCurso(null); // aca va usestate(null)?????
-  const [nombre, setNombre] = useState(''); //chatg dijo que todo esto va vacio, ver por que
+  const [cursos, setCurso] = useState([]);
+  const [nombre, setNombre] = useState('');
   const [descripcion, setDescripcion] = useState('');
   const [cantCupos, setCantCupos] = useState('');
   const [fechaInicio, setFechaInicio] = useState('');
@@ -19,8 +26,7 @@ export const DatosCurso = () => {
   const [horaFin, setHoraFin] = useState('');
   const [dias, setDias] = useState('');
   const [cursoToken, setCursoToken] = useState('');
-  const [cursoId, setCursoId] = useState('');
-  const [parcialId]=useState('')
+  const [parcialId]=useState(decodedCursoToken ? decodedCursoToken.parcial_id:'');
   const [profesor] = useState(null);
   const [mensajeExito, setMensajeExito] = useState('');
   const [materiales, setMateriales] = useState([]); 
@@ -36,25 +42,21 @@ export const DatosCurso = () => {
   ];
 
   useEffect(() => {
-    const cursoToken = localStorage.getItem('cursoToken');
-    if (cursoToken) {
-      const curso = jwtDecode(cursoToken);
-      const cursoId = curso.id;
-      setCursoToken(cursoToken); 
-      setCursoId(cursoId)
-      setNombre(curso.nombre || '');
-      setDescripcion(curso.descripcion || '');
-      setCantCupos(curso.cantCupos);
-      setFechaInicio(curso.fechaInicio ? curso.fechaInicio.split('T')[0] : '');
-      setFechaFin(curso.fechaFin ? curso.fechaFin.split('T')[0] : '');
-      setHoraInicio(curso.horaInicio || '');
-      setHoraFin(curso.horaFin || '');
-      setDias(curso.dias || '');
+    if (decodedCursoToken) {
+      setCursoToken(decodedCursoToken); 
+      setNombre(decodedCursoToken.nombre || '');
+      setDescripcion(decodedCursoToken.descripcion || '');
+      setCantCupos(decodedCursoToken.cantCupos);
+      setFechaInicio(decodedCursoToken.fechaInicio ? decodedCursoToken.fechaInicio.split('T')[0] : '');
+      setFechaFin(decodedCursoToken.fechaFin ? decodedCursoToken.fechaFin.split('T')[0] : '');
+      setHoraInicio(decodedCursoToken.horaInicio || '');
+      setHoraFin(decodedCursoToken.horaFin || '');
+      setDias(decodedCursoToken.dias || '');
     }
   }, []);
 
   useEffect(() => {
-    if (cursoToken) {
+    if (decodedCursoToken) {
       getMaterialesCurso(cursoId)
         .then((materialesData) => {
           setMateriales(materialesData); 
@@ -63,7 +65,7 @@ export const DatosCurso = () => {
           console.error('Error al obtener materiales del curso:', error);
         });
     }
-  }, [cursoToken, cursoId]);
+  }, [decodedCursoToken, cursoId]);
 
 
   useEffect(() => {
@@ -83,7 +85,7 @@ export const DatosCurso = () => {
     }
   }, [fechaInicio, fechaFin]);
 
-  if (!cursoToken) {
+  if (!decodedCursoToken) {
     return <p>Cargando datos del curso...</p>;
   }
 
@@ -113,7 +115,6 @@ export const DatosCurso = () => {
     }
   }
   const handleAgregarMaterial = () => {
-    setCurso(cursoToken);
     navigate('/agregar-material');
   };
   const handleParcial = () => {
@@ -125,8 +126,12 @@ export const DatosCurso = () => {
   }
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (!cursoId) {
+      console.error("Error: No se pudo obtener el ID del curso.");
+      return;
+    }
     const updatedCurso = ({
-      ...cursoToken,
+      ...decodedCursoToken,
       nombre,
       descripcion,
       cantCupos,
@@ -136,15 +141,15 @@ export const DatosCurso = () => {
       horaInicio,
       horaFin,
       dias,
-      profesorId: profesor.id,
+      usuarioId,
+      parcialId,
     });
-
+    console.log(updateCurso)
     Object.keys(updatedCurso).forEach(key => {
       if (updatedCurso[key] === null || updatedCurso[key] === undefined) {
         delete updatedCurso[key];
       }
     });
-
     updateCurso(cursoId, updatedCurso)
       .then((updatedData) => {
         setCurso(updatedData);
@@ -181,7 +186,7 @@ export const DatosCurso = () => {
           <input type="text" value={horaFin} onChange={(e) => setHoraFin(e.target.value)} />
           <div className="btns-curso">
             <button type="submit">Modificar Datos</button>
-            <button onClick={() => handleParcial(curso.parcialId)}>Parcial</button>
+            <button onClick={() => handleParcial(decodedCursoToken.parcialId)}>Parcial</button>
             <button onClick={handleEliminar}>Eliminar Curso</button>
             <button onClick={handleAgregarMaterial}>Agregar Material</button>
           </div>

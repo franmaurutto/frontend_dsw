@@ -3,17 +3,17 @@ import NavBar from './NavBar.js';
 import '../styles/AgregarMaterial.css';
 import { findMatSinCurso, addMaterialToCurso } from '../services/MaterialService.js';
 import  {jwtDecode} from 'jwt-decode';
+const usuarioToken = localStorage.getItem('authToken');
+const decodedUsuarioToken = usuarioToken ? jwtDecode(usuarioToken) : null;
+const usuarioId = decodedUsuarioToken ? decodedUsuarioToken.id : null;
+const cursoToken = localStorage.getItem('cursoToken');
+const decodedCursoToken = cursoToken ? jwtDecode(cursoToken) : null;
+const cursoId = decodedCursoToken ? decodedCursoToken.id : null;
 
 export const AgregarMaterial = () => {
   const [materiales, setMateriales] = useState([]);
   const [mensajeExito, setMensajeExito] = useState('');
   const [mensajeError, setMensajeError] = useState('');
-  const cursoToken = localStorage.getItem('cursoToken'); 
-  const usuarioToken = localStorage.getItem('usuarioToken'); 
-
-  // Decodificar el cursoToken para obtener los datos del curso
-  const decodedCursoToken = cursoToken ? jwtDecode(cursoToken) : null;
-  const cursoId = decodedCursoToken ? decodedCursoToken.id : null;
   const profLinks = [
     { label: 'Mi cuenta', path: '/mi-cuenta' },
     { label: 'Mis Cursos', path: '/nav-prof' },

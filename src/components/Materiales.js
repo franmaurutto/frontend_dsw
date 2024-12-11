@@ -2,10 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import NavBar from './NavBar.js';
 import '../styles/Materiales.css';
-import { getMateriales, deleteMaterial } from '../services/MaterialService.js';
+import { getMaterial, deleteMaterial, getMateriales} from '../services/MaterialService.js';
 import { useMaterial } from './MaterialContext.js';
 import  {jwtDecode} from 'jwt-decode';
-
 
 
 export const Materiales = () => {
@@ -49,15 +48,15 @@ export const Materiales = () => {
   };
 
   const handleModificarMaterial = async (material) => {
-    const response = await getMateriales(material.id);
-    const { materialToken } = response;
-
-    if (!materialToken) throw new Error('No se recibió token de autenticación.');
-      
-    const decodedToken = jwtDecode(materialToken);
+    const response = await getMaterial(material.id);
+    console.log(response)
+    const decodedToken = jwtDecode(response);
     console.log(decodedToken)
-    localStorage.setItem('materialToken', materialToken);
+    if (!decodedToken) throw new Error('No se recibió token de autenticación.');
+    console.log(decodedToken)
+    localStorage.setItem('materialToken', response);
     navigate('/modificar-material');
+
   };
  
 
