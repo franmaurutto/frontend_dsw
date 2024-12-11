@@ -2,14 +2,18 @@ import React, { useState, useEffect } from 'react';
 import NavBar from './NavBar.js';
 import '../styles/AgregarMaterial.css';
 import { findMatSinCurso, addMaterialToCurso } from '../services/MaterialService.js';
-import { useCurso } from './CursoContext.js';
+import jwt_decode from 'jwt-decode';
 
 export const AgregarMaterial = () => {
-  const { curso } = useCurso();
   const [materiales, setMateriales] = useState([]);
   const [mensajeExito, setMensajeExito] = useState('');
   const [mensajeError, setMensajeError] = useState('');
+  const cursoToken = localStorage.getItem('cursoToken'); 
+  const usuarioToken = localStorage.getItem('usuarioToken'); 
 
+  // Decodificar el cursoToken para obtener los datos del curso
+  const decodedCursoToken = cursoToken ? jwt_decode(cursoToken) : null;
+  const cursoId = decodedCursoToken ? decodedCursoToken.id : null;
   const profLinks = [
     { label: 'Mi cuenta', path: '/mi-cuenta' },
     { label: 'Mis Cursos', path: '/nav-prof' },
@@ -33,7 +37,7 @@ export const AgregarMaterial = () => {
 
   async function handleSelectMaterial(material) {
     try {
-      const result = await addMaterialToCurso(material.id, curso.id);
+      const result = await addMaterialToCurso(material.id, cursoId);
       console.log('Material agregado al curso:', result);
       setMensajeExito('Material agregado al curso con éxito!');
       setMensajeError(''); 

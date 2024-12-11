@@ -6,10 +6,14 @@ import '../styles/Parcial.css';
 import { useCurso } from './CursoContext.js';
 import {useLocation, useNavigate } from 'react-router-dom';
 
+const getCursoToken = () => JSON.parse(localStorage.getItem('cursoToken'));
+
+
 export const Parcial = () => {
-  const { curso } = useCurso();
+  const cursoToken = getCursoToken();
+  const id = cursoToken?.idParcial;
+
   const { state } = useLocation();
-  const id = state?.id; 
   const [parcial, setParcial] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true); 
@@ -18,7 +22,9 @@ export const Parcial = () => {
   const [horaComienzo, setHoraComienzo] = useState('');
   const [horaFin, setHoraFin] = useState('');
   const [mensajeExito, setMensajeExito] = useState('');
+
   const navigate=useNavigate()
+
   const profLinks = [
     { label: 'Mi cuenta', path: '/mi-cuenta' },
     { label: 'Mis Cursos', path: '/nav-prof' },
@@ -29,21 +35,23 @@ export const Parcial = () => {
 
   useEffect(() => {
     const fetchParcial = async () => {
-      setLoading(true); 
+      setLoading(true);
       try {
-        if (id || state?.id) {
-          const response = await getParcial(id || state?.id);
-          console.log('Parcial recibido:', response.data);
+        if (id) {
+          const response = await getParcial(id); 
           setParcial(response.data);
-        } 
+        } else {
+          throw new Error('No se encontró un idParcial en el token.');
+        }
       } catch (err) {
-        setError('Parcial no cargado');
+        console.error('Error al cargar el parcial:', err);
+        setError('Parcial no cargado.');
       } finally {
         setLoading(false);
       }
     };
     fetchParcial();
-  }, [id,state]);
+  }, [id]);
 
   useEffect(() => {
     if (parcial) {
@@ -53,6 +61,7 @@ export const Parcial = () => {
       setHoraFin(parcial.horaFin || '');
     }
   }, [parcial]);
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -73,14 +82,20 @@ export const Parcial = () => {
       setError('Hubo un error');
     }
   };
+  
 
-  const handleEliminar= async ()=>{
-    deleteParcial(id)
-    setMensajeExito('Parcial eliminado')
-    setTimeout(() => {
-      navigate('/nav-prof');
-    }, 3000);
-  }
+  const handleEliminar = async () => {
+    try {
+      await deleteParcial(id);
+      setMensajeExito('Parcial eliminado.');
+      setTimeout(() => {
+        navigate('/nav-prof');
+      }, 3000);
+    } catch (error) {
+      console.error('Error al eliminar el parcial:', error);
+      setError('Hubo un error al eliminar.');
+    }
+  };
 
   const handleHabilitacion = async () => {
     if (parcial) {
@@ -89,17 +104,16 @@ export const Parcial = () => {
         fecha,
         horaComienzo,
         horaFin,
-        cursoId: curso?.id,
-        habilitado: !parcial.habilitado, 
+        habilitado: !parcial.habilitado,
       };
 
       try {
         await updateParcial(id, parcialData);
-        setMensajeExito(parcialData.habilitado ? 'Parcial habilitado' : 'Parcial deshabilitado');
+        setMensajeExito(parcialData.habilitado ? 'Parcial habilitado.' : 'Parcial deshabilitado.');
         setError('');
       } catch (error) {
-        console.log('Error al actualizar el estado de habilitación:', error);
-        setError('Hubo un error al actualizar el estado');
+        console.error('Error al actualizar el estado de habilitación:', error);
+        setError('Hubo un error al actualizar el estado.');
       }
     }
   };

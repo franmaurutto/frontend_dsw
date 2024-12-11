@@ -9,27 +9,26 @@ import { useCurso } from './CursoContext.js';
 
 
 export const NavegacionProf = () => {
-
-  const { setCurso } = useCurso();
-  const { usuario } = useUser(); 
-  const [cursos, setCursos] = useState([]); 
-
-  const navigate=useNavigate()
+  const [cursos, setCursos] = useState([]);
+  const navigate = useNavigate(); 
 
   useEffect(() => {
-    if (usuario && usuario.id) { 
-      const fetchCursos = async () => {
-        try {
-          const data = await getCursosProfesor(usuario.id); 
-          setCursos(data.data); 
-        } catch (error) {
-          console.error('Error al obtener los cursos:', error);
-        }
-      };
-
-      fetchCursos();
+    const usuarioToken = localStorage.getItem('usuarioToken');
+    if (usuarioToken) {
+      const usuario = JSON.parse(usuarioToken); 
+      if (usuario.id) { 
+        const fetchCursos = async () => {
+          try {
+            const data = await getCursosProfesor(usuario.id); 
+            setCursos(data.data); 
+          } catch (error) {
+            console.error('Error al obtener los cursos:', error);
+          }
+        };
+        fetchCursos();
+      }
     }
-  }, [usuario]);
+  }, []);
 
   const profLinks = [
   { label: 'Mi cuenta', path: '/mi-cuenta' },
@@ -39,10 +38,23 @@ export const NavegacionProf = () => {
   { label: 'Materiales', path: '/materiales' },
   ];
 
-  const handleCursoClick = (curso) => {
-      setCurso(curso);
-      navigate('/datos-curso'); 
+
+  const handleCursoClick = async (cursoId) => {
+    try {
+      if (!cursoId) throw new Error('ID de curso inválido');
+      const data = await getCurso(cursoId);
+      const { token: cursoToken } = data;
+
+      if (!cursoToken) throw new Error('No se recibió token del curso.');
+      const decodedToken = jwtDecode(cursoToken);
+      console.log('Información del token decodificado:', decodedToken);
+      localStorage.setItem('cursoToken', cursoToken);
+      navigate('/datos-curso');
+    } catch (error) {
+      console.error('Error en handleCursoClick:', error.message);
+    }
   };
+
 
   return (
     <div className='nav-prof'>
