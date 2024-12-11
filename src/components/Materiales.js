@@ -4,10 +4,11 @@ import NavBar from './NavBar.js';
 import '../styles/Materiales.css';
 import { getMateriales, deleteMaterial } from '../services/MaterialService.js';
 import { useMaterial } from './MaterialContext.js';
+import jwtDecode from 'jwt-decode';
+
 
 
 export const Materiales = () => {
-  const { setMaterial } = useMaterial();
   const [materiales, setMateriales] = useState([]);
   const [mensajeExito, setMensajeExito] = useState('');
   const navigate = useNavigate();
@@ -47,10 +48,18 @@ export const Materiales = () => {
     }
   };
 
-  const handleModificarMaterial = (material) => {
-    setMaterial(material);
-    navigate('/modificar-material'); 
-  };
+  const handleModificarMaterial = async (material) => {
+    const response = await getMateriales(material.id);
+    const { materialToken } = response;
+
+    if (!materialToken) throw new Error('No se recibió token de autenticación.');
+      
+    const decodedToken = jwtDecode(materialToken);
+    console.log(decodedToken)
+    localStorage.setItem('materialToken', materialToken);
+    navigate('/modificar-material');
+  };
+ 
 
   return (
     <div className='navprof'>
