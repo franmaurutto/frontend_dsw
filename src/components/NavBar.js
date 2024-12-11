@@ -1,41 +1,47 @@
 import React from 'react';
 import { Link,useNavigate, useLocation} from 'react-router-dom';
 import '../styles/NavBar.css';
-import { useUser } from './UsuarioContext.js';
-import { deleteAlumno } from '../services/AlumnoServices.js';
-import { deleteProfesor } from '../services/ProfesorServices.js';
 import { useState } from 'react';
+import { deleteUsuario } from '../services/UsuarioServices.js';
+import { jwtDecode } from 'jwt-decode';
+
 const NavBar = ({ links = [] }) => {
 
   const navigate = useNavigate();
   const location = useLocation();
   const [menuActive, setMenuActive] = useState(false);
-  const { usuario, logout } = useUser();
+ 
+
+  
+  const removeToken = () => localStorage.removeItem('authToken');
 
   const handleSignUp = () => {
     navigate('/sign-up-form'); 
   };
 
   const handleLogout = () => {
-    logout(); 
+    removeToken(); 
     navigate('/'); 
   };
 
   const handleCloseAccount =async () => {
-    if (!usuario || !usuario.id) {
-    alert('No se ha encontrado un usuario válido');
-    return;
+    const token = localStorage.getItem('authToken'); 
+
+    if (!token) {
+      alert('No se encontró un usuario autenticado');
+      return;
+    }
+
+    const decodedToken = jwtDecode(token); 
+    const userId = decodedToken.id
+    if (!userId) {
+      alert('No se pudo encontrar el ID del usuario en el token.');
+      return;
     }
     const confirmation = window.confirm('¿Estás seguro de que quieres cerrar tu cuenta? Esta acción no se puede deshacer.');
         if (confirmation) {
       try {
-        
-        if (usuario.mail.includes('@educatech')) {
-          await deleteProfesor(usuario.id);  
-        } else {
-          await deleteAlumno(usuario.id);    
-        }
-        
+        deleteUsuario(userId) 
         handleLogout()
       } catch (error) {
         console.error('Error al eliminar la cuenta:', error);

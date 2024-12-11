@@ -4,6 +4,9 @@ import { Link, useNavigate } from 'react-router-dom';
 import '../styles/HomePage.css';
 import { useState } from 'react';
 import { authUsuario } from '../services/UsuarioServices.js';
+import { jwtDecode } from 'jwt-decode';
+
+
 
 const HomePage = () => {
 
@@ -23,17 +26,20 @@ const HomePage = () => {
 const handleSubmit = async (e) => {
     e.preventDefault();
     setError(null);
-  
+    console.log('entroooooo')
     try {
       const response = await authUsuario(mail, contrasenia);
-      const { token, usuario } = response;
+      console.log('llamo',response)
+      const { usuariotoken } = response;
 
-      if (!token) throw new Error('No se recibió token de autenticación.');
+      if (!usuariotoken) throw new Error('No se recibió token de autenticación.');
       
-      localStorage.setItem('authToken', token);
+      const decodedToken = jwtDecode(usuariotoken);
+      console.log(decodedToken)
 
+      localStorage.setItem('authToken', usuariotoken);
 
-      if (usuario.rol === 'profesor') {
+      if (decodedToken.rol === 'profesor') {
         navigate('/nav-prof');
       } else {
         navigate('/nav-alu');

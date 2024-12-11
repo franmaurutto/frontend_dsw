@@ -11,17 +11,19 @@ export const authUsuario = async (mail, contrasenia) => {
   });
   
   if (!response.ok) {
-    throw new Error('Correo o contraseña incorrecta');
+    const errorData = await response.json(); 
+    throw new Error(errorData.message || 'Correo o contraseña incorrecta');
   }
   const data = await response.json();
   localStorage.setItem('token', data.token);
   return data;
 };
 
-const getToken = () => localStorage.getItem('token');
+const getToken = () => localStorage.getItem('authToken');
 
 const getHeaders = () => {
   const token = getToken();
+  console.log('Token en headers:', token);
   return {
     'Content-Type': 'application/json',
     ...(token && { Authorization: `Bearer ${token}` }), 
@@ -34,19 +36,34 @@ export const getAlumnos = async () => {
 };
 
 export const addUsuario = async (usuario) => {
-  const response = await fetch(`${API_URL}`, { 
+  const response = await fetch(API_URL, {
     method: 'POST',
-    headers: getHeaders(), 
-    body: JSON.stringify(usuario), 
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(usuario),
   });
 
   if (!response.ok) {
-    throw new Error('Error al agregar el usuario');
+      const errorData = await response.json(); // Lee el mensaje de error del servidor
+      console.error('Error del servidor:', errorData);
+      throw new Error(errorData.message || 'Error al actualizar el usuario');
   }
 
   return response.json();}
 
+export const getUsuario = async (usuarioId) => {
+  const response = await fetch(`${API_URL}/${usuarioId}`, {
+    method: 'GET',
+    headers: getHeaders(),
+  });
 
+  if (!response.ok) {
+    throw new Error('No se pudo obtener el usuario');
+  }
+
+  return response.json();
+};
 
 
 
@@ -56,8 +73,28 @@ export const updateUsuario = async (usuarioId, usuario) => {
     headers:getHeaders(),
     body: JSON.stringify(usuario),
   });
+
+  if (!response.ok) {
+    throw new Error('Error al actualizar el usuario');
+  }
   return response.json();
 };
+
+export const cambiarContrasenia = async (usuarioId,viejaContrasenia,nuevaContrasenia) =>{
+    const response = await fetch(`${API_URL}/${usuarioId}/cambiar-contrasenia`, {
+    method: 'PATCH',
+    headers:getHeaders(),
+    body: JSON.stringify({
+    viejaContrasenia,
+    nuevaContrasenia,
+    }),
+  });
+
+  if (!response.ok) {
+    throw new Error('Error al actualizar el usuario');
+  }
+  return response.json();
+}
 
 export const deleteUsuario = async (usuarioId) => {
   const response = await fetch(`${API_URL}/${usuarioId}`, {
@@ -76,7 +113,9 @@ export const getInscripcionesAlumno = async (usuarioId) => {
       headers: getHeaders(),
     });
     if (!response.ok) {
-      throw new Error('No se pudieron obtener las inscripciones');
+        const errorData = await response.json(); 
+        console.error('Error del servidor:', errorData.message); 
+        throw new Error(errorData.message || 'Error al actualizar el usuario');
     }
     const data = await response.json();
     return data.data;  

@@ -1,21 +1,42 @@
 import React from 'react'
-import { useUser } from './UsuarioContext.js';
-import { useState, useEffect } from 'react';
+import { useState} from 'react';
 import '../styles/MiCuenta.css'
 import NavBar from './NavBar.js';
-import { updateUsuario } from './UsuarioService'; 
-import { updateAlumno } from '../services/AlumnoServices.js';
-import { updateProfesor } from '../services/ProfesorServices.js';
+import { jwtDecode } from 'jwt-decode';
+import { cambiarContrasenia, updateUsuario } from '../services/UsuarioServices.js';
+
 
 export const MiCuenta = () => {
 
-  const { usuario, setUsuario } = useUser(); 
+const getToken = () => localStorage.getItem('authToken');
+
+const getUserFromToken = () => {
+  const token = getToken();
+  if (!token) return null;
+
+  try {
+    const decodedToken = jwtDecode(token); 
+    return decodedToken; 
+  } catch (error) {
+    console.error('Error al decodificar el token:', error);
+    return null;
+  }
+};
+  const usuario = getUserFromToken();
   
   const [nombreCompleto, setNombreCompleto] =useState(usuario ? usuario.nombreCompleto : '');
-  const [mail, setMail] = useState(usuario ? usuario.mail : '');
+  const [mail, setMail] = useState(usuario ? usuario.mail :'');
   const [telefono, setTelefono] = useState(usuario ? usuario.telefono : '');
-  const [contrasenia, setContrasenia] = useState(usuario ? usuario.contrasenia : '');
+  const [rol]=useState(usuario ? usuario.rol: '');
+  const [mostrarFormulario, setMostrarFormulario] = useState(false); 
+  const [contraseñaActual, setContraseñaActual] = useState('');
+  const [nuevaContraseña, setNuevaContraseña] = useState('');
+  const [confirmarNuevaContraseña, setConfirmarNuevaContraseña] = useState('');
   const [mensajeExito, setMensajeExito] = useState('');
+  const [mensajeError, setMensajeError]=useState('');
+
+
+
 
   const links = usuario && usuario.rol==='profesor'
     ? [
@@ -31,14 +52,7 @@ export const MiCuenta = () => {
         { label: 'Cursos', path: '/nav-alu' },
       ];
 
-  useEffect(() => {
-    if (usuario) {
-      setNombreCompleto(usuario.nombre_y_apellido || usuario.nombreCompleto);
-      setMail(usuario.mail);
-      setTelefono(usuario.telefono);
-      setContrasenia(usuario.contrasenia);
-    }
-  }, [usuario]);
+  
 
   if (!usuario) {
     return <p>Cargando datos del usuario...</p>;  
@@ -50,45 +64,66 @@ export const MiCuenta = () => {
     
     const updatedUser =({
       ...usuario,
-      nombre_y_apellido: nombreCompleto,
+      nombreCompleto,
+      rol,
       mail,
       telefono,
-      contrasenia,
     });
 
-    if (mail.includes('@educatech')) {
-      updateProfesor(usuario.id, updatedUser)
-        .then((updatedData) => {
-          setUsuario(updatedData);
-          setMensajeExito('Datos de profesor actualizados correctamente');
-          console.log('Datos actualizados del profesor:', updatedUser);
-          setTimeout(() => setMensajeExito(''), 5000);
-        })
-        .catch((error) => {
-          console.error('Error al actualizar los datos del profesor:', error);
-        });
-    } else {
-      updateAlumno(usuario.id, updatedUser)
-        .then((updatedData) => {
-          setUsuario(updatedData);
-          setMensajeExito('Datos de alumno actualizados correctamente');
-          console.log('Datos actualizados del alumno:', updatedUser);
-          setTimeout(() => setMensajeExito(''), 5000);
-        })
-        .catch((error) => {
-          console.error('Error al actualizar los datos del alumno:', error);
-        });
+  
+  updateUsuario(usuario.id, updatedUser)
+    .then((updatedData) => {
+      setNombreCompleto(updatedData.nombreCompleto);
+      setMail(updatedData.mail);
+      setTelefono(updatedData.telefono);
+      
+
+      setMensajeExito('Datos actualizados correctamente');
+      setTimeout(() => setMensajeExito(''), 5000);
+    })
+    .catch((error) => {
+      setMensajeError('No se puedieron actualizar los datos')
+      setTimeout(() => setMensajeError(''), 5000);
+      console.error('Error al actualizar los datos del usuario:', error);
+    });
+};
+
+const handleCambiarContrasenia = (e) => {
+    e.preventDefault();
+    if (nuevaContraseña !== confirmarNuevaContraseña) {
+      setMensajeError('Contraseñas no coinciden')
+      setTimeout(() => setMensajeError(''), 5000);
+      return;
+    }
+    try {
+      console.log('entro')
+      cambiarContrasenia(usuario.id, contraseñaActual, nuevaContraseña);
+
+      console.log('Contraseña actual:', contraseñaActual);
+      console.log('Nueva contraseña:', nuevaContraseña);
+
+      setMensajeExito('Contraseña cambiada exitosamente.');
+      setTimeout(() => setMensajeExito(''), 5000);
+
+      setMostrarFormulario(false);
+    } catch (error) {
+        console.error('Error al cambiar la contraseña:', error.message);
+        setMensajeError(`Error: ${error.message}`);
+        setTimeout(() => setMensajeError(''), 5000);
     }
   };
 
 
-
-  return (
+return (
     <div className='pag-modificar'>
       <NavBar links={links}></NavBar>
       <div className='form-modificar'>
       <h1>Datos de la cuenta</h1>
       {mensajeExito && <p className="mensaje-exito">{mensajeExito}</p>}
+      {mensajeError && <p className="mensaje-error">{mensajeError}</p>}
+
+
+      {!mostrarFormulario ? (
       <form onSubmit={handleSubmit} className='modificar'>
         <label>Nombre Completo:</label>
         <input type="text"
@@ -105,13 +140,33 @@ export const MiCuenta = () => {
             value={telefono}
             onChange={(e) => setTelefono(e.target.value)}>
         </input>
-        <label>Contraseña:</label>
-        <input type="text"
-            value={contrasenia}
-            onChange={(e) => setContrasenia(e.target.value)}>
-        </input>
         <button type='submit'>Modificar datos</button>
-      </form>
+      </form>):(
+          <form onSubmit={handleCambiarContrasenia} className="modificar">
+            <label>Contraseña Actual:</label>
+            <input
+              type="password"
+              value={contraseñaActual}
+              onChange={(e) => setContraseñaActual(e.target.value)}
+            />
+            <label>Nueva Contraseña:</label>
+            <input
+              type="password"
+              value={nuevaContraseña}
+              onChange={(e) => setNuevaContraseña(e.target.value)}
+            />
+            <label>Confirmar Nueva Contraseña:</label>
+            <input
+              type="password"
+              value={confirmarNuevaContraseña}
+              onChange={(e) => setConfirmarNuevaContraseña(e.target.value)}
+            />
+            <button type="submit">Guardar nueva contraseña</button>
+          </form>
+        )}
+          <button onClick={() => setMostrarFormulario(!mostrarFormulario)}>
+          {mostrarFormulario ? 'Cancelar' : 'Cambiar contraseña'}
+        </button>
       </div>
     </div>
   )
