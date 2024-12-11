@@ -4,12 +4,12 @@ import { updateMaterial } from '../services/MaterialService.js';
 import { useState, useEffect } from 'react';
 import NavBar from './NavBar.js';
 import '../styles/ModificarMaterial.css';
+import jwt from 'jsonwebtoken';
 
 export const ModificarMaterial = () => {
-
-  const {material,setMaterial}=useMaterial();
-  const [titulo, setTitulo] =useState(material ? material.titulo : '');
-  const [descripcion, setDescripcion] = useState(material ?  material.descripcion : '');
+  const [titulo, setTitulo] =useState( '');
+  const [descripcion, setDescripcion] = useState('');
+  const [materialId, setMaterialId] = useState(null);
   const [mensajeExito, setMensajeExito] = useState('');
 
   const profLinks = [
@@ -21,22 +21,26 @@ export const ModificarMaterial = () => {
   ];
 
   useEffect(() => {
-    if (material) {
-      setTitulo(material.titulo || '');
-      setDescripcion(material.descripcion || '');
+    const token = localStorage.getItem('materialToken');
+    if (token) {
+      try {
+        const decodedMaterial = jwt.decode(token);
+        if (decodedMaterial) {
+          setTitulo(decodedMaterial.titulo || '');
+          setDescripcion(decodedMaterial.descripcion || '');
+          setMaterialId(decodedMaterial.id || null);
+        }
+      } catch (error) {
+        console.error('Error al decodificar el token:', error);
+      }
     }
-  }, [material]);
+  }, []);
 
-
-  if (!material) {
-    return <p>Cargando datos del curso...</p>;  
-  }
 
   const handleSubmit = (e) => {
     e.preventDefault();
     
     const updatedMaterial =({
-      ...material,
       titulo,
       descripcion,
     });
@@ -47,9 +51,8 @@ export const ModificarMaterial = () => {
     }
   });
 
-  updateMaterial(material.id, updatedMaterial)
+  updateMaterial(materialId, updatedMaterial)
       .then((updatedData) => {
-        setMaterial(updatedData);
         setMensajeExito('Datos del material actualizados correctamente');
         console.log('Datos actualizados del material:', updatedMaterial);
         setTimeout(() => setMensajeExito(''), 5000);
