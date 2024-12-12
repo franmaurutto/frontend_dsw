@@ -11,7 +11,7 @@ import { getCurso } from '../services/CursoServices.js';
 
 const usuarioToken = localStorage.getItem('authToken');
 const decodedUsuarioToken = usuarioToken ? jwtDecode(usuarioToken) : null;
-const usuarioId = decodedUsuarioToken ? decodedUsuarioToken.id : null;
+const usuarioId = decodedUsuarioToken?.id||null;
 
 export const NavegacionProf = () => {
   const [cursos, setCursos] = useState([]);

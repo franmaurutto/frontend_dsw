@@ -2,11 +2,26 @@ import React, { useState } from 'react'
 import NavBar from './NavBar.js'
 import { createCurso } from '../services/CursoServices.js';
 import '../styles/CrearCurso.css';
-import { useUser } from './UsuarioContext.js';
+import  {jwtDecode} from 'jwt-decode';
 
 export const CrearCurso = () => {
 
-  const { usuario } = useUser();
+  const getToken = () => localStorage.getItem('authToken');
+
+  const getUserFromToken = () => {
+  const token = getToken();
+  if (!token) return null;
+
+  try {
+    const decodedToken = jwtDecode(token); 
+    return decodedToken; 
+  } catch (error) {
+    console.error('Error al decodificar el token:', error);
+    return null;
+  }
+};
+  const usuario = getUserFromToken();
+
 
   const profLinks = [
     { label: 'Mi cuenta', path: '/mi-cuenta' },
@@ -32,7 +47,7 @@ export const CrearCurso = () => {
 
   const cursoData = { 
       ...formData, 
-      profesorId: usuario.id  
+      profesorId: usuario ? usuario.id : null 
     };
 
   const handleSubmit = async (e) => {

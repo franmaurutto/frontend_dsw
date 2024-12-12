@@ -22,6 +22,7 @@ const getHeaders = () => {
 
 
 export const createCurso = async (curso) => {
+  try{
   const response = await fetch(API_URL, {
     method: 'POST',
     headers: getHeaders(),
@@ -30,8 +31,15 @@ export const createCurso = async (curso) => {
   if (!response.ok) {
     throw new Error('Error al crear el curso');
   }
-  return response.json();
+  const data = await response.json();
+    return data.token;  
+  } catch (error) {
+    console.error('Error al crear el curso:', error);
+    throw error;
+  }
 };
+
+
 export const getCurso = async (cursoId) => {
   try {
     const response = await fetch(`${API_URL}/${cursoId}`, {

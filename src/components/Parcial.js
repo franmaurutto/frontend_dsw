@@ -3,13 +3,13 @@ import { deleteParcial, getParcial } from '../services/ParcialServices.js';
 import NavBar from './NavBar.js';
 import { updateParcial, createParcial } from '../services/ParcialServices.js';
 import '../styles/Parcial.css';
-import { useCurso } from './CursoContext.js';
 import {useLocation, useNavigate } from 'react-router-dom';
 import  {jwtDecode} from 'jwt-decode';
 
 const cursoToken = localStorage.getItem('cursoToken'); 
 const decodedCursoToken = cursoToken ? jwtDecode(cursoToken) : null;
-const parcialId = decodedCursoToken.parcialId ? decodedCursoToken.parcialId : null;
+const parcialId = decodedCursoToken?.parcialId || null;
+
 console.log(parcialId)
 
 export const Parcial = () => {
