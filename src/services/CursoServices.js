@@ -28,7 +28,8 @@ export const createCurso = async (curso) => {
     body: JSON.stringify(curso),
   });
   if (!response.ok) {
-    throw new Error('Error al crear el curso');
+    const errorData = await response.json(); 
+    console.error('Error del servidor:', errorData);
   }
   return response.json();
 };

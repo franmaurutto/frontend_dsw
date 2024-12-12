@@ -5,12 +5,35 @@ export const getTps = async () => {
   return response.json();
 };
 
+const getToken = () => localStorage.getItem('authToken');
+
+const getHeaders = () => {
+  const token = getToken();
+  console.log('Token en headers:', token);
+  return {
+    'Content-Type': 'application/json',
+    ...(token && { Authorization: `Bearer ${token}` }), 
+  };
+};
+
+export const getTp = async (tpId) => {
+  const response = await fetch(`${API_URL}/${tpId}`, {
+    method: 'GET',
+    headers:getHeaders()
+  });
+
+  if (!response.ok) {
+    const errorData = await response.json(); 
+    console.error('Error del servidor:', errorData);
+  }
+  return response.json();
+}
+
+
 export const createTp = async (tp) => {
   const response = await fetch(API_URL, {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
+    headers: getHeaders(),
     body: JSON.stringify(tp),
   });
   return response.json();
@@ -19,9 +42,7 @@ export const createTp = async (tp) => {
 export const updateTp = async (tpId, tp) => {
   const response = await fetch(`${API_URL}/${tpId}`, {
     method: 'PUT',
-    headers: {
-      'Content-Type': 'application/json',
-    },
+    headers:getHeaders(),
     body: JSON.stringify(tp),
   });
   return response.json();
@@ -30,6 +51,11 @@ export const updateTp = async (tpId, tp) => {
 export const deleteTp = async (tpId) => {
   const response = await fetch(`${API_URL}/${tpId}`, {
     method: 'DELETE',
+    headers:getHeaders()
   });
+  if (!response.ok) {
+    const errorData = await response.json(); 
+    console.error('Error del servidor:', errorData);
+  }
   return response.json();
 };

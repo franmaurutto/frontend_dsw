@@ -2,11 +2,28 @@ import React, { useState } from 'react'
 import NavBar from './NavBar.js'
 import { createCurso } from '../services/CursoServices.js';
 import '../styles/CrearCurso.css';
-import { useUser } from './UsuarioContext.js';
+import { jwtDecode } from 'jwt-decode';
+
 
 export const CrearCurso = () => {
 
-  const { usuario } = useUser();
+const getToken = () => localStorage.getItem('authToken');
+
+const getUserFromToken = () => {
+  const token = getToken();
+  if (!token) return null;
+
+  try {
+    const decodedToken = jwtDecode(token); 
+    return decodedToken; 
+  } catch (error) {
+    console.error('Error al decodificar el token:', error);
+    return null;
+  }
+};
+  const usuario = getUserFromToken();
+
+  
 
   const profLinks = [
     { label: 'Mi cuenta', path: '/mi-cuenta' },
@@ -39,8 +56,8 @@ export const CrearCurso = () => {
   e.preventDefault();
   setError(null);
   try {
-    const response = await createCurso(cursoData);
-    console.log('Curso registrado:', response);
+    console.log(cursoData.profesorId)
+    await createCurso(cursoData);
     setMensajeExito('Se ha registrado el curso')
   } catch (err) {
     setError('Hubo un error al registrar el curso');
