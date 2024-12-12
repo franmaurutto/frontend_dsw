@@ -17,6 +17,7 @@ import {Materiales} from './components/Materiales.js';
 import {ModificarMaterial} from './components/ModificarMaterial.js';
 import {AgregarMaterial} from './components/AgregarMaterial.js';
 import { Tp } from './components/Tp.js';
+import { InscripcionesCurso } from "./components/InscripcionesCurso.js";
 function App() {
 
   return (
@@ -40,6 +41,7 @@ function App() {
           <Route path="/modificar-material" element={<ModificarMaterial />} />
           <Route path="/agregar-material" element={<AgregarMaterial />} />
           <Route path="/tp" element={<Tp />} />
+          <Route path="/inscripciones-curso" element={<InscripcionesCurso />} />
           
         </Routes>
       </div>

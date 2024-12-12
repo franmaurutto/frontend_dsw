@@ -51,7 +51,7 @@ export const Parcial = () => {
       }
     };
     fetchParcial();
-  }, [parcialId]);
+  }, []);//le saque parcialId
 
   useEffect(() => {
     if (parcial) {

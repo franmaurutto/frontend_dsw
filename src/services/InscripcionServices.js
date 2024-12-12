@@ -95,3 +95,26 @@ export const getCursoDeInscripcion = async (inscripcionId, cursoId) => {
   }
 };
 
+export const getAlumnoDeInscripcion = async (usuarioId, inscripcionId) => {
+  try {
+    const response = await fetch(`${API_URL}/${inscripcionId}/usuario/${usuarioId}`, {
+      method: 'GET',
+      headers: getHeaders(),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      console.error('Error del servidor al obtener el usuario de la inscripción:', errorData.message);
+      throw new Error(errorData.message || 'Error al obtener el usuario de la inscripción');
+    }
+
+    const data = await response.json();
+    return data.token; 
+  } catch (error) {
+    console.error('Error al obtener el usuario de la inscripción:', error);
+    throw error;
+  }
+};
+
+
+

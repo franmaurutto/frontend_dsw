@@ -1,0 +1,101 @@
+/* Estilos para el contenedor principal */
+.inscripciones-curso {
+    padding: 20px;
+    font-family: Arial, sans-serif;
+}
+
+/* Estilos de la lista de inscripciones */
+.lista-inscripciones h1 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+.lista-alumnos {
+    list-style-type: none;
+    padding: 0;
+}
+
+.alumno-item {
+    border: 1px solid #ddd;
+    padding: 1rem;
+    margin-bottom: 0.5rem;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+}
+
+.alumno-item h3 {
+    margin: 0;
+    font-size: 1.25rem;
+    font-weight: bold;
+}
+
+.alumno-item p {
+    margin: 5px 0;
+    color: #555;
+}
+
+/* Botones */
+.boton-certificado {
+    background-color: #E91E63; /* Rosa característico */
+    color: white;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    margin-top: 10px;
+    border: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.boton-certificado:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+.boton-certificado:hover:not(:disabled) {
+    background-color: #D81B60; /* Rosa más oscuro */
+}
+
+/* Botón de volver */
+.boton-volver {
+    background-color: #E91E63; /* Rosa característico */
+    color: white;
+    padding: 0.5rem 1rem;
+    margin-top: 20px;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.boton-volver:hover {
+    background-color: #D81B60; /* Rosa más oscuro */
+}
+
+/* Mensaje cuando no hay alumnos inscritos */
+.mensaje-no-alumnos {
+    font-size: 1.2rem;
+    color: #666;
+    margin-top: 20px;
+}
+
+/* Estilos para la barra de navegación */
+.navbar {
+    background-color: #333;
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.navbar a {
+    color: white;
+    text-decoration: none;
+    margin-right: 20px;
+}
+
+.navbar a:hover {
+    text-decoration: underline;
+}
+
+
+  
+  

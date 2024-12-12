@@ -1,4 +1,28 @@
+
 const API_URL = 'http://localhost:3000/api/cursos';
+
+export const GetInscripcionesCurso = async (cursoId) => {
+  try {
+    const response = await fetch(`${API_URL}/${cursoId}/inscripciones`, {
+      method: 'GET',
+      headers: getHeaders(),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      console.error('Error al obtener inscripciones del curso:', errorData.message);
+      throw new Error(errorData.message || 'Error al obtener las inscripciones del curso');
+    }
+
+    const data = await response.json(); 
+    return data.token ; 
+  } catch (error) {
+    console.error('Error al obtener inscripciones por curso:', error);
+    throw error;
+  }
+};
+
+
 
 export const getCursos = async () => {
   const response = await fetch(API_URL);
@@ -106,3 +130,21 @@ export const getMaterialesCurso = async (cursoId) => {
   return data;
 };
 
+export const getInscripcionesPorCurso = async (cursoId) => {
+  try {
+    const response = await fetch(`${API_URL}/${cursoId}/inscripciones`, {
+      method: 'GET',
+      headers: getHeaders(),
+    });
+    if (!response.ok) {
+      const errorData = await response.json();
+      console.error('Error del servidor:', errorData.message);
+      throw new Error(errorData.message || 'Error al obtener las inscripciones del curso');
+    }
+    const data = await response.json();
+    return data.token; 
+  } catch (error) {
+    console.error('Error al obtener inscripciones:', error);
+    throw error;
+  }
+};

@@ -8,8 +8,7 @@ import  {jwtDecode} from 'jwt-decode';
 
 const usuarioToken = localStorage.getItem('authToken');
 const decodedUsuarioToken = usuarioToken ? jwtDecode(usuarioToken) : null;
-const usuarioId = decodedUsuarioToken ? decodedUsuarioToken.id : null;
-
+const usuarioId = decodedUsuarioToken?.id || null;
 export const NavegacionAlu = () => {
 
   const [cursos, setCursos] = useState([]);
