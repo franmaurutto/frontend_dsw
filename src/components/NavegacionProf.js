@@ -8,18 +8,17 @@ import  {jwtDecode} from 'jwt-decode';
 import { getCurso } from '../services/CursoServices.js';
 
 const usuarioToken = localStorage.getItem('authToken');
+
 const decodedUsuarioToken = usuarioToken ? jwtDecode(usuarioToken) : null;
 const usuarioId = decodedUsuarioToken?.id || null;
-console.log(decodedUsuarioToken)
-console.log(decodedUsuarioToken.id)
-console.log('usuario id',usuarioId)
+
+
 
 export const NavegacionProf = () => {
   const [cursos, setCursos] = useState([]);
   const navigate = useNavigate(); 
 
   useEffect(() => {
-    console.log(decodedUsuarioToken)
     if (decodedUsuarioToken && usuarioId) {
         const fetchCursos = async () => {
           try {
