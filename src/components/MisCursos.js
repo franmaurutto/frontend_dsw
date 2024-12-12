@@ -5,16 +5,18 @@ import '../styles/MisCursos.css';
 import NavBar from './NavBar.js';
 import { useNavigate } from 'react-router-dom';
 import  {jwtDecode} from 'jwt-decode';
+import { getCurso } from '../services/CursoServices.js';
+import { getParcial } from '../services/ParcialServices.js';
 
-const usuarioToken = localStorage.getItem('authToken');
-const decodedUsuarioToken = usuarioToken ? jwtDecode(usuarioToken) : null;
-const usuarioId = decodedUsuarioToken ? decodedUsuarioToken.id : null;
 export const MisCursos = () => {
 
   const navigate= useNavigate();
   const [cursos, setCursos] = useState([]);
   const [mensajeExito, setMensajeExito] = useState('');
   console.log("esta x entrar")
+  const usuarioToken = localStorage.getItem('authToken');
+  const decodedUsuarioToken = usuarioToken ? jwtDecode(usuarioToken) : null;
+  const usuarioId = decodedUsuarioToken ? decodedUsuarioToken.id : null;
   const aluLinks = [
     { label: 'Mi cuenta', path: '/mi-cuenta' },
     { label: 'Mis Cursos', path: '/mis-cursos' },
@@ -82,26 +84,22 @@ useEffect(() => {
     navigate('/nav-alu')
   }
 
-  const handleModificarInscripcion = async (inscripcionId) => {
-    const confirmation = window.confirm('¿Estás seguro de que quieres modificar la fecha de inscripción? Esta acción cambiará la fecha a la fecha actual.');
-    if (confirmation) {
-      try {
-        const today = new Date().toISOString().split('T')[0];
-        await updateInscripcion(inscripcionId, { fechaInscripcion: today });
-        
-        setMensajeExito('Fecha de inscripción actualizada correctamente.');
-        setTimeout(() => setMensajeExito(''), 5000);
-        setCursos((prevCursos) =>
-          prevCursos.map(curso =>
-            curso.inscripcionId === inscripcionId
-              ? { ...curso, fechaInscripcion: today } 
-              : curso
-          )
-        );
-      } catch (error) {
-        console.error('Error al modificar la inscripción:', error);
-      }
-    }
+  const handleVerParcial = async (cursoId, inscripcionId, parcialId) => {
+    console.log(parcialId)
+    const data = await getCurso(cursoId);
+    const decodedToken = jwtDecode(data);
+    if (!decodedToken) throw new Error('No se recibió token del curso.');
+    localStorage.setItem('cursoToken', data);
+    const data1 = await getInscripcion(inscripcionId);
+    const decodedToken1 = jwtDecode(data1);
+    if (!decodedToken1) throw new Error('No se recibió token del curso.');
+    localStorage.setItem('inscripcionToken', data1);
+    const data2 = await getParcial(parcialId);
+    const decodedToken2 = jwtDecode(data2);
+    if (!decodedToken2) throw new Error('No se recibió token del curso.');
+    localStorage.setItem('parcialToken', data2);
+    console.log(data2)
+    navigate('/ver-parcial');
   };
 
   return (
@@ -120,9 +118,9 @@ useEffect(() => {
                   <div>
                     <button
                       className="boton-cursos"
-                      onClick={() => handleModificarInscripcion(curso.inscripcionId)}
+                      onClick={() => handleVerParcial(curso.id, curso.inscripcionId, curso.parcial)}
                     >
-                      Modificar Fecha Inscripción
+                      Ver Parcial
                     </button>
                     <button
                       className="boton-cursos"

@@ -16,6 +16,10 @@ import { CrearMaterial } from './components/CrearMaterial.js';
 import {Materiales} from './components/Materiales.js';
 import {ModificarMaterial} from './components/ModificarMaterial.js';
 import {AgregarMaterial} from './components/AgregarMaterial.js';
+import {VerParcial} from './components/VerParcial.js';
+import RtaParcial from './components/RtaParcial.js';
+import VerRtasParcial from './components/VerRtasParcial.js';
+
 import { Tp } from './components/Tp.js';
 import { InscripcionesCurso } from "./components/InscripcionesCurso.js";
 function App() {
@@ -40,6 +44,9 @@ function App() {
           <Route path="/materiales" element={<Materiales />} />
           <Route path="/modificar-material" element={<ModificarMaterial />} />
           <Route path="/agregar-material" element={<AgregarMaterial />} />
+          <Route path="/ver-parcial" element={<VerParcial />} />
+          <Route path="/rta-parcial" element={<RtaParcial />} />
+          <Route path="/ver-rtasparcial" element={<VerRtasParcial />} />
           <Route path="/tp" element={<Tp />} />
           <Route path="/inscripciones-curso" element={<InscripcionesCurso />} />
           

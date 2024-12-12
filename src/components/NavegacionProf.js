@@ -7,16 +7,14 @@ import { useNavigate } from 'react-router-dom';
 import  {jwtDecode} from 'jwt-decode'; 
 import { getCurso } from '../services/CursoServices.js';
 
-const usuarioToken = localStorage.getItem('authToken');
-const decodedUsuarioToken = usuarioToken ? jwtDecode(usuarioToken) : null;
-const usuarioId = decodedUsuarioToken?.id || null;
-
 export const NavegacionProf = () => {
   const [cursos, setCursos] = useState([]);
   const navigate = useNavigate(); 
-
+  const usuarioToken = localStorage.getItem('authToken');
+  const decodedUsuarioToken = usuarioToken ? jwtDecode(usuarioToken) : null;
+  const usuarioId = decodedUsuarioToken?.id || null;
+  
   useEffect(() => {
-    console.log(decodedUsuarioToken)
     if (decodedUsuarioToken && usuarioId) {
         const fetchCursos = async () => {
           try {
@@ -44,9 +42,7 @@ export const NavegacionProf = () => {
     try {
       if (!cursoId) throw new Error('ID de curso inválido');
       const data = await getCurso(cursoId);
-      console.log(data)
       const decodedToken = jwtDecode(data);
-      console.log(decodedToken)
       if (!decodedToken) throw new Error('No se recibió token del curso.');
       console.log('Información del token decodificado:', decodedToken);
       localStorage.setItem('cursoToken', data);

@@ -6,11 +6,10 @@ import { getCursos } from '../services/CursoServices.js';
 import { getCurso } from '../services/CursoServices.js';
 import  {jwtDecode} from 'jwt-decode';
 
-const usuarioToken = localStorage.getItem('authToken');
-const decodedUsuarioToken = usuarioToken ? jwtDecode(usuarioToken) : null;
-const usuarioId = decodedUsuarioToken?.id || null;
 export const NavegacionAlu = () => {
-
+  const usuarioToken = localStorage.getItem('authToken');
+  const decodedUsuarioToken = usuarioToken ? jwtDecode(usuarioToken) : null;
+  const usuarioId = decodedUsuarioToken ? decodedUsuarioToken.id : null;
   const [cursos, setCursos] = useState([]);
   const navigate = useNavigate();
 

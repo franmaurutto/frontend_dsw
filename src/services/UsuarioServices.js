@@ -96,9 +96,11 @@ export const cambiarContrasenia = async (usuarioId,viejaContrasenia,nuevaContras
   });
 
   if (!response.ok) {
-    throw new Error('Error al actualizar el usuario');
+      const errorData = await response.json(); 
+      console.error('Error del servidor:', errorData.message); 
+      throw new Error(errorData.message || 'Error al actualizar el usuario');
   }
-  return response.json();
+  return await response.json();
 }
 
 export const deleteUsuario = async (usuarioId) => {

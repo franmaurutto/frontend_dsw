@@ -6,9 +6,7 @@ import { getTp, updateTp, deleteTp,createTp } from '../services/TpServices.js';
 import NavBar from './NavBar.js';
 import '../styles/Tp.css';
 
-const cursoToken = localStorage.getItem('cursoToken'); 
-const decodedCursoToken = cursoToken ? jwtDecode(cursoToken) : null;
-const tpId = decodedCursoToken?.tpId || null;
+
 
 export const Tp = () => {
 
@@ -18,6 +16,7 @@ export const Tp = () => {
   const [consigna, setConsigna] = useState('');
   const [fechaLimite, setFechaLimite] = useState('');
   const [mensajeExito, setMensajeExito] = useState('');
+  const [cursoToken, setCursoToken] = useState(localStorage.getItem('cursoToken'));
 
   const navigate=useNavigate()
 
@@ -29,6 +28,8 @@ export const Tp = () => {
     { label: 'Materiales', path: '/materiales' },
   ];
 
+  const decodedCursoToken = cursoToken ? jwtDecode(cursoToken) : null;
+  const tpId = decodedCursoToken?.tpId || null;
 
   useEffect(() => {
     const fetchTp = async () => {
@@ -48,7 +49,7 @@ export const Tp = () => {
       }
     };
     fetchTp();
-  }, [tpId]);
+  }, [cursoToken]);
 
 
   useEffect(() => {

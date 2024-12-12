@@ -6,11 +6,6 @@ import '../styles/Parcial.css';
 import { useNavigate } from 'react-router-dom';
 import  {jwtDecode} from 'jwt-decode';
 
-const cursoToken = localStorage.getItem('cursoToken'); 
-const decodedCursoToken = cursoToken ? jwtDecode(cursoToken) : null;
-const parcialId = decodedCursoToken?.parcialId || null;
-
-console.log(parcialId)
 
 export const Parcial = () => {
   const [parcial, setParcial] = useState(null);
@@ -21,7 +16,10 @@ export const Parcial = () => {
   const [horaComienzo, setHoraComienzo] = useState('');
   const [horaFin, setHoraFin] = useState('');
   const [mensajeExito, setMensajeExito] = useState('');
-
+  const cursoToken = localStorage.getItem('cursoToken'); 
+  const decodedCursoToken = cursoToken ? jwtDecode(cursoToken) : null;
+  const parcialId = decodedCursoToken?.parcialId || null;
+  console.log(parcialId)
   const navigate=useNavigate()
 
   const profLinks = [
@@ -39,7 +37,10 @@ export const Parcial = () => {
       try {
         if (parcialId) {
           const response = await getParcial(parcialId); 
-          setParcial(response.data);
+          console.log(response)
+          const decodedParcialToken = response ? jwtDecode(response) : null;
+          setParcial(decodedParcialToken);
+          console.log(decodedParcialToken)
         } else {
           throw new Error('No se encontró un idParcial en el token.');
         }
@@ -54,6 +55,7 @@ export const Parcial = () => {
   }, []);//le saque parcialId
 
   useEffect(() => {
+    console.log(parcial)
     if (parcial) {
       setFecha(parcial.fecha ? parcial.fecha.split('T')[0] : '');
       setConsigna(parcial.consigna || '');
