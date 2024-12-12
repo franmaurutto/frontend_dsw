@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useCurso } from './CursoContext.js';
 import { deleteCurso, updateCurso, getMaterialesCurso } from '../services/CursoServices.js';
 import { updateMaterial } from '../services/MaterialService.js'; 
 import NavBar from './NavBar.js';
@@ -27,6 +26,7 @@ export const DatosCurso = () => {
   const [dias, setDias] = useState('');
   const [cursoToken, setCursoToken] = useState('');
   const [parcialId]=useState(decodedCursoToken ? decodedCursoToken.parcial_id:'');
+  const [tpId]=useState(decodedCursoToken ? decodedCursoToken.tp_id:'')
   const [profesor] = useState(null);
   const [mensajeExito, setMensajeExito] = useState('');
   const [materiales, setMateriales] = useState([]); 
@@ -124,6 +124,14 @@ export const DatosCurso = () => {
       navigate('/parcial');
     }
   }
+
+  const handleTp = () => {
+    if (tpId) {
+      navigate('/tp', { state: { id: tpId } });
+    } else {
+      navigate('/tp');
+    }
+  }
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!cursoId) {
@@ -190,6 +198,7 @@ export const DatosCurso = () => {
             <button onClick={handleEliminar}>Eliminar Curso</button>
             <button onClick={() => navigate('/inscripciones-curso')}>Listar Inscripciones</button>
             <button onClick={handleAgregarMaterial}>Agregar Material</button>
+            <button onClick={handleTp}>Trabajo Practico</button>
           </div>
         </form>
 

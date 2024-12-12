@@ -1,23 +1,25 @@
 import React from 'react'
 import NavBar from './NavBar.js'
 import '../styles/NavegacionProf.css';
-import { useUser } from './UsuarioContext.js';
 import { useState,useEffect } from 'react';
 import { getCursosProfesor } from '../services/UsuarioServices.js';
 import { useNavigate } from 'react-router-dom';
-import { useCurso } from './CursoContext.js';
 import  {jwtDecode} from 'jwt-decode'; 
 import { getCurso } from '../services/CursoServices.js';
 
 const usuarioToken = localStorage.getItem('authToken');
 const decodedUsuarioToken = usuarioToken ? jwtDecode(usuarioToken) : null;
-const usuarioId = decodedUsuarioToken?.id||null;
+const usuarioId = decodedUsuarioToken?.id || null;
+console.log(decodedUsuarioToken)
+console.log(decodedUsuarioToken.id)
+console.log('usuario id',usuarioId)
 
 export const NavegacionProf = () => {
   const [cursos, setCursos] = useState([]);
   const navigate = useNavigate(); 
 
   useEffect(() => {
+    console.log(decodedUsuarioToken)
     if (decodedUsuarioToken && usuarioId) {
         const fetchCursos = async () => {
           try {
@@ -30,7 +32,7 @@ export const NavegacionProf = () => {
         fetchCursos();
       }
     }
-  , []);
+  , [decodedUsuarioToken, usuarioId]);
 
   const profLinks = [
   { label: 'Mi cuenta', path: '/mi-cuenta' },

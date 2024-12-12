@@ -1,14 +1,14 @@
- import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { deleteParcial, getParcial } from '../services/ParcialServices.js';
 import NavBar from './NavBar.js';
 import { updateParcial, createParcial } from '../services/ParcialServices.js';
 import '../styles/Parcial.css';
-import {useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import  {jwtDecode} from 'jwt-decode';
 
 const cursoToken = localStorage.getItem('cursoToken'); 
 const decodedCursoToken = cursoToken ? jwtDecode(cursoToken) : null;
-const parcialId = decodedCursoToken?.parcialId || null;
+const parcialId = decodedCursoToken?.parcialId || null;
 
 console.log(parcialId)
 
