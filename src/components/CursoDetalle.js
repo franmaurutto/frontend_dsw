@@ -7,15 +7,15 @@ import { useParams } from 'react-router-dom';
 import { createInscripcion } from '../services/InscripcionServices.js';
 import  {jwtDecode} from 'jwt-decode';
 
-const usuarioToken = localStorage.getItem('authToken');
-const decodedUsuarioToken = usuarioToken ? jwtDecode(usuarioToken) : null;
-const usuarioId = decodedUsuarioToken ? decodedUsuarioToken.id : null;
-const cursoToken = localStorage.getItem('cursoToken');
-const decodedCursoToken = cursoToken ? jwtDecode(cursoToken) : null;
-const cursoId = decodedCursoToken ? decodedCursoToken.id : null;
 
 export const CursoDetalle = () => {
   //const { usuario } = useUser();
+  const usuarioToken = localStorage.getItem('authToken');
+  const decodedUsuarioToken = usuarioToken ? jwtDecode(usuarioToken) : null;
+  const usuarioId = decodedUsuarioToken ? decodedUsuarioToken.id : null;
+  const cursoToken = localStorage.getItem('cursoToken');
+  const decodedCursoToken = cursoToken ? jwtDecode(cursoToken) : null;
+
   const { cursoId } = useParams();  
   const [curso, setCurso] = useState(null);
   const [mensajeExito, setMensajeExito] = useState('');

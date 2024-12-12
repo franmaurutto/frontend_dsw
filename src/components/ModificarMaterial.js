@@ -6,16 +6,14 @@ import NavBar from './NavBar.js';
 import '../styles/ModificarMaterial.css';
 import  {jwtDecode} from 'jwt-decode';
 
-const materialToken = localStorage.getItem('materialToken');
-const decodedMaterialToken = materialToken ? jwtDecode(materialToken) : null;
-const materialId = decodedMaterialToken ? decodedMaterialToken.id : null;
-
 
 export const ModificarMaterial = () => {
   const [titulo, setTitulo] =useState( '');
   const [descripcion, setDescripcion] = useState('');
   const [materialId, setMaterialId] = useState(null);
   const [mensajeExito, setMensajeExito] = useState('');
+  const materialToken = localStorage.getItem('materialToken');
+  const decodedMaterialToken = materialToken ? jwtDecode(materialToken) : null;
 
   const profLinks = [
   { label: 'Mi cuenta', path: '/mi-cuenta' },

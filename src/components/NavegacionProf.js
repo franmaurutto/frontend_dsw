@@ -9,14 +9,13 @@ import { useCurso } from './CursoContext.js';
 import  {jwtDecode} from 'jwt-decode'; 
 import { getCurso } from '../services/CursoServices.js';
 
-const usuarioToken = localStorage.getItem('authToken');
-const decodedUsuarioToken = usuarioToken ? jwtDecode(usuarioToken) : null;
-const usuarioId = decodedUsuarioToken ? decodedUsuarioToken.id : null;
-
 export const NavegacionProf = () => {
   const [cursos, setCursos] = useState([]);
   const navigate = useNavigate(); 
-
+  const usuarioToken = localStorage.getItem('authToken');
+  const decodedUsuarioToken = usuarioToken ? jwtDecode(usuarioToken) : null;
+  const usuarioId = decodedUsuarioToken?.id || null;
+  
   useEffect(() => {
     if (decodedUsuarioToken && usuarioId) {
         const fetchCursos = async () => {
