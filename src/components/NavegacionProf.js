@@ -1,11 +1,9 @@
 import React from 'react'
 import NavBar from './NavBar.js'
 import '../styles/NavegacionProf.css';
-import { useUser } from './UsuarioContext.js';
 import { useState,useEffect } from 'react';
 import { getCursosProfesor } from '../services/UsuarioServices.js';
 import { useNavigate } from 'react-router-dom';
-import { useCurso } from './CursoContext.js';
 import  {jwtDecode} from 'jwt-decode'; 
 import { getCurso } from '../services/CursoServices.js';
 
@@ -29,7 +27,7 @@ export const NavegacionProf = () => {
         fetchCursos();
       }
     }
-  , []);
+  , [decodedUsuarioToken, usuarioId]);
 
   const profLinks = [
   { label: 'Mi cuenta', path: '/mi-cuenta' },
@@ -44,9 +42,7 @@ export const NavegacionProf = () => {
     try {
       if (!cursoId) throw new Error('ID de curso inválido');
       const data = await getCurso(cursoId);
-      console.log(data)
       const decodedToken = jwtDecode(data);
-      console.log(decodedToken)
       if (!decodedToken) throw new Error('No se recibió token del curso.');
       console.log('Información del token decodificado:', decodedToken);
       localStorage.setItem('cursoToken', data);

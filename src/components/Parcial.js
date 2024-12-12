@@ -1,10 +1,9 @@
- import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { deleteParcial, getParcial } from '../services/ParcialServices.js';
 import NavBar from './NavBar.js';
 import { updateParcial, createParcial } from '../services/ParcialServices.js';
 import '../styles/Parcial.css';
-import { useCurso } from './CursoContext.js';
-import {useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import  {jwtDecode} from 'jwt-decode';
 
 

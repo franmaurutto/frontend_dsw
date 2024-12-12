@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { getCursoDeInscripcion, deleteInscripcion, updateInscripcion, getInscripcion } from '../services/InscripcionServices.js';
-import { getInscripcionesAlumno, getCursosProfesor } from '../services/UsuarioServices.js';
-import { useUser } from './UsuarioContext.js';
+import { getCursoDeInscripcion, deleteInscripcion, updateInscripcion } from '../services/InscripcionServices.js';
+import { getInscripcionesAlumno} from '../services/UsuarioServices.js';
 import '../styles/MisCursos.css';
 import NavBar from './NavBar.js';
 import { useNavigate } from 'react-router-dom';
