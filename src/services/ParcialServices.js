@@ -30,7 +30,10 @@ export const getParcial = async (id) => {
   if (!response.ok) {
     throw new Error('Error al obtener el parcial');
   }
-  return response.json();
+  const data = await response.json()
+  console.log(data.token)
+  console.log(data)
+  return data.parcialToken;
 };
 
 export const updateParcial = async (parcialId, parcial) => {
@@ -48,4 +51,16 @@ export const deleteParcial = async (parcialId) => {
     headers: getHeaders()
   }); 
   return response.json();
+};
+
+export const getRtaParcialdeParcial = async (parcialId) => {
+  const response = await fetch(`${API_URL}/${parcialId}/rtasParcial`, {
+    method: 'GET',
+    headers: getHeaders(), 
+  }); 
+  if (!response.ok) {
+    throw new Error('Error al obtener las rtasParcial');
+  }
+  const { data } = await response.json(); 
+  return data;
 };

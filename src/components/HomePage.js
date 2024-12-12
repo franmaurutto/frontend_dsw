@@ -5,6 +5,8 @@ import '../styles/HomePage.css';
 import { useState } from 'react';
 import { authUsuario } from '../services/UsuarioServices.js';
 import { jwtDecode } from 'jwt-decode';
+import { EyeClosedIcon } from 'lucide-react';
+import { LucideEye } from 'lucide-react';
 
 
 
@@ -13,6 +15,7 @@ const HomePage = () => {
   const [mail, setMail] = useState('');
   const [contrasenia, setContrasenia] = useState('');
   const [error, setError] = useState(null);
+  const [isVisible, setIsVisible] = useState(false);
   const homeLinks = [
   { label: 'Inicio', path: '/' },
   { label: 'Sobre Nosotros', path: '/sobre-nosotros' },
@@ -22,6 +25,10 @@ const HomePage = () => {
   const navigate = useNavigate();
   const handleMailChange = (e) => setMail(e.target.value);
   const handleContraseniaChange = (e) => setContrasenia(e.target.value);
+  
+  const handleClick = () => {
+    setIsVisible (!isVisible);
+  }
 
 const handleSubmit = async (e) => {
     e.preventDefault();
@@ -62,7 +69,18 @@ const handleSubmit = async (e) => {
           <h3 >Inicia Sesion</h3>
           <form onSubmit={handleSubmit}>
           <input type="email"className='inp'placeholder='Email' name='mail' value={mail} onChange={handleMailChange}></input>
-          <input type="Password" className='inp' placeholder='Contraseña' name='contrasenia' value={contrasenia} onChange={handleContraseniaChange}></input>
+          <div className="relative password-field">
+            <input type={isVisible ? "text" : "Password"} 
+             className='inp password-input' 
+             placeholder='Contraseña' name='contrasenia' value={contrasenia} onChange={handleContraseniaChange}/>
+            <button type="button" onClick={handleClick} className='eye-button'>
+              {
+                isVisible ? <EyeClosedIcon /> : <LucideEye />
+              }
+            </button>
+            
+          </div>
+          
           <button className='btn_is'>Iniciar Sesion</button>       
           </form>
           {error && <p className="error-box">{error}</p>}

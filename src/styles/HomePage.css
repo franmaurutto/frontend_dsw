@@ -1,3 +1,36 @@
+.relative.password-field {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.password-input {
+  flex: 1;
+  padding-right: 50px; 
+}
+
+.eye-button {
+  position: absolute;
+  right: 10px; 
+  background-color: #f4c2c2;
+  border: none;
+  color: #fff;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.eye-button:hover {
+  background-color: #f08080;
+}
+
+
+
 @media (min-width: 768px) and (max-width: 1023px) {
 
   .home-page {

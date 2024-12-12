@@ -92,3 +92,6 @@ export const Materiales = () => {
     </div>
   );
 };
+
+
+export default Materiales;

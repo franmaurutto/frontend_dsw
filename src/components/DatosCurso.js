@@ -5,6 +5,7 @@ import { updateMaterial } from '../services/MaterialService.js';
 import NavBar from './NavBar.js';
 import '../styles/DatosCurso.css';
 import  {jwtDecode} from 'jwt-decode';
+import { getParcial } from '../services/ParcialServices.js';
 
 const usuarioToken = localStorage.getItem('authToken');
 const decodedUsuarioToken = usuarioToken ? jwtDecode(usuarioToken) : null;
@@ -101,7 +102,14 @@ export const DatosCurso = () => {
       }
     }
   };
-
+  const handleVerRtaParcial = async (parcialId) => {
+    const data2 = await getParcial(parcialId);
+    const decodedToken2 = jwtDecode(data2);
+    if (!decodedToken2) throw new Error('No se recibió token del curso.');
+    localStorage.setItem('parcialToken', data2);
+    console.log(data2);
+    navigate('/ver-rtasparcial');
+  };
   const handleEliminarMaterial = (materialId) => {
     const confirmation = window.confirm('¿Estás seguro de que quieres eliminar este material del curso?');
     if (confirmation) {
@@ -197,6 +205,7 @@ export const DatosCurso = () => {
             <button onClick={() => handleParcial(decodedCursoToken.parcialId)}>Parcial</button>
             <button onClick={handleEliminar}>Eliminar Curso</button>
             <button onClick={handleAgregarMaterial}>Agregar Material</button>
+            <button onClick={() => handleVerRtaParcial(decodedCursoToken.parcialId)}>Ver Respuestas Parcial</button>
             <button onClick={handleTp}>Trabajo Practico</button>
           </div>
         </form>

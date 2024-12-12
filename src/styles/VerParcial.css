@@ -1,0 +1,172 @@
+
+.parcial-detalle {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    background-color: #f8e3e9;
+    padding-top: 70px;
+    height: 100vh;
+    overflow: auto;
+  }
+  
+  .parcial-curso-detalle {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    width: 100%;
+    margin-top: 20px;
+    height: auto;
+    position: relative;
+  }
+
+  .parcial-detalle h1 {
+    margin-bottom: 20px;
+    color: #333;
+    font-size: 24px;
+    text-align: center;
+  }
+
+  .parcial-detalle .curso-info {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+    width: 100%;
+  }
+  
+  .parcial-detalle .curso-info p {
+    font-size: 1rem;
+    margin: 5px 0;
+  }
+  
+  .parcial-detalle .curso-info strong {
+    font-weight: bold;
+    color: #f06292;
+  }
+
+.rtaparcial-btn {
+    background-color: #f8bbd0;
+    border: 1px solid #f06292;
+    color: #f06292;
+    padding: 12px 25px;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    margin-top: 20px;
+    width: 90%;
+  }
+
+  .rtaparcial-btn:hover {
+    background-color: #f06292;
+    color: white;
+  }
+
+  .rtaparcial-btn {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    display: block;
+    align-items: center;
+    text-align: center;
+    width: 90%;
+  }
+
+  @media (min-width: 1024px) {
+    .navbar {
+      display: flex;
+      align-items: center;
+      height: 40px;
+      padding: 0;
+      background-color: #dd84a0;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      position: fixed;
+      top: 0;
+      left: 0;
+    }
+  
+    .parcial-detalle {
+      padding-top: 60px;
+    }
+  
+    .parcial-curso-detalle {
+      max-width: 600px;
+      padding: 20px;
+    }
+  
+    .rtaparcial-btn {
+      width: 90%;
+    }
+  }
+
+  @media (max-width: 1023px) and (min-width: 768px) {
+    .navbar {
+      display: flex;
+      align-items: center;
+      height: 50px;
+      padding: 0 20px;
+      background-color: #dd84a0;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      justify-content: space-between;
+    }
+  
+    .parcial-detalle {
+      padding-top: 70px; 
+    }
+  
+    .parcial-curso-detalle {
+      max-width: 600px;
+      padding: 20px;
+    }
+  
+    .rtaparcial-btn {
+      width: 90%;
+    }
+  }
+
+  @media (max-width: 767px) {
+    .navbar {
+      display: flex;
+      align-items: center;
+      height: 60px;
+      padding: 0 10px;
+      background-color: #dd84a0;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      justify-content: space-between;
+    }
+  
+    .parcial-detalle {
+      padding-top: 80px;
+    }
+  
+    .parcial-curso-detalle {
+      padding: 15px;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      max-width: 90%;
+    }
+  
+    .rtaparcial-btn {
+      width: 100%;
+      font-size: 1rem;
+    }
+  }
+  
