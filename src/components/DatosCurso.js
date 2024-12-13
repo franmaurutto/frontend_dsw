@@ -7,14 +7,14 @@ import '../styles/DatosCurso.css';
 import  {jwtDecode} from 'jwt-decode';
 import { getParcial } from '../services/ParcialServices.js';
 
-const usuarioToken = localStorage.getItem('authToken');
-const decodedUsuarioToken = usuarioToken ? jwtDecode(usuarioToken) : null;
-const usuarioId = decodedUsuarioToken ? decodedUsuarioToken.id : null;
-const cursoToken = localStorage.getItem('cursoToken');
-const decodedCursoToken = cursoToken ? jwtDecode(cursoToken) : null;
-const cursoId = decodedCursoToken ? decodedCursoToken.id : null;
-
 export const DatosCurso = () => {
+  const usuarioToken = localStorage.getItem('authToken');
+  const decodedUsuarioToken = usuarioToken ? jwtDecode(usuarioToken) : null;
+  const usuarioId = decodedUsuarioToken ? decodedUsuarioToken.id : null;
+  const cursoToken = localStorage.getItem('cursoToken');
+  const decodedCursoToken = cursoToken ? jwtDecode(cursoToken) : null;
+  const cursoId = decodedCursoToken ? decodedCursoToken.id : null;
+  
   const [cursos, setCurso] = useState([]);
   const [nombre, setNombre] = useState('');
   const [descripcion, setDescripcion] = useState('');
@@ -25,12 +25,14 @@ export const DatosCurso = () => {
   const [horaInicio, setHoraInicio] = useState('');
   const [horaFin, setHoraFin] = useState('');
   const [dias, setDias] = useState('');
-  const [cursoToken, setCursoToken] = useState('');
+  //const [cursoToken, setCursoToken] = useState('');
   const [parcialId]=useState(decodedCursoToken ? decodedCursoToken.parcial_id:'');
   const [tpId]=useState(decodedCursoToken ? decodedCursoToken.tp_id:'')
   const [profesor] = useState(null);
   const [mensajeExito, setMensajeExito] = useState('');
   const [materiales, setMateriales] = useState([]); 
+  const [mensajeError, setMensajeError] = useState('');
+
 
   const navigate = useNavigate();
 
@@ -43,8 +45,9 @@ export const DatosCurso = () => {
   ];
 
   useEffect(() => {
-    if (decodedCursoToken) {
-      setCursoToken(decodedCursoToken); 
+    const fetchData = async ()=>{
+      if (decodedCursoToken) {
+      //setCursoToken(decodedCursoToken); 
       setNombre(decodedCursoToken.nombre || '');
       setDescripcion(decodedCursoToken.descripcion || '');
       setCantCupos(decodedCursoToken.cantCupos);
@@ -53,7 +56,21 @@ export const DatosCurso = () => {
       setHoraInicio(decodedCursoToken.horaInicio || '');
       setHoraFin(decodedCursoToken.horaFin || '');
       setDias(decodedCursoToken.dias || '');
+      if (decodedCursoToken.parcialId) {
+        try {
+          const response = await getParcial(decodedCursoToken.parcialId);
+          const decodedToken = jwtDecode(response);
+          if (!decodedToken) throw new Error('No se recibió token de autenticación.');
+          localStorage.setItem('parcialToken', response);
+        } catch (error) {
+          console.error('Error fetching parcial:', error);
+        }
+      } else {
+        console.log('No parcialId available.');
+      }
     }
+    }
+    fetchData()
   }, []);
 
   useEffect(() => {
@@ -74,7 +91,6 @@ export const DatosCurso = () => {
       const startDate = new Date(fechaInicio);
       const endDate = new Date(fechaFin);
       const timeDiff = endDate - startDate;
-
       if (timeDiff > 0) {
         const days = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
         setDuracion(`${days} días`);
@@ -103,12 +119,15 @@ export const DatosCurso = () => {
     }
   };
   const handleVerRtaParcial = async (parcialId) => {
-    const data2 = await getParcial(parcialId);
-    const decodedToken2 = jwtDecode(data2);
-    if (!decodedToken2) throw new Error('No se recibió token del curso.');
-    localStorage.setItem('parcialToken', data2);
-    console.log(data2);
-    navigate('/ver-rtasparcial');
+    if (decodedCursoToken.parcialId) {
+      navigate('/ver-rtasparcial');
+    } else {
+      setMensajeError('No existe parcial para mostrar respuestas.'); 
+      setTimeout(() => {
+        setMensajeError('');
+      }, 5000);
+      setMensajeExito('')
+    }
   };
   const handleEliminarMaterial = (materialId) => {
     const confirmation = window.confirm('¿Estás seguro de que quieres eliminar este material del curso?');
@@ -141,6 +160,7 @@ export const DatosCurso = () => {
     }
   }
   const handleSubmit = (e) => {
+    console.log('upfdate')
     e.preventDefault();
     if (!cursoId) {
       console.error("Error: No se pudo obtener el ID del curso.");
@@ -183,6 +203,7 @@ export const DatosCurso = () => {
       <div className="mod-curso">
         <h1>Datos del curso</h1>
         {mensajeExito && <p className="mensaje-exito">{mensajeExito}</p>}
+        {mensajeError && <p className="mensaje-error">{mensajeError}</p>}
         <form onSubmit={handleSubmit} className="modificar">
           <label>Nombre:</label>
           <input type="text" value={nombre} onChange={(e) => setNombre(e.target.value)} />
@@ -200,13 +221,14 @@ export const DatosCurso = () => {
           <input type="text" value={horaInicio} onChange={(e) => setHoraInicio(e.target.value)} />
           <label>Hora de finalización:</label>
           <input type="text" value={horaFin} onChange={(e) => setHoraFin(e.target.value)} />
+          
           <div className="btns-curso">
             <button type="submit">Modificar Datos</button>
-            <button onClick={() => handleParcial(decodedCursoToken.parcialId)}>Parcial</button>
-            <button onClick={handleEliminar}>Eliminar Curso</button>
-            <button onClick={handleAgregarMaterial}>Agregar Material</button>
-            <button onClick={() => handleVerRtaParcial(decodedCursoToken.parcialId)}>Ver Respuestas Parcial</button>
-            <button onClick={handleTp}>Trabajo Practico</button>
+            <button type="button" onClick={() => handleParcial(decodedCursoToken.parcialId)}>Parcial</button>
+            <button type="button" onClick={handleEliminar}>Eliminar Curso</button>
+            <button type="button" onClick={handleAgregarMaterial}>Agregar Material</button>
+            <button type="button" onClick={() => handleVerRtaParcial(decodedCursoToken.parcialId)}>Ver Rtas Parcial</button>
+            <button type="button" onClick={handleTp}>Trabajo Practico</button>
           </div>
         </form>
 
@@ -217,7 +239,7 @@ export const DatosCurso = () => {
               materiales.map(material => (
                 <li key={material.id} className="material-item">
                   <span>ID del material: {material.id} - {material.titulo}</span>
-                  <button onClick={() => handleEliminarMaterial(material.id)}>Eliminar Material</button>
+                  <button className='eliminar-material' onClick={() => handleEliminarMaterial(material.id)}>Eliminar Material</button>
                 </li>
               ))
             ) : (

@@ -85,6 +85,19 @@
     border-radius: 5px;
     text-align: center;
   }
+  .mensaje-error {
+    font-size: 0.9rem;
+    font-weight: bold;
+    margin-top: 10px;
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    text-align: center;
+    margin-top: 15px;
+  }
 
   .btns-curso {
     display: flex;
@@ -92,6 +105,8 @@
     gap: 10px;
     width: 100%;
     margin: 20px auto;
+    height: 100%;
+    word-wrap: break-word;
   }
 
   .btns-curso button {
@@ -103,12 +118,49 @@
     font-size: 1rem;
     cursor: pointer;
     width: 100%;
-    height: auto;
+    height: 100%;
     transition: background-color 0.3s ease;
+    word-wrap: break-word;
   }
 
   .btns-curso button:hover {
     background-color: #c23864;
+  }
+  .material-item {
+    display: flex;
+    flex-direction: column;
+    align-items:center;
+    margin-bottom: 10px;
+    word-wrap: break-word;
+    width: 100%;
+  }
+
+  .material-item span {
+    flex: 1;
+    margin-bottom: 15px;
+  }
+
+  .eliminar-material {
+    position: relative;
+    background-color: #f06292;
+    border: 1px solid #f06292;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    box-sizing: border-box;
+    width: auto;
+    height: auto;
+    padding: 6px 10px;
+    font-size: 14px;
+    margin-top: 5px;
+    align-self:flex-start
+  }
+  
+  .eliminar-material:hover {
+    background-color: #c23864;
+  }
+  .materiales-curso h2{
+    margin-top: 40px;
   }
 }
 
@@ -352,6 +404,7 @@
     cursor: pointer;
     width: 100%;
     transition: background-color 0.3s ease;
+    overflow-wrap: break-word;
   }
 
   .mod-curso button:hover {
