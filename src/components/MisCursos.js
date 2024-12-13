@@ -7,7 +7,6 @@ import { useNavigate } from 'react-router-dom';
 import  {jwtDecode} from 'jwt-decode';
 import { getCurso } from '../services/CursoServices.js';
 import { getParcial } from '../services/ParcialServices.js';
-import { getInscripcion } from '../services/InscripcionServices.js';
 import { getTp } from '../services/TpServices.js';
 
 console.log('miscursos1')
