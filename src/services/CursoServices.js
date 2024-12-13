@@ -13,7 +13,7 @@ export const GetInscripcionesCurso = async (cursoId) => {
       console.error('Error al obtener inscripciones del curso:', errorData.message);
       throw new Error(errorData.message || 'Error al obtener las inscripciones del curso');
     }
-
+    
     const data = await response.json(); 
     return data.token ; 
   } catch (error) {

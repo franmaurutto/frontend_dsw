@@ -21,6 +21,10 @@ export const NavegacionAlu = () => {
   ];
 
   useEffect(() => {
+    if (!usuarioToken || !decodedUsuarioToken) {
+      localStorage.removeItem('authToken');
+      navigate('/');
+    }
     if (usuarioId) { 
       const fetchCursos = async () => {
         try {
@@ -45,7 +49,6 @@ export const NavegacionAlu = () => {
     if (!decodedToken) {
       throw new Error('No se recibió el token del curso.');
     }
-    console.log(decodedToken);
     localStorage.setItem('cursoToken', response);
     navigate(`/curso/${cursoId}`); 
     } catch (error) {

@@ -1,67 +1,73 @@
 import React, { useEffect, useState } from 'react';
-import '../styles/VerRtasParcial.css';
+import '../styles/VerRtasTp.css'; 
 import NavBar from './NavBar.js';
 import { useNavigate } from 'react-router-dom';
-import {jwtDecode} from 'jwt-decode';
-import { getRtaParcialdeParcial } from '../services/ParcialServices.js';
-import { deleteRtaParcial, getInscripcionDeRtaParcial } from '../services/RtaParcialServices.js';
+import { jwtDecode } from 'jwt-decode';
+import { getRtaTpdeTp } from '../services/TpServices.js';
+import { deleteRtaTp, getInscripcionDeRtaTp } from '../services/RtaTpServices.js';
 import { getAlumnoDeInscripcion } from '../services/InscripcionServices.js';
 
-const VerRtasParcial = () => {
+const cursoToken = localStorage.getItem('cursoToken');
+  const decodedCursoToken = cursoToken ? jwtDecode(cursoToken) : null;
+  const tpId = decodedCursoToken ? decodedCursoToken.tpId : null;
+export const RespuestaTp = () => {
+
   const [rtas, setRtas] = useState([]);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(true);
-  const navigate = useNavigate();
-  const parcialToken = localStorage.getItem('parcialToken');
-  const decodedParcialToken = parcialToken ? jwtDecode(parcialToken) : null;
-  const parcialId = decodedParcialToken ? decodedParcialToken.id : null;
+  const navigate=useNavigate();
+  const cursoToken = localStorage.getItem('cursoToken');
+  const decodedCursoToken = cursoToken ? jwtDecode(cursoToken) : null;
+  const tpId = decodedCursoToken ? decodedCursoToken.tpId : null;
   const usuarioToken = localStorage.getItem('authToken');
   const decodedUsuarioToken = usuarioToken ? jwtDecode(usuarioToken) : null;
 
+
+
   useEffect(() => {
+    setLoading(false);
     if (!usuarioToken || !decodedUsuarioToken) {
       localStorage.removeItem('authToken');
       navigate('/');
     }
     const fetchRtas = async () => {
+
       try {
-        if (!parcialId) {
-          throw new Error('Parcial ID no encontrado.'); 
+        if (tpId) {
+          const rtasData = await getRtaTpdeTp(tpId);
+          const rtasConInscripciones = await Promise.all(
+            rtasData.map(async (rta) => {
+              const inscripcionData = await getInscripcionDeRtaTp(rta.id, rta.inscripcion);
+              const alumnoData = await getAlumnoDeInscripcion(inscripcionData.id, inscripcionData.usuario); 
+              return { ...rta, alumno: alumnoData };
+            })
+          );
+          setRtas(rtasConInscripciones);
         }
-  
-        const rtasData = await getRtaParcialdeParcial(parcialId); 
-        const rtasConInscripciones = await Promise.all(
-          rtasData.map(async (rta) => {
-            const inscripcionData = await getInscripcionDeRtaParcial(rta.id, rta.inscripcion);
-            const alumnoData = await getAlumnoDeInscripcion(inscripcionData.id, inscripcionData.usuario); 
-            return { ...rta, alumno: alumnoData };
-          })
-        );
-        setRtas(rtasConInscripciones);
       } catch (error) {
-        setError(error.message || 'Hubo un error al obtener las respuestas.');
-        console.error('Error al obtener las respuestas del parcial:', error);
+        setError('Hubo un error al obtener las respuestas.');
+        console.error('Error al obtener las respuestas del TP:', error);
       } finally {
         setLoading(false);
       }
     };
-  
+
     fetchRtas();
-  }, [parcialId]);
-  
+  }, [tpId]);
+
   const profLinks = [
     { label: 'Mi cuenta', path: '/mi-cuenta' },
     { label: 'Mis Cursos', path: '/nav-prof' },
     { label: 'Crear Curso', path: '/crear-curso' },
     { label: 'Crear Material', path: '/crear-material' },
     { label: 'Materiales', path: '/materiales' },
-    ];
+  ];
 
-  const handleDelete = async (rtaParcialId) => {
+  const handleDelete = async (rtaTPId) => {
     try {
-      const response = await deleteRtaParcial(rtaParcialId); 
+      const response = await deleteRtaTp(rtaTPId);
       if (response.success) {
-        setRtas((prevRtas) => prevRtas.filter((rta) => rta.id !== rtaParcialId));
+        setRtas((prevRtas) => prevRtas.filter((rta) => rta.id !== rtaTPId));
       } else {
         setError('No se pudo eliminar la respuesta');
       }
@@ -82,8 +88,8 @@ const VerRtasParcial = () => {
   return (
     <div className='nav-prof'>
       <NavBar links={profLinks}></NavBar>
-      <div className="rtas-parcial">
-        <h1>Respuestas del Parcial</h1>
+      <div className="rtas-tp">
+        <h1>Respuestas del TP</h1>
         {rtas.length > 0 ? (
           <table>
             <thead>
@@ -97,7 +103,7 @@ const VerRtasParcial = () => {
             <tbody>
               {rtas.map((rta, index) => (
                 <tr key={index}>
-                  <td>{rta.rtaConsignaParcial}</td>
+                  <td>{rta.rtaConsignaTP}</td>
                   <td>{rta.alumno.nombreCompleto}</td>
                   <td>{rta.alumno.mail}</td>
                   <td>{rta.alumno.telefono}</td>
@@ -109,11 +115,10 @@ const VerRtasParcial = () => {
             </tbody>
           </table>
         ) : (
-          <p>No se encontraron respuestas para este parcial.</p>
+          <p>No se encontraron respuestas para este TP.</p>
         )}
       </div>
     </div>
   );
 }  
 
-export default VerRtasParcial;

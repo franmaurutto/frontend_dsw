@@ -1,10 +1,10 @@
 import React from 'react';
-import { useMaterial } from './MaterialContext.js';
 import { updateMaterial } from '../services/MaterialService.js';
 import { useState, useEffect } from 'react';
 import NavBar from './NavBar.js';
 import '../styles/ModificarMaterial.css';
 import  {jwtDecode} from 'jwt-decode';
+import { useNavigate } from 'react-router-dom';
 
 
 export const ModificarMaterial = () => {
@@ -14,7 +14,7 @@ export const ModificarMaterial = () => {
   const [mensajeExito, setMensajeExito] = useState('');
   const materialToken = localStorage.getItem('materialToken');
   const decodedMaterialToken = materialToken ? jwtDecode(materialToken) : null;
-
+  const navigate = useNavigate()
   const profLinks = [
   { label: 'Mi cuenta', path: '/mi-cuenta' },
   { label: 'Mis Cursos', path: '/nav-prof' },
@@ -25,10 +25,21 @@ export const ModificarMaterial = () => {
 
   useEffect(() => {
       try {
+        const usuarioToken = localStorage.getItem('authToken');
+        const decodedUsuarioToken = usuarioToken ? jwtDecode(usuarioToken) : null;
+        if (!usuarioToken || !decodedUsuarioToken) {
+          localStorage.removeItem('authToken');
+          navigate('/');
+        }
         if (decodedMaterialToken) {
           setTitulo(decodedMaterialToken.titulo || '');
           setDescripcion(decodedMaterialToken.descripcion || '');
           setMaterialId(decodedMaterialToken.id || null);
+        }
+        if (!decodedUsuarioToken || decodedUsuarioToken.rol !== 'alumno') {
+          localStorage.removeItem('authToken');
+          navigate('/');
+          return;
         }
       } catch (error) {
         console.error('Error al decodificar el token:', error);
@@ -54,7 +65,6 @@ export const ModificarMaterial = () => {
   updateMaterial(materialId, updatedMaterial)
       .then((updatedData) => {
         setMensajeExito('Datos del material actualizados correctamente');
-        console.log('Datos actualizados del material:', updatedMaterial);
         setTimeout(() => setMensajeExito(''), 5000);
       })
       .catch((error) => {

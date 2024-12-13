@@ -8,6 +8,7 @@ import NavBar from './NavBar.js';
 import '../styles/InscripcionesCurso.css';
 
 
+
 const InscripcionesCurso = () => {
   const [alumnos, setAlumnos] = useState([]);
   const [cargando, setCargando] = useState(false);

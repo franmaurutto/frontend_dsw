@@ -1,5 +1,6 @@
 import React from 'react'
-import { useState} from 'react';
+import { useState, useEffect} from 'react'
+import { useNavigate } from 'react-router-dom';
 import '../styles/MiCuenta.css'
 import NavBar from './NavBar.js';
 import { jwtDecode } from 'jwt-decode';
@@ -23,7 +24,13 @@ const getUserFromToken = () => {
   }
 };
   const usuario = getUserFromToken();
-  
+  const navigate=useNavigate()
+  useEffect(() => {
+    if (!usuario) {
+      localStorage.removeItem('authToken');
+      navigate('/'); 
+    }
+  }, [usuario, navigate]);
   const [nombreCompleto, setNombreCompleto] =useState(usuario ? usuario.nombreCompleto : '');
   const [mail, setMail] = useState(usuario ? usuario.mail :'');
   const [telefono, setTelefono] = useState(usuario ? usuario.telefono : '');
@@ -96,15 +103,9 @@ const handleCambiarContrasenia = (e) => {
       return;
     }
     try {
-      console.log('entro')
       cambiarContrasenia(usuario.id, contraseñaActual, nuevaContraseña);
-
-      console.log('Contraseña actual:', contraseñaActual);
-      console.log('Nueva contraseña:', nuevaContraseña);
-
       setMensajeExito('Contraseña cambiada exitosamente.');
       setTimeout(() => setMensajeExito(''), 5000);
-
       setMostrarFormulario(false);
     } catch (error) {
         console.error('Error al cambiar la contraseña:', error.message);
@@ -114,34 +115,46 @@ const handleCambiarContrasenia = (e) => {
   };
 
 
-return (
+  return (
     <div className='pag-modificar'>
       <NavBar links={links}></NavBar>
       <div className='form-modificar'>
-      <h1>Datos de la cuenta</h1>
-      {mensajeExito && <p className="mensaje-exito">{mensajeExito}</p>}
-      {mensajeError && <p className="mensaje-error">{mensajeError}</p>}
-
-
-      {!mostrarFormulario ? (
-      <form onSubmit={handleSubmit} className='modificar'>
-        <label>Nombre Completo:</label>
-        <input type="text"
-            value={nombreCompleto}
-            onChange={(e) => setNombreCompleto(e.target.value)}>
-        </input>
-        <label>Email:</label>
-        <input type="email"
-            value={mail}
-            onChange={(e) => setMail(e.target.value)} placeholder={usuario ? usuario.mail : 'Cargando...'}>
-        </input>
-        <label>Telefono:</label>
-        <input type="text"
-            value={telefono}
-            onChange={(e) => setTelefono(e.target.value)}>
-        </input>
-        <button type='submit'>Modificar datos</button>
-      </form>):(
+        <h1>Datos de la cuenta</h1>
+        {mensajeExito && <p className="mensaje-exito">{mensajeExito}</p>}
+        {mensajeError && <p className="mensaje-error">{mensajeError}</p>}
+  
+        {!mostrarFormulario ? (
+          <form onSubmit={handleSubmit} className='modificar'>
+            <label>Nombre Completo:</label>
+            <input
+              type="text"
+              value={nombreCompleto}
+              onChange={(e) => setNombreCompleto(e.target.value)}
+            />
+            <label>Email:</label>
+            <input
+              type="email"
+              value={mail}
+              onChange={(e) => setMail(e.target.value)}
+              placeholder={usuario ? usuario.mail : 'Cargando...'}
+            />
+            <label>Telefono:</label>
+            <input
+              type="text"
+              value={telefono}
+              onChange={(e) => setTelefono(e.target.value)}
+            />
+            <div className="botones-container">
+              <button type='submit'>Modificar datos</button>
+              <button 
+                type="button"
+                onClick={() => setMostrarFormulario(!mostrarFormulario)} 
+                className="btn-cambiar-contrasena">
+                {mostrarFormulario ? 'Cancelar' : 'Cambiar contraseña'}
+              </button>
+            </div>
+          </form>
+        ) : (
           <form onSubmit={handleCambiarContrasenia} className="modificar">
             <label>Contraseña Actual:</label>
             <input
@@ -161,14 +174,18 @@ return (
               value={confirmarNuevaContraseña}
               onChange={(e) => setConfirmarNuevaContraseña(e.target.value)}
             />
-            <button type="submit">Guardar nueva contraseña</button>
+            <div className="botones-container">
+              <button type="submit">Guardar nueva contraseña</button>
+              <button 
+                type="button" 
+                onClick={() => setMostrarFormulario(!mostrarFormulario)} 
+                className="btn-cambiar-contrasena">
+                {mostrarFormulario ? 'Cancelar' : 'Cambiar contraseña'}
+              </button>
+            </div>
           </form>
         )}
-          <button onClick={() => setMostrarFormulario(!mostrarFormulario)}>
-          {mostrarFormulario ? 'Cancelar' : 'Cambiar contraseña'}
-        </button>
       </div>
     </div>
   )
-
-} 
+}  

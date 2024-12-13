@@ -1,0 +1,180 @@
+.boton-container {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 20px; 
+  }
+
+.respuesta-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #f8e3e9;
+    padding-top: 60px;
+    height: 100vh;
+    overflow: auto;
+  }
+  
+  .rta-tp {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    width: 50%;
+    max-width: 600px;
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .rta-tp h1 {
+    margin-bottom: 15px;
+    color: #333;
+    font-size: 1.6em;
+    text-align: center;
+  }
+  
+  .recuadro {
+    margin-bottom: 20px;
+    width: 100%;
+  }
+  
+  .recuadro label {
+    margin-bottom: 5px;
+    font-size: 1rem;
+    color: #333;
+  }
+  
+  .consigna-text,
+  .fecha-limite-text {
+    padding: 10px;
+    background-color: #f1f1f1;
+    border-radius: 5px;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    width: 100%;
+    font-size: 1rem;
+  }
+  
+  .form-rta {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+  
+  .form-rta label {
+    margin-bottom: 5px;
+    font-size: 1rem;
+    color: #333;
+  }
+  
+  .respuesta {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    margin-bottom: 15px;
+    font-size: 1rem;
+    box-sizing: border-box;
+  }
+  
+  button {
+    background-color: #f06292;
+    color: white;
+    padding: 10px 20px;
+    font-size: 1rem;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  button:hover {
+    background-color: #dd84a0;
+  }
+  
+
+  @media (max-width: 1023px) and (min-width: 768px) {
+    .respuesta-container {
+      padding-top: 60px;
+    }
+  
+    .rta-tp {
+      width: 80%;
+      max-width: 600px;
+      padding: 20px;
+    }
+  
+    .rta-tp h1 {
+      font-size: 1.6em;
+    }
+  
+    .consigna-text,
+    .fecha-limite-text {
+      font-size: 1rem;
+    }
+  
+    .respuesta {
+      font-size: 1rem;
+    }
+  
+    button {
+      font-size: 1rem;
+    }
+  }
+  
+  @media (max-width: 767px) {
+    .respuesta-container {
+      padding-top: 80px;
+    }
+  
+    .rta-tp {
+      width: 90%;
+      padding: 15px;
+    }
+  
+    .rta-tp h1 {
+      font-size: 1.8em;
+    }
+  
+    .consigna-text,
+    .fecha-limite-text {
+      font-size: 0.9rem;
+    }
+  
+    .respuesta {
+      font-size: 0.9rem;
+    }
+  
+    button {
+      font-size: 1rem;
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .rta-tp {
+      width: 50%;
+      max-width: 600px;
+      padding: 20px;
+    }
+  
+    .rta-tp h1 {
+      font-size: 24px;
+    }
+  
+    .consigna-text,
+    .fecha-limite-text {
+      font-size: 1.1rem;
+    }
+  
+    .respuesta {
+      font-size: 1rem;
+    }
+  
+    button {
+      font-size: 1.1rem;
+    }
+  }
+  

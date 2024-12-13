@@ -7,7 +7,6 @@ import NavBar from './NavBar.js';
 import '../styles/Tp.css';
 
 
-
 export const Tp = () => {
 
   const [tp, setTp] = useState(null);
@@ -17,7 +16,8 @@ export const Tp = () => {
   const [fechaLimite, setFechaLimite] = useState('');
   const [mensajeExito, setMensajeExito] = useState('');
   const [cursoToken, setCursoToken] = useState(localStorage.getItem('cursoToken'));
-
+  const usuarioToken = localStorage.getItem('authToken');
+  const decodedUsuarioToken = usuarioToken ? jwtDecode(usuarioToken) : null;
   const navigate=useNavigate()
 
   const profLinks = [
@@ -32,6 +32,10 @@ export const Tp = () => {
   const tpId = decodedCursoToken?.tpId || null;
 
   useEffect(() => {
+    if (!usuarioToken || !decodedUsuarioToken) {
+      localStorage.removeItem('authToken');
+      navigate('/');
+    }
     const fetchTp = async () => {
       setLoading(true);
       try {
@@ -74,8 +78,7 @@ export const Tp = () => {
         setError('');
       }
     } catch (error) {
-      console.log('Error al guardar el trabajo practico:', error);
-      setError('Hubo un error');
+      setError('Hubo un error al guardar el Trabajo Practico');
     }
   };
   
@@ -91,6 +94,12 @@ export const Tp = () => {
       console.error('Error al eliminar el trabajo practico:', error);
       setError('Hubo un error al eliminar.');
     }
+  };
+
+  const handleVerRtaTP = async (tpId) => {
+    const tp = await getTp(tpId);
+    if (!tp) throw new Error('No se encontró el TP.');
+    navigate('/ver-rtastp');
   };
 
   return (
@@ -122,6 +131,7 @@ export const Tp = () => {
           {tp && (
             <div className="acciones-tp">
               <button onClick={handleEliminar}>Eliminar</button>
+              <button onClick={() => handleVerRtaTP(tpId)}>Ver Respuestas Tp</button>
             </div>
           )}
         </div>
