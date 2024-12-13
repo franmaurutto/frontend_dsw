@@ -29,13 +29,7 @@ export const createRtaTp = async (rtaTp) => {
  
     }),
   });
-  console.log(rtaTp);
-  console.log(rtaTp.inscripcionId);
-  console.log(rtaTp.tpId)
-  console.log(rtaTp.rtaConsignaTP)
-  console.log('HOLAAAA'); 
-  console.log('Response Status:', response.status);
-  
+
   if (!response.ok) {
     console.error('Error en la respuesta:', response.statusText);
     console.error('Error en la respuesta completa:', await response.text());
@@ -48,14 +42,46 @@ export const createRtaTp = async (rtaTp) => {
   return tp1.data;
 };
 
-export const updateRtaTp = async (rtaTpId, rtaTp) => {
-  const response = await fetch(`${API_URL}/${rtaTpId}`, {
-    method: 'POST',
-    headers: getHeaders(),
-    body: JSON.stringify(rtaTp),
-  });
-  return response.json();
+export const getRtaTp = async (tpId, inscripcionId) => {
+  try {
+    const response = await fetch(`${API_URL}/${tpId}/inscripcion/${inscripcionId}`, {
+      method: 'GET',
+      headers: getHeaders(),
+    });
+
+    if (!response.ok) {
+      throw new Error('Error al obtener la respuesta del TP');
+    }
+
+    const data = await response.json();
+    console.log('Respuesta del TP:', data);
+    return data;
+  } catch (error) {
+    console.error('Error al obtener la respuesta:', error);
+    throw error;
+  }
 };
+
+export const updateRtaTp = async (rtaTpId, rtaConsignaTP) => {
+  const response = await fetch(`${API_URL}/${rtaTpId}`, {
+    method: 'PUT',
+    headers: getHeaders(),
+    body: JSON.stringify({
+      rtaConsignaTP: rtaConsignaTP,
+    }),
+  });
+
+  if (!response.ok) {
+    console.error('Error en la respuesta:', response.statusText);
+    console.error('Error en la respuesta completa:', await response.text());
+    return;
+  }
+
+  const tp1 = await response.json();
+  console.log('Respuesta actualizada:', tp1.data);
+  return tp1.data;
+};
+
 
 export const deleteRtaTp = async (rtaTpId) => {
   const response = await fetch(`${API_URL}/${rtaTpId}`, {
