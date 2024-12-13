@@ -7,7 +7,6 @@ import NavBar from './NavBar.js';
 import '../styles/Tp.css';
 
 
-
 export const Tp = () => {
 
   const [tp, setTp] = useState(null);
@@ -93,6 +92,13 @@ export const Tp = () => {
     }
   };
 
+  const handleVerRtaTP = async (tpId) => {
+    const tp = await getTp(tpId);
+    if (!tp) throw new Error('No se encontró el TP.');
+    console.log(tp);
+    navigate('/ver-rtastp');
+  };
+
   return (
      <div>
       <NavBar links={profLinks} />
@@ -122,6 +128,7 @@ export const Tp = () => {
           {tp && (
             <div className="acciones-tp">
               <button onClick={handleEliminar}>Eliminar</button>
+              <button onClick={() => handleVerRtaTP(tpId)}>Ver Respuestas Tp</button>
             </div>
           )}
         </div>

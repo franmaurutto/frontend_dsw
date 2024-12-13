@@ -1,27 +1,52 @@
-const API_URL = 'http://localhost:3000/api/rtaTps';
+const API_URL = 'http://localhost:3000/api/rtatps';
+
+const getToken = () => localStorage.getItem('authToken');
+
+const getHeaders = () => {
+  const token = getToken();
+  console.log('Token en headers:', token);
+  return {
+    'Content-Type': 'application/json',
+    ...(token && { Authorization: `Bearer ${token}` }), 
+  };
+};
+
 
 export const getRtasTp = async () => {
   const response = await fetch(API_URL);
-  return response.json();
+  const tp1 = await response.json();  
+  console.log(tp1.data);  
+  return tp1.data;
 };
 
 export const createRtaTp = async (rtaTp) => {
   const response = await fetch(API_URL, {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(rtaTp),
+    headers: getHeaders(), 
+    body: JSON.stringify({
+      inscripcionId: rtaTp.inscripcionId,  
+      tpId: rtaTp.tpId,                    
+      sanitizedInput: rtaTp.sanitizedInput 
+    }),
   });
-  return response.json();
+  console.log('HOLAAAA'); 
+  console.log('Response Status:', response.status);
+  
+  if (!response.ok) {
+    console.error('Error en la respuesta:', response.statusText);
+    return;
+  }
+  const tp1 = await response.json();
+  console.log('Respuesta recibida:', tp1.data);  
+  return tp1.data;
 };
+
+
 
 export const updateRtaTp = async (rtaTpId, rtaTp) => {
   const response = await fetch(`${API_URL}/${rtaTpId}`, {
-    method: 'PUT',
-    headers: {
-      'Content-Type': 'application/json',
-    },
+    method: 'POST',
+    headers: getHeaders(),
     body: JSON.stringify(rtaTp),
   });
   return response.json();
@@ -30,6 +55,24 @@ export const updateRtaTp = async (rtaTpId, rtaTp) => {
 export const deleteRtaTp = async (rtaTpId) => {
   const response = await fetch(`${API_URL}/${rtaTpId}`, {
     method: 'DELETE',
+    headers: getHeaders()
   });
   return response.json();
+};
+
+export const getInscripcionDeRtaTp = async (rtaTpId, inscripcionId) => {
+  try {
+    const response = await fetch(`${API_URL}/${rtaTpId}/inscripcion/${inscripcionId}`, {
+      method: 'GET',
+      headers: getHeaders(),
+    });
+    if (!response.ok) {
+      throw new Error('Error al obtener la inscripcion de la rtaTp');
+    }
+    const data= await response.json(); 
+    return data
+  } catch (error) {
+    console.error('Error al obtener la inscripcion:', error);
+    throw error;
+  }
 };

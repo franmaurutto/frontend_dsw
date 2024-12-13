@@ -1,0 +1,154 @@
+/* Estilos generales para los recuadros */
+.recuadro p.consigna-text,
+.recuadro p.fecha-limite-text {
+  background-color: #ffffff;
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  font-size: 1rem;
+  margin-bottom: 20px;
+  width: 100%;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.consigna-text, .fecha-limite-text {
+  color: #a3a0a0;
+}
+
+/* Recuadro de consigna */
+.consigna-text {
+  background-color: #ffffff;
+  padding: 20px;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  font-size: 1.1rem;
+  color: #333;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  width: 80%;
+  min-width: 400px; /* Reducir el tamaño mínimo */
+}
+
+/* Estilo para el área de respuesta */
+.respuesta {
+  width: 80%;
+  min-width: 400px; /* Reducir el tamaño mínimo */
+  padding: 15px;
+  font-size: 1.1rem;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+}
+
+/* Estilo para la fecha límite */
+.fecha-limite-text {
+  font-weight: bold;
+  color: #f06292;
+}
+
+/* Estilo para el formulario */
+.form-rta {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+textarea {
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  padding: 10px;
+  font-size: 1rem;
+  width: 100%;
+  resize: vertical;
+}
+
+/* Estilos para el botón */
+button {
+  background-color: #f8bbd0;
+  border: 1px solid #f06292;
+  color: #f06292;
+  padding: 12px 25px;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  width: 100%;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #f06292;
+  color: white;
+}
+
+/* Media Queries */
+
+/* Para pantallas pequeñas (menos de 768px) */
+@media (max-width: 767px) {
+  /* Fondo rosa detrás de los botones y la respuesta */
+  .rta-tp {
+    background-color: #f8bbd0; /* Fondo rosa claro */
+    padding: 20px;
+    border-radius: 10px;
+  }
+
+  .consigna-text, .fecha-limite-text, .respuesta {
+    width: 95%;  /* Reducir el tamaño del recuadro */
+    min-width: 0; /* Eliminar el mínimo de 400px */
+    background-color: #ffffff; /* Fondo blanco para recuadros de texto */
+    color: #333; /* Color gris oscuro para el texto */
+  }
+
+  .form-rta {
+    gap: 15px;
+  }
+
+  .respuesta {
+    font-size: 1rem; /* Reducir tamaño de fuente */
+  }
+
+  button {
+    padding: 10px;  /* Reducir padding del botón */
+  }
+}
+
+/* Para pantallas medianas (768px - 1023px) */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .consigna-text, .fecha-limite-text, .respuesta {
+    width: 85%;
+    min-width: 400px;
+    background-color: #ffffff; /* Fondo blanco en pantallas medianas */
+  }
+
+  .form-rta {
+    gap: 20px;
+  }
+
+  .respuesta {
+    font-size: 1.1rem;
+  }
+
+  button {
+    padding: 12px 20px;
+  }
+}
+
+/* Para pantallas grandes (más de 1024px) */
+@media (min-width: 1024px) {
+  .consigna-text, .fecha-limite-text, .respuesta {
+    width: 80%;
+    min-width: 500px;
+    background-color: #ffffff; /* Fondo blanco en pantallas grandes */
+  }
+
+  .form-rta {
+    gap: 20px;
+  }
+
+  .respuesta {
+    font-size: 1.1rem;
+  }
+
+  button {
+    padding: 12px 25px;
+  }
+}

@@ -5,7 +5,7 @@ import SobreNosotros from './components/SobreNosotros.js';
 import Contacto from './components/Contacto';
 import SignUpForm from './components/SignUpForm';
 import { NavegacionAlu } from './components/NavegacionAlu.js';
-import { MisCursos } from './components/MisCursos.js';
+import {MisCursos} from './components/MisCursos.js';
 import { MiCuenta } from './components/MiCuenta.js';
 import { NavegacionProf } from './components/NavegacionProf.js';
 import CursoDetalle from './components/CursoDetalle.js';
@@ -18,9 +18,10 @@ import {ModificarMaterial} from './components/ModificarMaterial.js';
 import {AgregarMaterial} from './components/AgregarMaterial.js';
 import {VerParcial} from './components/VerParcial.js';
 import RtaParcial from './components/RtaParcial.js';
+import {RespuestaTp} from './components/RespuestaTp.js';
 import VerRtasParcial from './components/VerRtasParcial.js';
-
 import { Tp } from './components/Tp.js';
+import ResponderTp from './components/ResponderTp.js';
 function App() {
 
   return (
@@ -47,6 +48,8 @@ function App() {
           <Route path="/rta-parcial" element={<RtaParcial />} />
           <Route path="/ver-rtasparcial" element={<VerRtasParcial />} />
           <Route path="/tp" element={<Tp />} />
+          <Route path="/rta-tp" element={<ResponderTp />}/>
+          <Route path="/ver-rtastp" element={<RespuestaTp />} />
           
         </Routes>
       </div>

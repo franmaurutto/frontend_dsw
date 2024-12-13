@@ -26,7 +26,10 @@ export const getTp = async (tpId) => {
     const errorData = await response.json(); 
     console.error('Error del servidor:', errorData);
   }
-  return response.json();
+  /*const tp1 = await response.json();  
+  console.log(tp1.data);  
+  return tp1.data;*/
+  return response.json()
 }
 
 
@@ -58,4 +61,17 @@ export const deleteTp = async (tpId) => {
     console.error('Error del servidor:', errorData);
   }
   return response.json();
+};
+
+
+export const getRtaTpdeTp = async (tpId) => {
+  const response = await fetch(`${API_URL}/${tpId}/rtastp`, {
+    method: 'GET',
+    headers: getHeaders(), 
+  }); 
+  if (!response.ok) {
+    throw new Error('Error al obtener las rtastp');
+  }
+  const { data } = await response.json(); 
+  return data;
 };
