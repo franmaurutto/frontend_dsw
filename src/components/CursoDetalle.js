@@ -26,7 +26,7 @@ export const CursoDetalle = () => {
     } else {
       setMensajeError('No se encontró información del curso.');
     }
-  }, []);
+  }, [decodedCursoToken]);
 
   const separarNombreApellido = (nombreCompleto) => {
     const [nombre, apellido] = nombreCompleto.split(' ');
@@ -68,8 +68,6 @@ export const CursoDetalle = () => {
     }
   };
   
-  
-  
   return (
     <div className='curso-detalle'>
       <NavBar links={[
@@ -85,12 +83,15 @@ export const CursoDetalle = () => {
             {mensajeError && <p className="mensaje-error">{mensajeError}</p>}
             <h1>{curso.nombre}</h1>
             <p><strong>Descripción:</strong> {curso.descripcion}</p>
-            {curso.profesor.nombreCompleto && (
-              <>
-                <p><strong>Profesor:</strong> {separarNombreApellido(curso.profesor.nombreCompleto).nombre} {separarNombreApellido(curso.profesor.nombreCompleto).apellido}</p>
-              </>
+            {curso && curso.profesor && curso.profesor.nombreCompleto && (
+            <>
+            <p><strong>Profesor:</strong> {separarNombreApellido(curso.profesor.nombreCompleto).nombre} {separarNombreApellido(curso.profesor.nombreCompleto).apellido}</p>
+            </>
             )}
+            {curso && curso.profesor && curso.profesor.mail && (
             <p><strong>Email del Profesor:</strong> {curso.profesor.mail}</p>
+            )}
+
             <p><strong>Duración:</strong> {curso.duracion}</p>
             <p><strong>Fecha de Inicio:</strong> {curso.fechaInicio}</p>
             <p><strong>Fecha de Fin:</strong> {curso.fechaFin}</p>

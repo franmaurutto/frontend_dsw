@@ -1,0 +1,148 @@
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body, html {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.rtas-tp {
+  width: 100%; 
+  min-height: 100vh; 
+  background-color: #f8e3e9;
+  color: #333;
+  font-family: Arial, sans-serif;
+  padding: 20px;
+  padding-top: 60px; 
+}
+
+.rtas-tp h1 {
+  font-size: 24px;
+  text-align: center;
+  margin: 30px 0 20px;
+  color: #c23864;
+}
+
+table {
+  width: 100%; 
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+table th,
+table td {
+  padding: 12px;
+  text-align: left;
+  border: 1px solid #ddd;
+  font-size: 16px;
+}
+
+table th {
+  background-color: #f06292;
+  color: white;
+  font-weight: bold;
+}
+
+table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+table tr:hover {
+  background-color: #f1f1f1;
+}
+
+table td:last-child {
+  text-align: center;
+}
+
+button {
+  background-color: transparent;
+  border: none;
+  color: #f06292;
+  font-size: 14px;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+button:hover {
+  color: #c23864;
+}
+
+.mensaje-error {
+  background-color: #f8d7da;
+  color: #721c24;
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 16px;
+  margin-top: 20px;
+  text-align: center;
+}
+
+.mensaje-exito {
+  background-color: #d4edda;
+  color: #155724;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #c3e6cb;
+  font-size: 16px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .rtas-tp {
+    padding: 10px;
+    padding-top: 80px; 
+  }
+
+  table th, table td {
+    font-size: 14px;
+    padding: 8px;
+  }
+
+  button {
+    padding: 6px 12px;
+    font-size: 13px;
+  }
+
+  .mensaje-error,
+  .mensaje-exito {
+    font-size: 14px;
+    padding: 8px;
+  }
+
+  .rtas-tp table {
+    display: block;
+    overflow-x: auto; 
+    width: 100%;
+    -webkit-overflow-scrolling: touch;
+    margin-bottom: 60px; 
+  }
+
+  .rtas-tp h1 {
+    padding-top: 20px; 
+  }
+}
+
+@media (min-width: 768px) {
+  table th, table td {
+    font-size: 16px;
+    padding: 12px;
+  }
+
+  button {
+    padding: 8px 14px;
+    font-size: 15px;
+  }
+
+  .mensaje-error,
+  .mensaje-exito {
+    font-size: 16px;
+    padding: 10px;
+  }
+}

@@ -53,18 +53,23 @@ export const addUsuario = async (usuario) => {
   return response.json();}
 
 export const getUsuario = async (usuarioId) => {
-  const response = await fetch(`${API_URL}/${usuarioId}`, {
-    method: 'GET',
-    headers: getHeaders(),
-  });
+  try {
+    const response = await fetch(`${API_URL}/${usuarioId}`, {
+      method: 'GET',
+      headers: getHeaders(),
+    });
 
-  if (!response.ok) {
-    throw new Error('No se pudo obtener el usuario');
-  }
+    if (!response.ok) {
+      throw new Error('No se pudo obtener el usuario');
+    }
 
-  return response.json();
+    const data = await response.json();
+    return data.token;  
+  } catch (error) {
+    console.error('Error al obtener el detalle del curso:', error);
+    throw error;
+  }
 };
-
 
 
 export const updateUsuario = async (usuarioId, usuario) => {
@@ -120,6 +125,7 @@ export const getInscripcionesAlumno = async (usuarioId) => {
         throw new Error(errorData.message || 'Error al actualizar el usuario');
     }
     const data = await response.json();
+    console.log (data);
     return data;  
   } catch (error) {
     console.error('Error al obtener inscripciones:', error);

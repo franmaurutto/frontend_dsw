@@ -7,64 +7,85 @@ import { useNavigate } from 'react-router-dom';
 import  {jwtDecode} from 'jwt-decode';
 import { getCurso } from '../services/CursoServices.js';
 import { getParcial } from '../services/ParcialServices.js';
+import { getInscripcion } from '../services/InscripcionServices.js';
+import { getTp } from '../services/TpServices.js';
+
+console.log('miscursos1')
+const usuarioToken = localStorage.getItem('authToken');
+const decodedUsuarioToken = usuarioToken ? jwtDecode(usuarioToken) : null;
+const usuarioId = decodedUsuarioToken ? decodedUsuarioToken.id : null;
+console.log(decodedUsuarioToken)
 
 export const MisCursos = () => {
 
+  console.log('miscursos1.2')
   const navigate= useNavigate();
   const [cursos, setCursos] = useState([]);
   const [mensajeExito, setMensajeExito] = useState('');
-  console.log("esta x entrar")
-  const usuarioToken = localStorage.getItem('authToken');
-  const decodedUsuarioToken = usuarioToken ? jwtDecode(usuarioToken) : null;
-  const usuarioId = decodedUsuarioToken ? decodedUsuarioToken.id : null;
+  console.log('miscursos2')
+  console.log('miscursos3')
+
   const aluLinks = [
     { label: 'Mi cuenta', path: '/mi-cuenta' },
     { label: 'Mis Cursos', path: '/mis-cursos' },
     { label: 'Cursos', path: '/nav-alu' },
     ];
-useEffect(() => {
-  const fetchCursos = async () => {
-    try {
-      console.log(decodedUsuarioToken);
-      console.log(usuarioId);
-      console.log(decodedUsuarioToken.rol);
-      if (decodedUsuarioToken.rol === 'alumno') {
-        const inscripcionesData = await getInscripcionesAlumno(usuarioId);
-        console.log(inscripcionesData);
-        if (Array.isArray(inscripcionesData.data)) {
-          const cursosData = await Promise.all(
-            inscripcionesData.data.map(async (inscripcion) => {
-              const cursoId = inscripcion.curso ? inscripcion.curso : null; 
-              if (!cursoId) {
-                console.error('No se encontró curso para esta inscripción:', inscripcion);
-                return null;
-              }
-              const cursoData = await getCursoDeInscripcion(inscripcion.id, cursoId);
-              return cursoData
-                ? {
-                    ...cursoData,
-                    inscripcionId: inscripcion.id,
-                    fechaInscripcion: inscripcion.fechaInscripcion,
-                  }
-                : null; 
-            })
-          );
-          const filteredCursosData = cursosData.filter((curso) => curso !== null); 
-          console.log(filteredCursosData);
-          setCursos(filteredCursosData);
-        } else {
-          setCursos([]);
+
+  useEffect(() => {
+    const fetchCursos = async () => {
+      try {
+        
+        if (decodedUsuarioToken.rol === 'alumno') {
+          const inscripcionesData = await getInscripcionesAlumno(usuarioId);
+          if (Array.isArray(inscripcionesData.data)) {
+            const cursosData = await Promise.all(
+              inscripcionesData.data.map(async (inscripcion) => {
+                const cursoId = inscripcion.curso ? inscripcion.curso : null; 
+                if (!cursoId) {
+                  console.error('No se encontró curso para esta inscripción:', inscripcion);
+                  return null;
+                }
+                const cursoData = await getCursoDeInscripcion(inscripcion.id, cursoId);
+                return cursoData
+                  ? {
+                      ...cursoData,
+                      inscripcionId: inscripcion.id,
+                      fechaInscripcion: inscripcion.fechaInscripcion,
+                    }
+                  : null;})
+            );
+            const filteredCursosData = cursosData.filter((curso) => curso !== null); 
+            setCursos(filteredCursosData);
+          } else {
+            setCursos([]);
+          }
         }
+      } catch (error) {
+        console.error('Error al obtener los cursos:', error);
+        setCursos([]);
       }
-    } catch (error) {
-      console.error('Error al obtener los cursos:', error);
-      setCursos([]);
-    }
+    };
+
+    fetchCursos();
+  }, [usuarioId]);
+
+  const handleTp = async (cursoId, inscripcionId, tpId) => {
+    console.log(tpId)
+    const data = await getCurso(cursoId);
+    const decodedToken = jwtDecode(data);
+    console.log('tokenCurso',decodedToken)
+    if (!decodedToken) throw new Error('No se recibió token del curso.');
+    localStorage.setItem('cursoToken', data);
+    const data1 = await getInscripcion(inscripcionId);
+    const decodedToken1 = jwtDecode(data1);
+    console.log('token insc',decodedToken1)
+    if (!decodedToken1) throw new Error('No se recibió token de la inscripcion.');
+    localStorage.setItem('inscripcionToken', data1);
+    const tp = await getTp(decodedToken.tpId)
+    console.log('tp',tp)
+    if (!tp) throw new Error('No se recibió el tp.');
+    navigate('/rta-tp');
   };
-
-  fetchCursos();
-}, []);
-
 
   const handleAnularInscripcion = async (inscripcionId) => {
     const confirmation = window.confirm('¿Estás seguro de que quieres anular la inscripción a este curso? Esta acción no se puede deshacer.');
@@ -128,6 +149,12 @@ useEffect(() => {
                     >
                       Anular Inscripción
                     </button>
+                    <button
+                      className="boton-cursos"
+                      onClick={() => handleTp(curso.id, curso.inscripcionId, curso.tp)}
+                    >
+                      Ver Tp
+                    </button>
                   </div>
                 )}
               </li>
@@ -144,7 +171,6 @@ useEffect(() => {
   );
 };
 
-export default MisCursos;
 
 
 
