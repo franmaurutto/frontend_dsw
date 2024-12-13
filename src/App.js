@@ -21,7 +21,7 @@ import RtaParcial from './components/RtaParcial.js';
 import {RespuestaTp} from './components/RespuestaTp.js';
 import VerRtasParcial from './components/VerRtasParcial.js';
 import { Tp } from './components/Tp.js';
-import { InscripcionesCurso } from "./components/InscripcionesCurso.js";
+import InscripcionesCurso from "./components/InscripcionesCurso.js";
 import ResponderTp from './components/ResponderTp.js';
 function App() {
 

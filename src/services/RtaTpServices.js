@@ -1,4 +1,4 @@
-const API_URL = 'http://localhost:3000/api/rtatps';
+const API_URL = 'http://localhost:3000/api/rtaTps';
 
 const getToken = () => localStorage.getItem('authToken');
 
@@ -10,7 +10,6 @@ const getHeaders = () => {
     ...(token && { Authorization: `Bearer ${token}` }), 
   };
 };
-
 
 export const getRtasTp = async () => {
   const response = await fetch(API_URL);
@@ -26,22 +25,28 @@ export const createRtaTp = async (rtaTp) => {
     body: JSON.stringify({
       inscripcionId: rtaTp.inscripcionId,  
       tpId: rtaTp.tpId,                    
-      sanitizedInput: rtaTp.sanitizedInput 
+      rtaConsignaTP: rtaTp.rtaConsignaTP
+ 
     }),
   });
+  console.log(rtaTp);
+  console.log(rtaTp.inscripcionId);
+  console.log(rtaTp.tpId)
+  console.log(rtaTp.rtaConsignaTP)
   console.log('HOLAAAA'); 
   console.log('Response Status:', response.status);
   
   if (!response.ok) {
     console.error('Error en la respuesta:', response.statusText);
+    console.error('Error en la respuesta completa:', await response.text());
+
+    console.log('entra al if')
     return;
   }
   const tp1 = await response.json();
-  console.log('Respuesta recibida:', tp1.data);  
+  console.log('Respuesta recibidaaaa:', tp1.data);  
   return tp1.data;
 };
-
-
 
 export const updateRtaTp = async (rtaTpId, rtaTp) => {
   const response = await fetch(`${API_URL}/${rtaTpId}`, {

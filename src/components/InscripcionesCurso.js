@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import jwtDecode from 'jwt-decode';
-import {createCertificado} from '../services/CertificadoService';
-import { GetInscripcionesCurso } from "../services/CursoService";
+import {jwtDecode} from 'jwt-decode';
+import {createCertificado} from '../services/CertificadoServices.js';
+import { GetInscripcionesCurso } from "../services/CursoServices.js";
 import { getUsuario } from "../services/UsuarioServices.js";
 import NavBar from './NavBar.js';
 import '../styles/InscripcionesCurso.css';
+
 
 
 const InscripcionesCurso = () => {

@@ -21,6 +21,7 @@ export const RespuestaTp = () => {
   const [loading, setLoading] = useState(true);
   const navigate=useNavigate();
   console.log('holartatp3')
+  
   useEffect(() => {
     setLoading(false);
     const fetchRtas = async () => {

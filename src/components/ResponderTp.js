@@ -23,7 +23,8 @@ export const ResponderTp = () => {
   const tpId = decodedcursoToken ? decodedcursoToken.tpId : null;
   const inscripcionToken = localStorage.getItem('inscripcionToken');
   const decodedInscripcionToken = inscripcionToken ? jwtDecode(inscripcionToken) : null;
-  const inscripcionId = decodedInscripcionToken?.id || null;
+  const inscripcionId = decodedInscripcionToken ? decodedInscripcionToken.id : null;;
+
 
   useEffect(() => {
     const fetchTp = async () => {
@@ -57,7 +58,7 @@ export const ResponderTp = () => {
     }
 
     const rtaTp = {
-      rtaConsignaTp: rtaConsigna,
+      rtaConsignaTP: rtaConsigna,
       tpId,
       inscripcionId,
     };
