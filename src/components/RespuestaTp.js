@@ -7,31 +7,27 @@ import { getRtaTpdeTp } from '../services/TpServices.js';
 import { deleteRtaTp, getInscripcionDeRtaTp } from '../services/RtaTpServices.js';
 import { getAlumnoDeInscripcion } from '../services/InscripcionServices.js';
 
-console.log('holartatp')
-const cursoToken = localStorage.getItem('cursoToken');
-  const decodedCursoToken = cursoToken ? jwtDecode(cursoToken) : null;
-  const tpId = decodedCursoToken ? decodedCursoToken.tpId : null;
-  console.log(decodedCursoToken)
 export const RespuestaTp = () => {
-
-    console.log('holartatp2')
-
   const [rtas, setRtas] = useState([]);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(true);
   const navigate=useNavigate();
-  console.log('holartatp3')
-  
+  const cursoToken = localStorage.getItem('cursoToken');
+  const decodedCursoToken = cursoToken ? jwtDecode(cursoToken) : null;
+  const tpId = decodedCursoToken ? decodedCursoToken.tpId : null;
+  const usuarioToken = localStorage.getItem('authToken');
+  const decodedUsuarioToken = usuarioToken ? jwtDecode(usuarioToken) : null;
+
   useEffect(() => {
     setLoading(false);
+    if (!usuarioToken || !decodedUsuarioToken) {
+      localStorage.removeItem('authToken');
+      navigate('/');
+    }
     const fetchRtas = async () => {
-        console.log('holartatp4')
       try {
         if (tpId) {
-            console.log('holartatp5')
           const rtasData = await getRtaTpdeTp(tpId);
-          console.log('Datos de respuestas:', rtasData);
-          console.log('holartatp6')
           const rtasConInscripciones = await Promise.all(
             rtasData.map(async (rta) => {
               const inscripcionData = await getInscripcionDeRtaTp(rta.id, rta.inscripcion);

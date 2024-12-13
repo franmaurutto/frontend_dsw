@@ -3,8 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import NavBar from './NavBar.js';
 import '../styles/Materiales.css';
 import { getMaterial, deleteMaterial, getMateriales} from '../services/MaterialService.js';
-import { useMaterial } from './MaterialContext.js';
-import  {jwtDecode} from 'jwt-decode';
+import { jwtDecode } from 'jwt-decode';
 
 
 export const Materiales = () => {
@@ -21,6 +20,12 @@ export const Materiales = () => {
   ];
 
   useEffect(() => {
+    const usuarioToken = localStorage.getItem('authToken');
+    const decodedUsuarioToken = usuarioToken ? jwtDecode(usuarioToken) : null;
+    if (!usuarioToken || !decodedUsuarioToken) {
+      localStorage.removeItem('authToken');
+      navigate('/');
+    }
     const fetchMateriales = async () => {
       try {
         const data = await getMateriales();
@@ -31,7 +36,7 @@ export const Materiales = () => {
     };
 
     fetchMateriales();
-  }, []);
+  }, [navigate]);
 
   const handleEliminarMaterial = async (materialId) => {
     const confirmation = window.confirm('¿Estás seguro de que deseas eliminar este material? Esta acción no se puede deshacer.');
@@ -49,14 +54,10 @@ export const Materiales = () => {
 
   const handleModificarMaterial = async (material) => {
     const response = await getMaterial(material.id);
-    console.log(response)
     const decodedToken = jwtDecode(response);
-    console.log(decodedToken)
     if (!decodedToken) throw new Error('No se recibió token de autenticación.');
-    console.log(decodedToken)
     localStorage.setItem('materialToken', response);
     navigate('/modificar-material');
-
   };
  
 

@@ -3,16 +3,21 @@ import NavBar from './NavBar.js'
 import { createCurso } from '../services/CursoServices.js';
 import '../styles/CrearCurso.css';
 import { jwtDecode } from 'jwt-decode';
+import { useNavigate } from 'react-router-dom';
 
 
 export const CrearCurso = () => {
 
 const getToken = () => localStorage.getItem('authToken');
-
+const navigate = useNavigate();
 const getUserFromToken = () => {
   const token = getToken();
   if (!token) return null;
-
+  if (!token) {
+    localStorage.removeItem('authToken');
+    navigate('/');
+    return;
+  }
   try {
     const decodedToken = jwtDecode(token); 
     return decodedToken; 
@@ -22,9 +27,6 @@ const getUserFromToken = () => {
   }
 };
   const usuario = getUserFromToken();
-
-  
-
   const profLinks = [
     { label: 'Mi cuenta', path: '/mi-cuenta' },
     { label: 'Mis Cursos', path: '/nav-prof' },
@@ -56,7 +58,6 @@ const getUserFromToken = () => {
   e.preventDefault();
   setError(null);
   try {
-    console.log(cursoData.profesorId)
     await createCurso(cursoData);
     setMensajeExito('Se ha registrado el curso')
   } catch (err) {

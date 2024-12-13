@@ -1,5 +1,6 @@
 import React from 'react'
-import { useState} from 'react';
+import { useState, useEffect} from 'react'
+import { useNavigate } from 'react-router-dom';
 import '../styles/MiCuenta.css'
 import NavBar from './NavBar.js';
 import { jwtDecode } from 'jwt-decode';
@@ -23,7 +24,13 @@ const getUserFromToken = () => {
   }
 };
   const usuario = getUserFromToken();
-  
+  const navigate=useNavigate()
+  useEffect(() => {
+    if (!usuario) {
+      localStorage.removeItem('authToken');
+      navigate('/'); 
+    }
+  }, [usuario, navigate]);
   const [nombreCompleto, setNombreCompleto] =useState(usuario ? usuario.nombreCompleto : '');
   const [mail, setMail] = useState(usuario ? usuario.mail :'');
   const [telefono, setTelefono] = useState(usuario ? usuario.telefono : '');
@@ -96,15 +103,9 @@ const handleCambiarContrasenia = (e) => {
       return;
     }
     try {
-      console.log('entro')
       cambiarContrasenia(usuario.id, contraseñaActual, nuevaContraseña);
-
-      console.log('Contraseña actual:', contraseñaActual);
-      console.log('Nueva contraseña:', nuevaContraseña);
-
       setMensajeExito('Contraseña cambiada exitosamente.');
       setTimeout(() => setMensajeExito(''), 5000);
-
       setMostrarFormulario(false);
     } catch (error) {
         console.error('Error al cambiar la contraseña:', error.message);

@@ -7,6 +7,7 @@ import '../styles/DatosCurso.css';
 import  {jwtDecode} from 'jwt-decode';
 import { getParcial } from '../services/ParcialServices.js';
 
+
 export const DatosCurso = () => {
   const usuarioToken = localStorage.getItem('authToken');
   const decodedUsuarioToken = usuarioToken ? jwtDecode(usuarioToken) : null;
@@ -14,7 +15,7 @@ export const DatosCurso = () => {
   const cursoToken = localStorage.getItem('cursoToken');
   const decodedCursoToken = cursoToken ? jwtDecode(cursoToken) : null;
   const cursoId = decodedCursoToken ? decodedCursoToken.id : null;
-  
+
   const [cursos, setCurso] = useState([]);
   const [nombre, setNombre] = useState('');
   const [descripcion, setDescripcion] = useState('');
@@ -25,15 +26,11 @@ export const DatosCurso = () => {
   const [horaInicio, setHoraInicio] = useState('');
   const [horaFin, setHoraFin] = useState('');
   const [dias, setDias] = useState('');
-  //const [cursoToken, setCursoToken] = useState('');
   const [parcialId]=useState(decodedCursoToken ? decodedCursoToken.parcial_id:'');
   const [tpId]=useState(decodedCursoToken ? decodedCursoToken.tp_id:'')
-  const [profesor] = useState(null);
   const [mensajeExito, setMensajeExito] = useState('');
   const [materiales, setMateriales] = useState([]); 
   const [mensajeError, setMensajeError] = useState('');
-
-
   const navigate = useNavigate();
 
   const profLinks = [
@@ -46,8 +43,12 @@ export const DatosCurso = () => {
 
   useEffect(() => {
     const fetchData = async ()=>{
+      if (!usuarioToken || !decodedUsuarioToken) {
+        localStorage.removeItem('authToken');
+        navigate('/');
+        return;
+      }
       if (decodedCursoToken) {
-      //setCursoToken(decodedCursoToken); 
       setNombre(decodedCursoToken.nombre || '');
       setDescripcion(decodedCursoToken.descripcion || '');
       setCantCupos(decodedCursoToken.cantCupos);
@@ -65,9 +66,7 @@ export const DatosCurso = () => {
         } catch (error) {
           console.error('Error fetching parcial:', error);
         }
-      } else {
-        console.log('No parcialId available.');
-      }
+      } 
     }
     }
     fetchData()
@@ -160,7 +159,6 @@ export const DatosCurso = () => {
     }
   }
   const handleSubmit = (e) => {
-    console.log('upfdate')
     e.preventDefault();
     if (!cursoId) {
       console.error("Error: No se pudo obtener el ID del curso.");
@@ -180,7 +178,6 @@ export const DatosCurso = () => {
       usuarioId,
       parcialId,
     });
-    console.log(updateCurso)
     Object.keys(updatedCurso).forEach(key => {
       if (updatedCurso[key] === null || updatedCurso[key] === undefined) {
         delete updatedCurso[key];
@@ -224,20 +221,12 @@ export const DatosCurso = () => {
           
           <div className="btns-curso">
             <button type="submit">Modificar Datos</button>
-<<<<<<< HEAD
             <button type="button" onClick={() => handleParcial(decodedCursoToken.parcialId)}>Parcial</button>
             <button type="button" onClick={handleEliminar}>Eliminar Curso</button>
             <button type="button" onClick={handleAgregarMaterial}>Agregar Material</button>
             <button type="button" onClick={() => handleVerRtaParcial(decodedCursoToken.parcialId)}>Ver Rtas Parcial</button>
-            <button type="button" onClick={handleTp}>Trabajo Practico</button>
-=======
-            <button onClick={() => handleParcial(decodedCursoToken.parcialId)}>Parcial</button>
-            <button onClick={handleEliminar}>Eliminar Curso</button>
             <button onClick={() => navigate('/inscripciones-curso')}>Listar Inscripciones</button>
-            <button onClick={handleAgregarMaterial}>Agregar Material</button>
-            <button onClick={() => handleVerRtaParcial(decodedCursoToken.parcialId)}>Ver Respuestas Parcial</button>
-            <button onClick={handleTp}>Trabajo Practico</button>
->>>>>>> 15bae06a334ce4fa90d5395ab8352be409196775
+            <button type="button" onClick={handleTp}>Trabajo Practico</button>
           </div>
         </form>
 

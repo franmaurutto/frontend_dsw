@@ -33,17 +33,11 @@ const HomePage = () => {
 const handleSubmit = async (e) => {
     e.preventDefault();
     setError(null);
-    console.log('entroooooo')
     try {
       const response = await authUsuario(mail, contrasenia);
-      console.log('llamo',response)
       const { usuariotoken } = response;
-
       if (!usuariotoken) throw new Error('No se recibió token de autenticación.');
-      
       const decodedToken = jwtDecode(usuariotoken);
-      console.log(decodedToken)
-
       localStorage.setItem('authToken', usuariotoken);
 
       if (decodedToken.rol === 'profesor') {

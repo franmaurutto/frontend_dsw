@@ -24,15 +24,18 @@ export const ResponderTp = () => {
   const inscripcionToken = localStorage.getItem('inscripcionToken');
   const decodedInscripcionToken = inscripcionToken ? jwtDecode(inscripcionToken) : null;
   const inscripcionId = decodedInscripcionToken ? decodedInscripcionToken.id : null;;
-
-
+  const usuarioToken = localStorage.getItem('authToken');
+  const decodedUsuarioToken = usuarioToken ? jwtDecode(usuarioToken) : null;
   useEffect(() => {
+    if (!usuarioToken || !decodedUsuarioToken) {
+      localStorage.removeItem('authToken');
+      navigate('/');
+    }
     const fetchTp = async () => {
       if (tpId) {
         try {
           const tpData = await getTp(tpId);
           setTp(tpData.data)
-          console.log(tpData)
         } catch (error) {
           console.error('Error al obtener el TP:', error);
         }

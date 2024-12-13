@@ -45,7 +45,6 @@ const handleInputChange = (e) => {
 
 const handleSubmit = async (e) => {
   e.preventDefault();
-  console.log('entro');
   setError(null);
 
   let dataToSend;
@@ -63,7 +62,6 @@ const handleSubmit = async (e) => {
   }
 
   try {
-    console.log('llama')
     await addUsuario(dataToSend);
     navigate('/');  
   } catch (err) {

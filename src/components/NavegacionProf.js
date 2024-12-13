@@ -15,6 +15,10 @@ export const NavegacionProf = () => {
   const usuarioId = decodedUsuarioToken?.id || null;
   
   useEffect(() => {
+    if (!usuarioToken || !decodedUsuarioToken) {
+      localStorage.removeItem('authToken');
+      navigate('/');
+    }
     if (decodedUsuarioToken && usuarioId) {
         const fetchCursos = async () => {
           try {
@@ -44,7 +48,6 @@ export const NavegacionProf = () => {
       const data = await getCurso(cursoId);
       const decodedToken = jwtDecode(data);
       if (!decodedToken) throw new Error('No se recibió token del curso.');
-      console.log('Información del token decodificado:', decodedToken);
       localStorage.setItem('cursoToken', data);
       navigate('/datos-curso');
     } catch (error) {

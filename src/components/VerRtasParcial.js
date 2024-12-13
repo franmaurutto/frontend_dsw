@@ -15,8 +15,14 @@ const VerRtasParcial = () => {
   const parcialToken = localStorage.getItem('parcialToken');
   const decodedParcialToken = parcialToken ? jwtDecode(parcialToken) : null;
   const parcialId = decodedParcialToken ? decodedParcialToken.id : null;
+  const usuarioToken = localStorage.getItem('authToken');
+  const decodedUsuarioToken = usuarioToken ? jwtDecode(usuarioToken) : null;
 
   useEffect(() => {
+    if (!usuarioToken || !decodedUsuarioToken) {
+      localStorage.removeItem('authToken');
+      navigate('/');
+    }
     const fetchRtas = async () => {
       try {
         if (!parcialId) {

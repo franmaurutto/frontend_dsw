@@ -21,7 +21,14 @@ export const RtaParcial = () => {
   const inscripcionToken = localStorage.getItem('inscripcionToken');
   const decodedInscripcionToken = inscripcionToken ? jwtDecode(inscripcionToken) : null;
   const inscripcionId = decodedInscripcionToken?.id || null;
+  const usuarioToken = localStorage.getItem('authToken');
+  const decodedUsuarioToken = usuarioToken ? jwtDecode(usuarioToken) : null;
+
   useEffect(() => {
+    if (!usuarioToken || !decodedUsuarioToken) {
+      localStorage.removeItem('authToken');
+      navigate('/');
+    }
     try {
       if (decodedParcialToken) {
         setConsigna(decodedParcialToken.consigna || '');
