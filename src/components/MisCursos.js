@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { getCursoDeInscripcion, deleteInscripcion, updateInscripcion } from '../services/InscripcionServices.js';
+import { getCursoDeInscripcion, deleteInscripcion, updateInscripcion, getInscripcion } from '../services/InscripcionServices.js';
 import { getInscripcionesAlumno} from '../services/UsuarioServices.js';
 import '../styles/MisCursos.css';
 import NavBar from './NavBar.js';

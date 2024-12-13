@@ -19,29 +19,30 @@ const VerRtasParcial = () => {
   useEffect(() => {
     const fetchRtas = async () => {
       try {
-        if (parcialId) {
-          const rtasData = await getRtaParcialdeParcial(parcialId); 
-          const rtasConInscripciones = await Promise.all(
-            rtasData.map(async (rta) => {
-                console.log(rta)
-              const inscripcionData = await getInscripcionDeRtaParcial(rta.id, rta.inscripcion);
-              console.log(inscripcionData)
-              const alumnoData = await getAlumnoDeInscripcion(inscripcionData.id, inscripcionData.usuario); 
-              return { ...rta, alumno: alumnoData };
-            })
-          );
-          setRtas(rtasConInscripciones);
+        if (!parcialId) {
+          throw new Error('Parcial ID no encontrado.'); 
         }
+  
+        const rtasData = await getRtaParcialdeParcial(parcialId); 
+        const rtasConInscripciones = await Promise.all(
+          rtasData.map(async (rta) => {
+            const inscripcionData = await getInscripcionDeRtaParcial(rta.id, rta.inscripcion);
+            const alumnoData = await getAlumnoDeInscripcion(inscripcionData.id, inscripcionData.usuario); 
+            return { ...rta, alumno: alumnoData };
+          })
+        );
+        setRtas(rtasConInscripciones);
       } catch (error) {
-        setError('Hubo un error al obtener las respuestas.');
+        setError(error.message || 'Hubo un error al obtener las respuestas.');
         console.error('Error al obtener las respuestas del parcial:', error);
       } finally {
         setLoading(false);
       }
     };
-
+  
     fetchRtas();
   }, [parcialId]);
+  
   const profLinks = [
     { label: 'Mi cuenta', path: '/mi-cuenta' },
     { label: 'Mis Cursos', path: '/nav-prof' },

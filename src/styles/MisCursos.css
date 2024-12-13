@@ -32,6 +32,7 @@
   list-style-type: none;
   padding: 0;
   justify-content: flex-start;
+  
 }
 
 .list-cursos li {
@@ -40,13 +41,14 @@
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   padding: 16px;
-  width: 230px;
+  width: 275px;
   height: 350px; 
   text-align: center;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  
 }
 
 .list-cursos li h3 {
