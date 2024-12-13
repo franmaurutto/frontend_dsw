@@ -1,35 +1,3 @@
-.relative.password-field {
-  position: relative;
-  display: flex;
-  align-items: center;
-}
-
-.password-input {
-  flex: 1;
-  padding-right: 50px; 
-}
-
-.eye-button {
-  position: absolute;
-  right: 10px; 
-  background-color: #f4c2c2;
-  border: none;
-  color: #fff;
-  border-radius: 50%;
-  width: 30px;
-  height: 30px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-.eye-button:hover {
-  background-color: #f08080;
-}
-
-
 
 @media (min-width: 768px) and (max-width: 1023px) {
 
@@ -147,6 +115,48 @@
     text-decoration: underline;
   }
 }
+
+.password-field {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.password-input {
+  width: 100%;
+  padding: 10px 30px 10px 10px; /* Ajuste el padding para dar espacio al ícono */
+  font-size: 16px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+.eye-button {
+  position: absolute;
+  right: 8px; /* Lo posicionamos cerca del borde derecho */
+  top: 50%;
+  transform: translateY(-80%); /* Centrado vertical */
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  width: 20px; /* Tamaño pequeño */
+  height: 20px; /* Tamaño pequeño */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+.eye-button svg {
+  width: 40px; /* Ícono pequeño */
+  height: 40px; /* Ícono pequeño */
+  color: #e396b7; /* Color del ícono */
+}
+
+.eye-button:hover svg {
+  color: #c93766; /* Cambiar color al pasar el mouse */
+}
+
 
 @media (min-width: 1024px) {
   .home-page {

@@ -1,154 +1,174 @@
-/* Estilos generales para los recuadros */
-.recuadro p.consigna-text,
-.recuadro p.fecha-limite-text {
-  background-color: #ffffff;
-  padding: 15px;
-  border: 1px solid #ddd;
-  border-radius: 10px;
-  font-size: 1rem;
-  margin-bottom: 20px;
-  width: 100%;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  text-align: center;
-}
 
-.consigna-text, .fecha-limite-text {
-  color: #a3a0a0;
-}
-
-/* Recuadro de consigna */
-.consigna-text {
-  background-color: #ffffff;
-  padding: 20px;
-  border: 1px solid transparent;
-  border-radius: 10px;
-  font-size: 1.1rem;
-  color: #333;
-  margin-bottom: 20px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  width: 80%;
-  min-width: 400px; /* Reducir el tamaño mínimo */
-}
-
-/* Estilo para el área de respuesta */
-.respuesta {
-  width: 80%;
-  min-width: 400px; /* Reducir el tamaño mínimo */
-  padding: 15px;
-  font-size: 1.1rem;
-  border-radius: 10px;
-  border: 1px solid #ddd;
-}
-
-/* Estilo para la fecha límite */
-.fecha-limite-text {
-  font-weight: bold;
-  color: #f06292;
-}
-
-/* Estilo para el formulario */
-.form-rta {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-textarea {
-  border-radius: 10px;
-  border: 1px solid #ddd;
-  padding: 10px;
-  font-size: 1rem;
-  width: 100%;
-  resize: vertical;
-}
-
-/* Estilos para el botón */
-button {
-  background-color: #f8bbd0;
-  border: 1px solid #f06292;
-  color: #f06292;
-  padding: 12px 25px;
-  border-radius: 5px;
-  font-size: 1rem;
-  cursor: pointer;
-  width: 100%;
-  transition: background-color 0.3s;
-}
-
-button:hover {
-  background-color: #f06292;
-  color: white;
-}
-
-/* Media Queries */
-
-/* Para pantallas pequeñas (menos de 768px) */
-@media (max-width: 767px) {
-  /* Fondo rosa detrás de los botones y la respuesta */
+.respuesta-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #f8e3e9;
+    padding-top: 60px;
+    height: 100vh;
+    overflow: auto;
+  }
+  
   .rta-tp {
-    background-color: #f8bbd0; /* Fondo rosa claro */
+    background-color: white;
     padding: 20px;
     border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    width: 50%;
+    max-width: 600px;
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
   }
-
-  .consigna-text, .fecha-limite-text, .respuesta {
-    width: 95%;  /* Reducir el tamaño del recuadro */
-    min-width: 0; /* Eliminar el mínimo de 400px */
-    background-color: #ffffff; /* Fondo blanco para recuadros de texto */
-    color: #333; /* Color gris oscuro para el texto */
+  
+  .rta-tp h1 {
+    margin-bottom: 15px;
+    color: #333;
+    font-size: 1.6em;
+    text-align: center;
   }
-
+  
+  .recuadro {
+    margin-bottom: 20px;
+    width: 100%;
+  }
+  
+  .recuadro label {
+    margin-bottom: 5px;
+    font-size: 1rem;
+    color: #333;
+  }
+  
+  .consigna-text,
+  .fecha-limite-text {
+    padding: 10px;
+    background-color: #f1f1f1;
+    border-radius: 5px;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    width: 100%;
+    font-size: 1rem;
+  }
+  
   .form-rta {
-    gap: 15px;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
   }
-
+  
+  .form-rta label {
+    margin-bottom: 5px;
+    font-size: 1rem;
+    color: #333;
+  }
+  
   .respuesta {
-    font-size: 1rem; /* Reducir tamaño de fuente */
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    margin-bottom: 15px;
+    font-size: 1rem;
+    box-sizing: border-box;
   }
-
+  
   button {
-    padding: 10px;  /* Reducir padding del botón */
+    background-color: #f06292;
+    color: white;
+    padding: 10px 20px;
+    font-size: 1rem;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
   }
-}
+  
+  button:hover {
+    background-color: #dd84a0;
+  }
+  
 
-/* Para pantallas medianas (768px - 1023px) */
-@media (min-width: 768px) and (max-width: 1023px) {
-  .consigna-text, .fecha-limite-text, .respuesta {
-    width: 85%;
-    min-width: 400px;
-    background-color: #ffffff; /* Fondo blanco en pantallas medianas */
+  @media (max-width: 1023px) and (min-width: 768px) {
+    .respuesta-container {
+      padding-top: 60px;
+    }
+  
+    .rta-tp {
+      width: 80%;
+      max-width: 600px;
+      padding: 20px;
+    }
+  
+    .rta-tp h1 {
+      font-size: 1.6em;
+    }
+  
+    .consigna-text,
+    .fecha-limite-text {
+      font-size: 1rem;
+    }
+  
+    .respuesta {
+      font-size: 1rem;
+    }
+  
+    button {
+      font-size: 1rem;
+    }
   }
-
-  .form-rta {
-    gap: 20px;
+  
+  @media (max-width: 767px) {
+    .respuesta-container {
+      padding-top: 80px;
+    }
+  
+    .rta-tp {
+      width: 90%;
+      padding: 15px;
+    }
+  
+    .rta-tp h1 {
+      font-size: 1.8em;
+    }
+  
+    .consigna-text,
+    .fecha-limite-text {
+      font-size: 0.9rem;
+    }
+  
+    .respuesta {
+      font-size: 0.9rem;
+    }
+  
+    button {
+      font-size: 1rem;
+    }
   }
-
-  .respuesta {
-    font-size: 1.1rem;
+  
+  @media (min-width: 1024px) {
+    .rta-tp {
+      width: 50%;
+      max-width: 600px;
+      padding: 20px;
+    }
+  
+    .rta-tp h1 {
+      font-size: 24px;
+    }
+  
+    .consigna-text,
+    .fecha-limite-text {
+      font-size: 1.1rem;
+    }
+  
+    .respuesta {
+      font-size: 1rem;
+    }
+  
+    button {
+      font-size: 1.1rem;
+    }
   }
-
-  button {
-    padding: 12px 20px;
-  }
-}
-
-/* Para pantallas grandes (más de 1024px) */
-@media (min-width: 1024px) {
-  .consigna-text, .fecha-limite-text, .respuesta {
-    width: 80%;
-    min-width: 500px;
-    background-color: #ffffff; /* Fondo blanco en pantallas grandes */
-  }
-
-  .form-rta {
-    gap: 20px;
-  }
-
-  .respuesta {
-    font-size: 1.1rem;
-  }
-
-  button {
-    padding: 12px 25px;
-  }
-}
+  
