@@ -16,7 +16,8 @@ export const Tp = () => {
   const [fechaLimite, setFechaLimite] = useState('');
   const [mensajeExito, setMensajeExito] = useState('');
   const [cursoToken, setCursoToken] = useState(localStorage.getItem('cursoToken'));
-
+  const usuarioToken = localStorage.getItem('authToken');
+  const decodedUsuarioToken = usuarioToken ? jwtDecode(usuarioToken) : null;
   const navigate=useNavigate()
 
   const profLinks = [
@@ -31,6 +32,10 @@ export const Tp = () => {
   const tpId = decodedCursoToken?.tpId || null;
 
   useEffect(() => {
+    if (!usuarioToken || !decodedUsuarioToken) {
+      localStorage.removeItem('authToken');
+      navigate('/');
+    }
     const fetchTp = async () => {
       setLoading(true);
       try {
@@ -73,8 +78,7 @@ export const Tp = () => {
         setError('');
       }
     } catch (error) {
-      console.log('Error al guardar el trabajo practico:', error);
-      setError('Hubo un error');
+      setError('Hubo un error al guardar el Trabajo Practico');
     }
   };
   
@@ -95,7 +99,6 @@ export const Tp = () => {
   const handleVerRtaTP = async (tpId) => {
     const tp = await getTp(tpId);
     if (!tp) throw new Error('No se encontró el TP.');
-    console.log(tp);
     navigate('/ver-rtastp');
   };
 

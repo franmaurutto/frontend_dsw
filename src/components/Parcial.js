@@ -19,7 +19,8 @@ export const Parcial = () => {
   const cursoToken = localStorage.getItem('cursoToken'); 
   const decodedCursoToken = cursoToken ? jwtDecode(cursoToken) : null;
   const parcialId = decodedCursoToken?.parcialId || null;
-  console.log(parcialId)
+  const usuarioToken = localStorage.getItem('authToken');
+  const decodedUsuarioToken = usuarioToken ? jwtDecode(usuarioToken) : null;
   const navigate=useNavigate()
 
   const profLinks = [
@@ -32,15 +33,16 @@ export const Parcial = () => {
 
   useEffect(() => {
     const fetchParcial = async () => {
-      console.log(parcialId)
+      if (!usuarioToken || !decodedUsuarioToken) {
+        localStorage.removeItem('authToken');
+        navigate('/');
+      }
       setLoading(true);
       try {
         if (parcialId) {
           const response = await getParcial(parcialId); 
-          console.log(response)
           const decodedParcialToken = response ? jwtDecode(response) : null;
           setParcial(decodedParcialToken);
-          console.log(decodedParcialToken)
         } else {
           throw new Error('No se encontró un idParcial en el token.');
         }
@@ -55,7 +57,6 @@ export const Parcial = () => {
   }, []);//le saque parcialId
 
   useEffect(() => {
-    console.log(parcial)
     if (parcial) {
       setFecha(parcial.fecha ? parcial.fecha.split('T')[0] : '');
       setConsigna(parcial.consigna || '');
@@ -80,7 +81,6 @@ export const Parcial = () => {
         setError('');
       }
     } catch (error) {
-      console.log('Error al guardar el parcial:', error);
       setError('Hubo un error');
     }
   };

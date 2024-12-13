@@ -3,7 +3,6 @@ import '../styles/VerParcial.css';
 import NavBar from './NavBar.js';
 import { useNavigate } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode'; 
-import { getParcial } from '../services/ParcialServices.js';
 
 export const VerParcial = () => {
   const navigate = useNavigate();
@@ -18,6 +17,8 @@ export const VerParcial = () => {
   const decodedParcialToken = parcialToken ? jwtDecode(parcialToken) : null;
   const inscripcionToken = localStorage.getItem('inscripcionToken');
   const decodedInscripcionToken = inscripcionToken ? jwtDecode(inscripcionToken) : null;
+  const usuarioToken = localStorage.getItem('authToken');
+  const decodedUsuarioToken = usuarioToken ? jwtDecode(usuarioToken) : null;
   const [parcial, setParcial] = useState(null);
   const [fecha, setFecha] = useState('');
   const [horaComienzo, setHoraComienzo] = useState('');
@@ -27,8 +28,11 @@ export const VerParcial = () => {
   const [canTakeParcial, setCanTakeParcial] = useState(false);
 
   useEffect(() => {
+    if (!usuarioToken || !decodedUsuarioToken) {
+      localStorage.removeItem('authToken');
+      navigate('/');
+    }
     if (decodedParcialToken) {
-      console.log(decodedParcialToken);
       setFecha(decodedParcialToken.fecha.split('T')[0]); 
       setHoraComienzo(decodedParcialToken.horaComienzo);
       setHoraFin(decodedParcialToken.horaFin);

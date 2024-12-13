@@ -1,8 +1,9 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import NavBar from './NavBar.js'
 import { createMaterial } from '../services/MaterialService.js';
 import '../styles/CrearMaterial.css';
-
+import { useNavigate } from 'react-router-dom';
+import { jwtDecode } from 'jwt-decode';
 export const CrearMaterial = () => {
 
   const profLinks = [
@@ -12,7 +13,7 @@ export const CrearMaterial = () => {
     { label: 'Crear Material', path: '/crear-material' },
     { label: 'Materiales', path: '/materiales' },
   ];
-
+  const navigate = useNavigate()
   const[error,setError]= useState()
   const[mensajeExito,setMensajeExito]=useState()
 
@@ -20,6 +21,14 @@ export const CrearMaterial = () => {
   descripcion: '',
   titulo: '',
   });
+  useEffect(() => {
+    const usuarioToken = localStorage.getItem('authToken');
+    const decodedUsuarioToken = usuarioToken ? jwtDecode(usuarioToken) : null;
+    if (!usuarioToken || !decodedUsuarioToken) {
+      localStorage.removeItem('authToken');
+      navigate('/');
+    }
+  }, [navigate]);
   const materialData = { 
     ...formData, 
   };

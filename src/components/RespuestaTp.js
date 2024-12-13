@@ -16,10 +16,20 @@ export const RespuestaTp = () => {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(true);
   const navigate=useNavigate();
+  const cursoToken = localStorage.getItem('cursoToken');
+  const decodedCursoToken = cursoToken ? jwtDecode(cursoToken) : null;
+  const tpId = decodedCursoToken ? decodedCursoToken.tpId : null;
+  const usuarioToken = localStorage.getItem('authToken');
+  const decodedUsuarioToken = usuarioToken ? jwtDecode(usuarioToken) : null;
+
 
 
   useEffect(() => {
     setLoading(false);
+    if (!usuarioToken || !decodedUsuarioToken) {
+      localStorage.removeItem('authToken');
+      navigate('/');
+    }
     const fetchRtas = async () => {
 
       try {

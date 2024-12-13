@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { getCursoDeInscripcion, deleteInscripcion, updateInscripcion, getInscripcion } from '../services/InscripcionServices.js';
+import { getCursoDeInscripcion, deleteInscripcion, getInscripcion } from '../services/InscripcionServices.js';
 import { getInscripcionesAlumno} from '../services/UsuarioServices.js';
 import '../styles/MisCursos.css';
 import NavBar from './NavBar.js';
@@ -9,20 +9,15 @@ import { getCurso } from '../services/CursoServices.js';
 import { getParcial } from '../services/ParcialServices.js';
 import { getTp } from '../services/TpServices.js';
 
-console.log('miscursos1')
-const usuarioToken = localStorage.getItem('authToken');
-const decodedUsuarioToken = usuarioToken ? jwtDecode(usuarioToken) : null;
-const usuarioId = decodedUsuarioToken ? decodedUsuarioToken.id : null;
-console.log(decodedUsuarioToken)
 
 export const MisCursos = () => {
-
-  console.log('miscursos1.2')
+  const usuarioToken = localStorage.getItem('authToken');
+  const decodedUsuarioToken = usuarioToken ? jwtDecode(usuarioToken) : null;
+  const usuarioId = decodedUsuarioToken ? decodedUsuarioToken.id : null;
   const navigate= useNavigate();
   const [cursos, setCursos] = useState([]);
   const [mensajeExito, setMensajeExito] = useState('');
-  console.log('miscursos2')
-  console.log('miscursos3')
+
 
   const aluLinks = [
     { label: 'Mi cuenta', path: '/mi-cuenta' },
@@ -31,6 +26,11 @@ export const MisCursos = () => {
     ];
 
   useEffect(() => {
+    if (!decodedUsuarioToken || decodedUsuarioToken.rol !== 'alumno') {
+      localStorage.removeItem('authToken');
+      navigate('/');
+      return;
+    }
     const fetchCursos = async () => {
       try {
         
@@ -69,19 +69,15 @@ export const MisCursos = () => {
   }, [usuarioId]);
 
   const handleTp = async (cursoId, inscripcionId, tpId) => {
-    console.log(tpId)
     const data = await getCurso(cursoId);
     const decodedToken = jwtDecode(data);
-    console.log('tokenCurso',decodedToken)
     if (!decodedToken) throw new Error('No se recibió token del curso.');
     localStorage.setItem('cursoToken', data);
     const data1 = await getInscripcion(inscripcionId);
     const decodedToken1 = jwtDecode(data1);
-    console.log('token insc',decodedToken1)
     if (!decodedToken1) throw new Error('No se recibió token de la inscripcion.');
     localStorage.setItem('inscripcionToken', data1);
     const tp = await getTp(decodedToken.tpId)
-    console.log('tp',tp)
     if (!tp) throw new Error('No se recibió el tp.');
     navigate('/rta-tp');
   };
@@ -105,7 +101,6 @@ export const MisCursos = () => {
   }
 
   const handleVerParcial = async (cursoId, inscripcionId, parcialId) => {
-    console.log(parcialId)
     const data = await getCurso(cursoId);
     const decodedToken = jwtDecode(data);
     if (!decodedToken) throw new Error('No se recibió token del curso.');
@@ -118,7 +113,6 @@ export const MisCursos = () => {
     const decodedToken2 = jwtDecode(data2);
     if (!decodedToken2) throw new Error('No se recibió token del curso.');
     localStorage.setItem('parcialToken', data2);
-    console.log(data2)
     navigate('/ver-parcial');
   };
 

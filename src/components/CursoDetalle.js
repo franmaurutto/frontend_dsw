@@ -1,21 +1,18 @@
 import { useState, useEffect } from 'react';
-import { useUser } from './UsuarioContext.js';
-import { getCursoDetalle } from '../services/CursoServices.js'; 
 import NavBar from './NavBar'; 
 import '../styles/CursoDetalle.css';
 import { useParams } from 'react-router-dom';
 import { createInscripcion } from '../services/InscripcionServices.js';
 import  {jwtDecode} from 'jwt-decode';
-
+import { useNavigate } from 'react-router-dom';
 
 export const CursoDetalle = () => {
-  //const { usuario } = useUser();
   const usuarioToken = localStorage.getItem('authToken');
   const decodedUsuarioToken = usuarioToken ? jwtDecode(usuarioToken) : null;
   const usuarioId = decodedUsuarioToken ? decodedUsuarioToken.id : null;
   const cursoToken = localStorage.getItem('cursoToken');
   const decodedCursoToken = cursoToken ? jwtDecode(cursoToken) : null;
-
+  const navigate=useNavigate()
   const { cursoId } = useParams();  
   const [curso, setCurso] = useState(null);
   const [mensajeExito, setMensajeExito] = useState('');
@@ -25,6 +22,11 @@ export const CursoDetalle = () => {
       setCurso(decodedCursoToken); 
     } else {
       setMensajeError('No se encontró información del curso.');
+    }
+    if (!usuarioToken || !decodedUsuarioToken) {
+      localStorage.removeItem('authToken');
+      navigate('/');
+      return;
     }
   }, [decodedCursoToken]);
 

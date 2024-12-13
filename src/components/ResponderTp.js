@@ -24,9 +24,15 @@ export const ResponderTp = () => {
   const tpId = decodedcursoToken ? decodedcursoToken.tpId : null;
   const inscripcionToken = localStorage.getItem('inscripcionToken');
   const decodedInscripcionToken = inscripcionToken ? jwtDecode(inscripcionToken) : null;
-  const inscripcionId = decodedInscripcionToken ? decodedInscripcionToken.id : null;
 
+  const inscripcionId = decodedInscripcionToken ? decodedInscripcionToken.id : null;;
+  const usuarioToken = localStorage.getItem('authToken');
+  const decodedUsuarioToken = usuarioToken ? jwtDecode(usuarioToken) : null;
   useEffect(() => {
+    if (!usuarioToken || !decodedUsuarioToken) {
+      localStorage.removeItem('authToken');
+      navigate('/');
+    }
     const fetchTp = async () => {
       if (tpId && inscripcionId) {
         try {
@@ -38,6 +44,7 @@ export const ResponderTp = () => {
             setRespuestaExistente(respuestaExistente);
             setRtaConsigna(respuestaExistente.rtaConsignaTP);
           }
+          setTp(tpData.data)
         } catch (error) {
           console.error('Error al obtener la respuesta:', error);
         }

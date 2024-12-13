@@ -3,6 +3,7 @@ import NavBar from './NavBar.js';
 import '../styles/AgregarMaterial.css';
 import { findMatSinCurso, addMaterialToCurso } from '../services/MaterialService.js';
 import  {jwtDecode} from 'jwt-decode';
+import { useNavigate } from 'react-router-dom';
 
 export const AgregarMaterial = () => {
   const [materiales, setMateriales] = useState([]);
@@ -10,10 +11,10 @@ export const AgregarMaterial = () => {
   const [mensajeError, setMensajeError] = useState('');
   const usuarioToken = localStorage.getItem('authToken');
   const decodedUsuarioToken = usuarioToken ? jwtDecode(usuarioToken) : null;
-  const usuarioId = decodedUsuarioToken ? decodedUsuarioToken.id : null;
   const cursoToken = localStorage.getItem('cursoToken');
   const decodedCursoToken = cursoToken ? jwtDecode(cursoToken) : null;
   const cursoId = decodedCursoToken ? decodedCursoToken.id : null;
+  const navigate = useNavigate();
   const profLinks = [
     { label: 'Mi cuenta', path: '/mi-cuenta' },
     { label: 'Mis Cursos', path: '/nav-prof' },
@@ -23,6 +24,11 @@ export const AgregarMaterial = () => {
   ];
 
   useEffect(() => {
+    if (!usuarioToken || !decodedUsuarioToken) {
+      localStorage.removeItem('authToken');
+      navigate('/');
+      return;
+    }
     const fetchMateriales = async () => {
       try {
         const data = await findMatSinCurso();
