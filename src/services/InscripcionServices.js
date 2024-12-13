@@ -10,12 +10,24 @@ const getHeaders = () => {
     ...(token && { Authorization: `Bearer ${token}` }), 
   };
 };
-export const getInscripciones = async () => {
-  const response = await fetch(API_URL);
-  if (!response.ok) {
-    throw new Error('Error al obtener las inscripciones');
+
+
+export const getInscripciones = async (cursoId) => {
+  try {
+    const response = await fetch(`${API_URL}/${cursoId}`, { 
+      method: 'GET',
+      headers: getHeaders(),
+    });
+
+    if (!response.ok) {
+      throw new Error('Error al crear el curso');
+    }
+    const data = await response.json();
+    return data.token; 
+  } catch (error) {
+    console.error('Error en getInscripciones:', error.message);
+    throw error;
   }
-  return response.json();
 };
 
 export const createInscripcion = async (inscripcion) => {
@@ -113,7 +125,26 @@ export const getInscripcion = async (inscripcionId) => {
     return data.inscripcionToken;  
   } catch (error) {
     console.error('Error al obtener la inscripcion:', error);
-    throw error;
-  }
+    throw error;
+  }
 };
+export const getAlumnoInscripcion = async (usuarioId, inscripcionId) => {
+  try {
+    const response = await fetch(`${API_URL}/${inscripcionId}/usuario/${usuarioId}`, {
+      method: 'GET',
+      headers: getHeaders(),
+    });
 
+    if (!response.ok) {
+      const errorData = await response.json();
+      console.error('Error del servidor al obtener el usuario de la inscripción:', errorData.message);
+      throw new Error(errorData.message || 'Error al obtener el usuario de la inscripción');
+    }
+
+    const data = await response.json();
+    return data.token; 
+  } catch (error) {
+    console.error('Error al obtener el usuario de la inscripción:', error);
+    throw error;
+  }
+};

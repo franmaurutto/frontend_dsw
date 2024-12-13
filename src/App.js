@@ -21,6 +21,7 @@ import RtaParcial from './components/RtaParcial.js';
 import {RespuestaTp} from './components/RespuestaTp.js';
 import VerRtasParcial from './components/VerRtasParcial.js';
 import { Tp } from './components/Tp.js';
+import { InscripcionesCurso } from "./components/InscripcionesCurso.js";
 import ResponderTp from './components/ResponderTp.js';
 function App() {
 
@@ -48,6 +49,7 @@ function App() {
           <Route path="/rta-parcial" element={<RtaParcial />} />
           <Route path="/ver-rtasparcial" element={<VerRtasParcial />} />
           <Route path="/tp" element={<Tp />} />
+          <Route path="/inscripciones-curso" element={<InscripcionesCurso />} />
           <Route path="/rta-tp" element={<ResponderTp />}/>
           <Route path="/ver-rtastp" element={<RespuestaTp />} />
           

@@ -204,6 +204,7 @@ export const DatosCurso = () => {
             <button type="submit">Modificar Datos</button>
             <button onClick={() => handleParcial(decodedCursoToken.parcialId)}>Parcial</button>
             <button onClick={handleEliminar}>Eliminar Curso</button>
+            <button onClick={() => navigate('/inscripciones-curso')}>Listar Inscripciones</button>
             <button onClick={handleAgregarMaterial}>Agregar Material</button>
             <button onClick={() => handleVerRtaParcial(decodedCursoToken.parcialId)}>Ver Respuestas Parcial</button>
             <button onClick={handleTp}>Trabajo Practico</button>

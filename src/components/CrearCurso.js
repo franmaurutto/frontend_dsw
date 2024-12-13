@@ -49,7 +49,7 @@ const getUserFromToken = () => {
 
   const cursoData = { 
       ...formData, 
-      profesorId: usuario.id  
+      profesorId: usuario ? usuario.id : null 
     };
 
   const handleSubmit = async (e) => {

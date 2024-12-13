@@ -52,7 +52,7 @@ export const Parcial = () => {
       }
     };
     fetchParcial();
-  }, [parcialId]);
+  }, []);//le saque parcialId
 
   useEffect(() => {
     console.log(parcial)
