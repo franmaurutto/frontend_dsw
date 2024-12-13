@@ -1,6 +1,6 @@
 
 const API_URL = 'http://localhost:3000/api/cursos';
-
+/*
 export const GetInscripcionesCurso = async (cursoId) => {
   try {
     const response = await fetch(`${API_URL}/${cursoId}/inscripciones`, {
@@ -20,7 +20,7 @@ export const GetInscripcionesCurso = async (cursoId) => {
     console.error('Error al obtener inscripciones por curso:', error);
     throw error;
   }
-};
+};*/
 
 
 
@@ -129,7 +129,7 @@ export const getMaterialesCurso = async (cursoId) => {
   const { data } = await response.json(); 
   return data;
 };
-
+/*
 export const getInscripcionesPorCurso = async (cursoId) => {
   try {
     const response = await fetch(`${API_URL}/${cursoId}/inscripciones`, {
@@ -142,7 +142,30 @@ export const getInscripcionesPorCurso = async (cursoId) => {
       throw new Error(errorData.message || 'Error al obtener las inscripciones del curso');
     }
     const data = await response.json();
-    return data.token; 
+    return data; 
+  } catch (error) {
+    console.error('Error al obtener inscripciones:', error);
+    throw error;
+  }
+};*/
+export const getInscripcionesCurso = async (cursoId) => {
+  try {
+    const url = `${API_URL}/${cursoId}/inscripciones`;
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: getHeaders(),
+    });
+
+    console.log('Response completa:', response); // Verifica qué estás recibiendo
+    if (!response.ok) {
+      const errorData = await response.json();
+      console.error('Error del servidor:', errorData.message);
+      throw new Error(errorData.message || 'Error al obtener las inscripciones del curso');
+    }
+
+    const data = await response.json();
+    console.log('Datos de la respuesta:', data); // Asegúrate de que "data" es lo que esperas
+    return data; //ACA NO VA DATA.TOKEN 
   } catch (error) {
     console.error('Error al obtener inscripciones:', error);
     throw error;

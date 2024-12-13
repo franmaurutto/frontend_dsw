@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { useUser } from './UsuarioContext.js';
 import { getCursoDetalle } from '../services/CursoServices.js'; 
 import NavBar from './NavBar'; 
 import '../styles/CursoDetalle.css';
@@ -23,6 +22,7 @@ export const CursoDetalle = () => {
   useEffect(() => {
     if (decodedCursoToken) {
       setCurso(decodedCursoToken); 
+      console.log('decodedCursoToken:', decodedCursoToken);
     } else {
       setMensajeError('No se encontró información del curso.');
     }
@@ -85,12 +85,12 @@ export const CursoDetalle = () => {
             {mensajeError && <p className="mensaje-error">{mensajeError}</p>}
             <h1>{curso.nombre}</h1>
             <p><strong>Descripción:</strong> {curso.descripcion}</p>
-            {curso.profesor.nombreCompleto && (
+            {curso.profesor?.nombreCompleto && (
               <>
-                <p><strong>Profesor:</strong> {separarNombreApellido(curso.profesor.nombreCompleto).nombre} {separarNombreApellido(curso.profesor.nombreCompleto).apellido}</p>
+                <p><strong>Profesor:</strong> {separarNombreApellido(curso.profesor.nombreCompleto)?.nombre} {separarNombreApellido(curso.profesor.nombreCompleto)?.apellido}</p>
               </>
             )}
-            <p><strong>Email del Profesor:</strong> {curso.profesor.mail}</p>
+            <p><strong>Email del Profesor:</strong> {curso.profesor?.mail}</p>
             <p><strong>Duración:</strong> {curso.duracion}</p>
             <p><strong>Fecha de Inicio:</strong> {curso.fechaInicio}</p>
             <p><strong>Fecha de Fin:</strong> {curso.fechaFin}</p>

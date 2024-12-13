@@ -64,7 +64,7 @@ export const getUsuario = async (usuarioId) => {
     }
 
     const data = await response.json();
-    return data.token;  
+    return data;  
   } catch (error) {
     console.error('Error al obtener el detalle del curso:', error);
     throw error;

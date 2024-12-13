@@ -1,3 +1,4 @@
+/* Asegúrate de que el fondo cubra todo el contenido */
 body, html {
     margin: 0;
     padding: 0;
@@ -6,13 +7,13 @@ body, html {
   }
   
   .inscripciones-curso {
-    min-height: 100%;
+    min-height: 100%; /* Asegura que ocupe toda la altura disponible */
     display: flex;
     flex-direction: column;
   }
   
   .lista-inscripciones {
-    flex: 1;
+    flex: 1; /* Esto hace que ocupe el espacio restante disponible */
     padding: 20px;
     background-color: #f8e3e9;
     color: #333;
@@ -25,8 +26,7 @@ body, html {
   .lista-inscripciones h1 {
     font-size: 24px;
     text-align: center;
-    margin-bottom: 30px; /* Espacio inferior */
-    margin-top: 60px; /* Mueve el título más abajo para no ser cubierto */
+    margin-bottom: 30px; /* Esto mueve el título más abajo */
     color: #c23864;
   }
   
@@ -75,18 +75,16 @@ body, html {
     margin-top: 20px;
   }
   
-  /* Botón "Volver" reducido y al final */
+  /* Estilo para el botón volver que debe estar abajo */
   .boton-volver {
-    margin-top: 20px; /* Ajusta el margen superior */
-    align-self: center; /* Centra el botón */
+    margin-top: 30px;
     background-color: #f06292;
     color: white;
     border: none;
-    padding: 8px 16px; /* Reduce tamaño */
-    font-size: 14px;
+    padding: 10px 20px;
     cursor: pointer;
     transition: background-color 0.3s;
-    border-radius: 5px;
+    text-align: center;
   }
   
   .boton-volver:hover {

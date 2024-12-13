@@ -13,13 +13,32 @@ const getHeaders = () => {
     ...(token && { Authorization: `Bearer ${token}` }), 
   };
 };
-
-export const createCertificado = async (certificado) => {
+export const getCertificado = async (certificadoId) => {
   try {
+    const response = await fetch(`${API_URL}/${certificadoId}`, {
+      method: 'GET',
+      headers: getHeaders(),
+    });
+
+    if (!response.ok) {
+      throw new Error('No se pudo obtener el certificado');
+    }
+
+    const data = await response.json();
+    return data;  
+  } catch (error) {
+    console.error('Error al obtener el detalle del certificado:', error);
+    throw error;
+  }
+};
+
+export const createCertificado = async (certificadoData) => {
+  try {
+    console.log("Datos del certificado:", certificadoData);
     const response = await fetch(API_URL, {
       method: 'POST',
       headers: getHeaders(),
-      body: JSON.stringify(certificado),
+      body: JSON.stringify(certificadoData),
     });
     if (!response.ok) {
       const errorData = await response.json();
@@ -27,7 +46,7 @@ export const createCertificado = async (certificado) => {
       throw new Error('Error al crear el certificado');
     }
     const data = await response.json();
-    return data.token; 
+    return data; 
   } catch (error) {
     console.error('Error al crear el certificado:', error);
     throw error;

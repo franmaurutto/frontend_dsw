@@ -19,9 +19,10 @@ import {AgregarMaterial} from './components/AgregarMaterial.js';
 import {VerParcial} from './components/VerParcial.js';
 import RtaParcial from './components/RtaParcial.js';
 import VerRtasParcial from './components/VerRtasParcial.js';
-
+import MisCertificados from './components/MisCertificados.js'
 import { Tp } from './components/Tp.js';
-import { InscripcionesCurso } from "./components/InscripcionesCurso.js";
+import InscripcionesCurso  from "./components/InscripcionesCurso.js";
+
 function App() {
 
   return (
@@ -49,6 +50,7 @@ function App() {
           <Route path="/ver-rtasparcial" element={<VerRtasParcial />} />
           <Route path="/tp" element={<Tp />} />
           <Route path="/inscripciones-curso" element={<InscripcionesCurso />} />
+          <Route path="/mis-certificados" element={<MisCertificados />} />
           
         </Routes>
       </div>
