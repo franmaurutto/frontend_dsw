@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { deleteCurso, updateCurso, getMaterialesCurso } from '../services/CursoServices.js';
+import { deleteCurso, updateCurso, getMaterialesCurso, getCurso } from '../services/CursoServices.js';
 import { updateMaterial } from '../services/MaterialService.js'; 
 import NavBar from './NavBar.js';
 import '../styles/DatosCurso.css';
@@ -14,8 +14,12 @@ export const DatosCurso = () => {
   const usuarioId = decodedUsuarioToken ? decodedUsuarioToken.id : null;
   const cursoToken = localStorage.getItem('cursoToken');
   const decodedCursoToken = cursoToken ? jwtDecode(cursoToken) : null;
-  const cursoId = decodedCursoToken ? decodedCursoToken.id : null;
+  console.log(cursoToken)
+  console.log(decodedCursoToken, 'esta es la linea 17')
+  const cursoid=decodedCursoToken.id;
+  if (decodedCursoToken){console.log(cursoid)}
 
+  
   const [cursos, setCurso] = useState([]);
   const [nombre, setNombre] = useState('');
   const [descripcion, setDescripcion] = useState('');
@@ -48,18 +52,25 @@ export const DatosCurso = () => {
         navigate('/');
         return;
       }
-      if (decodedCursoToken) {
-      setNombre(decodedCursoToken.nombre || '');
-      setDescripcion(decodedCursoToken.descripcion || '');
-      setCantCupos(decodedCursoToken.cantCupos);
-      setFechaInicio(decodedCursoToken.fechaInicio ? decodedCursoToken.fechaInicio.split('T')[0] : '');
-      setFechaFin(decodedCursoToken.fechaFin ? decodedCursoToken.fechaFin.split('T')[0] : '');
-      setHoraInicio(decodedCursoToken.horaInicio || '');
-      setHoraFin(decodedCursoToken.horaFin || '');
-      setDias(decodedCursoToken.dias || '');
-      if (decodedCursoToken.parcialId) {
+      const curso = await getCurso(cursoid)
+      localStorage.removeItem('cursoToken');
+      localStorage.setItem('cursoToken', curso) 
+      console.log(JSON.stringify(curso))
+      const decodedCursoToken1 = curso ? jwtDecode(curso) : null;
+      if (decodedCursoToken1) {
+      setNombre(decodedCursoToken1.nombre || '');
+      setDescripcion(decodedCursoToken1.descripcion || '');
+      setCantCupos(decodedCursoToken1.cantCupos);
+      setFechaInicio(decodedCursoToken1.fechaInicio ? decodedCursoToken1.fechaInicio.split('T')[0] : '');
+      setFechaFin(decodedCursoToken1.fechaFin ? decodedCursoToken1.fechaFin.split('T')[0] : '');
+      setHoraInicio(decodedCursoToken1.horaInicio || '');
+      setHoraFin(decodedCursoToken1.horaFin || '');
+      setDias(decodedCursoToken1.dias || '');
+      console.log(decodedCursoToken1.parcialId)
+      console.log(decodedCursoToken1)
+      if (decodedCursoToken1.parcialId) {
         try {
-          const response = await getParcial(decodedCursoToken.parcialId);
+          const response = await getParcial(decodedCursoToken1.parcialId);
           const decodedToken = jwtDecode(response);
           if (!decodedToken) throw new Error('No se recibió token de autenticación.');
           localStorage.setItem('parcialToken', response);
@@ -74,7 +85,7 @@ export const DatosCurso = () => {
 
   useEffect(() => {
     if (decodedCursoToken) {
-      getMaterialesCurso(cursoId)
+      getMaterialesCurso(cursoid)
         .then((materialesData) => {
           setMateriales(materialesData); 
         })
@@ -82,7 +93,7 @@ export const DatosCurso = () => {
           console.error('Error al obtener materiales del curso:', error);
         });
     }
-  }, [decodedCursoToken, cursoId]);
+  }, [decodedCursoToken, cursoid]);
 
 
   useEffect(() => {
@@ -109,7 +120,7 @@ export const DatosCurso = () => {
     const confirmation = window.confirm('¿Estás seguro de que quieres eliminar el curso? Esta acción no se puede deshacer.');
     if (confirmation) {
       try {
-        deleteCurso(cursoId);
+        deleteCurso(cursoid);
         navigate('/nav-prof');
       } catch (error) {
         console.error('Error al eliminar el curso:', error);
@@ -143,15 +154,16 @@ export const DatosCurso = () => {
   const handleAgregarMaterial = () => {
     navigate('/agregar-material');
   };
-  const handleParcial = () => {
+  const handleParcial = (parcialId) => {
     if (parcialId) {
+      console.log(parcialId)
       navigate('/parcial', { state: { id: parcialId } });
     } else {
       navigate('/parcial');
     }
   }
 
-  const handleTp = () => {
+  const handleTp = (tpId) => {
     if (tpId) {
       navigate('/tp', { state: { id: tpId } });
     } else {
@@ -160,7 +172,7 @@ export const DatosCurso = () => {
   }
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!cursoId) {
+    if (!cursoid) {
       console.error("Error: No se pudo obtener el ID del curso.");
       return;
     }
@@ -183,7 +195,7 @@ export const DatosCurso = () => {
         delete updatedCurso[key];
       }
     });
-    updateCurso(cursoId, updatedCurso)
+    updateCurso(cursoid, updatedCurso)
       .then((updatedData) => {
         setCurso(updatedData);
         setMensajeExito('Datos de curso actualizados correctamente');
@@ -224,9 +236,9 @@ export const DatosCurso = () => {
             <button type="button" onClick={() => handleParcial(decodedCursoToken.parcialId)}>Parcial</button>
             <button type="button" onClick={handleEliminar}>Eliminar Curso</button>
             <button type="button" onClick={handleAgregarMaterial}>Agregar Material</button>
-            <button type="button" onClick={() => handleVerRtaParcial(decodedCursoToken.parcialId)}>Ver Rtas Parcial</button>
+            <button type="button" onClick={() => handleVerRtaParcial(decodedCursoToken.parcialId)}>Rtas Parcial</button>
             <button onClick={() => navigate('/inscripciones-curso')}>Listar Inscripciones</button>
-            <button type="button" onClick={handleTp}>Trabajo Practico</button>
+            <button type="button" onClick={() => handleTp(decodedCursoToken.tpId)}>Trabajo Practico</button>
           </div>
         </form>
 

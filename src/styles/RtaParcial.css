@@ -8,7 +8,30 @@
       height: 100vh;
       overflow: auto;
     }
-  
+    .mensaje-exito {
+      font-size: 0.9rem;
+      color: green;
+      font-weight: bold;
+      margin-top: 10px;
+      padding: 10px;
+      background-color: #d4edda;
+      border: 1px solid #c3e6cb;
+      border-radius: 5px;
+      text-align: center;
+    }
+    .mensaje-error {
+      font-size: 0.9rem;
+      font-weight: bold;
+      margin-top: 10px;
+      background-color: #f8d7da;
+      color: #721c24;
+      border: 1px solid #f5c6cb;
+      padding: 10px;
+      border-radius: 5px;
+      font-size: 0.9rem;
+      text-align: center;
+      margin-top: 15px;
+    }
     .rta-parcial {
       background-color: white;
       padding: 20px;
@@ -99,7 +122,30 @@
     .consigna-text {
       font-size: 0.9rem;
     }
-  
+    .mensaje-exito {
+      font-size: 0.9rem;
+      color: green;
+      font-weight: bold;
+      margin-top: 10px;
+      padding: 10px;
+      background-color: #d4edda;
+      border: 1px solid #c3e6cb;
+      border-radius: 5px;
+      text-align: center;
+    }
+    .mensaje-error {
+      font-size: 0.9rem;
+      font-weight: bold;
+      margin-top: 10px;
+      background-color: #f8d7da;
+      color: #721c24;
+      border: 1px solid #f5c6cb;
+      padding: 10px;
+      border-radius: 5px;
+      font-size: 0.9rem;
+      text-align: center;
+      margin-top: 15px;
+    }
     .respuesta {
       font-size: 0.9rem;
     }
@@ -119,7 +165,30 @@
       height: 100vh;
       overflow: auto;
     }
-  
+    .mensaje-exito {
+      font-size: 0.9rem;
+      color: green;
+      font-weight: bold;
+      margin-top: 10px;
+      padding: 10px;
+      background-color: #d4edda;
+      border: 1px solid #c3e6cb;
+      border-radius: 5px;
+      text-align: center;
+    }
+    .mensaje-error {
+      font-size: 0.9rem;
+      font-weight: bold;
+      margin-top: 10px;
+      background-color: #f8d7da;
+      color: #721c24;
+      border: 1px solid #f5c6cb;
+      padding: 10px;
+      border-radius: 5px;
+      font-size: 0.9rem;
+      text-align: center;
+      margin-top: 15px;
+    }
     .rta-parcial {
       background-color: white;
       padding: 20px;

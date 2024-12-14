@@ -23,6 +23,8 @@ export const RtaParcial = () => {
   const inscripcionId = decodedInscripcionToken?.id || null;
   const usuarioToken = localStorage.getItem('authToken');
   const decodedUsuarioToken = usuarioToken ? jwtDecode(usuarioToken) : null;
+  const [mensajeExito, setMensajeExito] = useState('');
+  const [mensajeError, setMensajeError] = useState('');
 
   useEffect(() => {
     if (!usuarioToken || !decodedUsuarioToken) {
@@ -42,7 +44,8 @@ export const RtaParcial = () => {
     e.preventDefault();
     
     if (rtaConsigna.trim() === '') {
-      alert('Por favor, ingrese una respuesta.');
+      setMensajeError('Por favor, ingrese una respuesta');
+      setTimeout(() => setMensajeError(''), 5000);
       return;
     }
 
@@ -55,18 +58,20 @@ export const RtaParcial = () => {
     try {
       const response = await createRtaParcial(rtaParcial);
       if (response) {
-        alert('Respuesta enviada con éxito');
-        navigate('/mis-cursos');
+        setMensajeExito('Respuesta enviada con éxito');
+        setTimeout(() => setMensajeExito(''), 5000);
       }
     } catch (error) {
-      console.error('Error al enviar la respuesta:', error);
-      alert('Ocurrió un error al enviar la respuesta.');
+      setMensajeError('Hubo un error al enviar la respuesta');
+      setTimeout(() => setMensajeError(''), 5000);
     }
   };
 
   return (
     <div className="respuesta-container">
     <NavBar links={aluLinks} />
+    {mensajeExito && <p className="mensaje-exito">{mensajeExito}</p>}
+    {mensajeError && <p className="mensaje-error">{mensajeError}</p>}
     <div className="rta-parcial">
       <h1>Evaluación: </h1>
       

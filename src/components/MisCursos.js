@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { getCursoDeInscripcion, deleteInscripcion, getInscripcion, getInscripcion } from '../services/InscripcionServices.js';
+import { getCursoDeInscripcion, deleteInscripcion, getInscripcion } from '../services/InscripcionServices.js';
 import { getInscripcionesAlumno} from '../services/UsuarioServices.js';
 import '../styles/MisCursos.css';
 import NavBar from './NavBar.js';
@@ -23,6 +23,7 @@ export const MisCursos = () => {
     { label: 'Mi cuenta', path: '/mi-cuenta' },
     { label: 'Mis Cursos', path: '/mis-cursos' },
     { label: 'Cursos', path: '/nav-alu' },
+    { label: 'Mis Certificados', path: '/mis-certificados' },
     ];
 
   useEffect(() => {
@@ -113,7 +114,13 @@ export const MisCursos = () => {
     const decodedToken2 = jwtDecode(data2);
     if (!decodedToken2) throw new Error('No se recibió token del curso.');
     localStorage.setItem('parcialToken', data2);
-    navigate('/ver-parcial');
+    console.log(decodedToken1.rtaparcialId)
+    if (decodedToken1.rtaparcialId) {
+      navigate('/ver-parcial', { state: { id: decodedToken1.rtaparcialId
+      } });
+    } else {
+      navigate('/ver-parcial');
+    }
   };
 
   return (

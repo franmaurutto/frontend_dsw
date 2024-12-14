@@ -47,7 +47,7 @@ const MisCertificados = () => {
           })
         );
         setCertificados(certificadosConDatos.filter(cert => cert !== null));
-        setMensajeExito('Certificados cargados exitosamente.');
+        //setMensajeExito('Certificados cargados exitosamente.');
       } catch (error) {
         console.error('Error al obtener certificados:', error);
         setMensajeError('Hubo un error al cargar los certificados.');

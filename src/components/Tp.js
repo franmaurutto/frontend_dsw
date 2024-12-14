@@ -5,10 +5,12 @@ import { useNavigate} from 'react-router-dom';
 import { getTp, updateTp, deleteTp,createTp } from '../services/TpServices.js';
 import NavBar from './NavBar.js';
 import '../styles/Tp.css';
-
+import { useLocation } from 'react-router-dom';
+import { getCurso } from '../services/CursoServices.js';
 
 export const Tp = () => {
-
+  const location = useLocation();
+  const tpId = location.state?.id;
   const [tp, setTp] = useState(null);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(true); 
@@ -18,7 +20,9 @@ export const Tp = () => {
   const [cursoToken, setCursoToken] = useState(localStorage.getItem('cursoToken'));
   const usuarioToken = localStorage.getItem('authToken');
   const decodedUsuarioToken = usuarioToken ? jwtDecode(usuarioToken) : null;
+  const decodedCursoToken = cursoToken ? jwtDecode(cursoToken) : null;
   const navigate=useNavigate()
+  
 
   const profLinks = [
     { label: 'Mi cuenta', path: '/mi-cuenta' },
@@ -28,9 +32,12 @@ export const Tp = () => {
     { label: 'Materiales', path: '/materiales' },
   ];
 
-  const decodedCursoToken = cursoToken ? jwtDecode(cursoToken) : null;
-  const tpId = decodedCursoToken?.tpId || null;
-
+  //const decodedCursoToken = cursoToken ? jwtDecode(cursoToken) : null;
+  //const tpId = decodedCursoToken?.tpId || null;
+  useEffect(() => {
+      const storedCursoToken = localStorage.getItem('cursoToken');
+      setCursoToken(storedCursoToken); // Only set the token on component mount
+    }, []);
   useEffect(() => {
     if (!usuarioToken || !decodedUsuarioToken) {
       localStorage.removeItem('authToken');
@@ -47,7 +54,6 @@ export const Tp = () => {
         }
       } catch (err) {
         console.error('Error al cargar el tp:', err);
-        setError('Tp no cargado.');
       } finally {
         setLoading(false);
       }
@@ -71,11 +77,17 @@ export const Tp = () => {
       if (tp) {
         await updateTp(tpId, tpData);
         setMensajeExito('Trabajo Practico actualizado');
+        setTimeout(() => setMensajeExito(''), 5000);
         setError('');
       } else {
         await createTp(tpData);
         setMensajeExito('Trabajo Practico creado');
+        setTimeout(() => setMensajeExito(''), 5000);
         setError('');
+        const curso =await getCurso(decodedCursoToken.id)
+        localStorage.removeItem('cursoToken');
+        setCursoToken(curso)
+        localStorage.setItem('cursoToken', cursoToken)
       }
     } catch (error) {
       setError('Hubo un error al guardar el Trabajo Practico');

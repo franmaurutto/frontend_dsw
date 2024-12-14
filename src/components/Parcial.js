@@ -5,9 +5,13 @@ import { updateParcial, createParcial } from '../services/ParcialServices.js';
 import '../styles/Parcial.css';
 import { useNavigate } from 'react-router-dom';
 import  {jwtDecode} from 'jwt-decode';
-
+import { getCurso } from '../services/CursoServices.js';
+import { useLocation } from 'react-router-dom';
 
 export const Parcial = () => {
+  const location = useLocation();
+  const parcialId = location.state?.id;
+  console.log(parcialId)
   const [parcial, setParcial] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true); 
@@ -16,12 +20,18 @@ export const Parcial = () => {
   const [horaComienzo, setHoraComienzo] = useState('');
   const [horaFin, setHoraFin] = useState('');
   const [mensajeExito, setMensajeExito] = useState('');
-  const cursoToken = localStorage.getItem('cursoToken'); 
+  const [cursoToken, setCursoToken]=useState(localStorage.getItem('cursoToken'))
+  //setCursoToken(localStorage.getItem('cursoToken'))
+  //const cursoToken = localStorage.getItem('cursoToken'); 
   const decodedCursoToken = cursoToken ? jwtDecode(cursoToken) : null;
-  const parcialId = decodedCursoToken?.parcialId || null;
+  //const parcialId = decodedCursoToken?.parcialId || null;
   const usuarioToken = localStorage.getItem('authToken');
   const decodedUsuarioToken = usuarioToken ? jwtDecode(usuarioToken) : null;
   const navigate=useNavigate()
+  useEffect(() => {
+    const storedCursoToken = localStorage.getItem('cursoToken');
+    setCursoToken(storedCursoToken); // Only set the token on component mount
+  }, []);
 
   const profLinks = [
     { label: 'Mi cuenta', path: '/mi-cuenta' },
@@ -43,18 +53,19 @@ export const Parcial = () => {
           const response = await getParcial(parcialId); 
           const decodedParcialToken = response ? jwtDecode(response) : null;
           setParcial(decodedParcialToken);
+          //const cursoToken = localStorage.getItem('cursoToken'); 
+          //const decodedCursoToken = cursoToken ? jwtDecode(cursoToken) : null;
         } else {
           throw new Error('No se encontró un idParcial en el token.');
         }
       } catch (err) {
         console.error('Error al cargar el parcial:', err);
-        setError('Parcial no cargado.');
       } finally {
         setLoading(false);
       }
     };
     fetchParcial();
-  }, []);//le saque parcialId
+  }, [cursoToken]);//le saque parcialId
 
   useEffect(() => {
     if (parcial) {
@@ -74,11 +85,20 @@ export const Parcial = () => {
       if (parcial) {
         await updateParcial(parcialId, parcialData);
         setMensajeExito('Parcial actualizado');
+        setTimeout(() => setMensajeExito(''), 5000);
         setError('');
+        //const cursoToken1 = localStorage.setItem('cursoToken', curso); 
+        //const decodedCursoToken1 = cursoToken1 ? jwtDecode(cursoToken1) : null;
       } else {
-        await createParcial(parcialData);
+        const resp = await createParcial(parcialData);
+        console.log(resp)
         setMensajeExito('Parcial creado');
+        setTimeout(() => setMensajeExito(''), 5000);
         setError('');
+        const curso =await getCurso(decodedCursoToken.id)
+        localStorage.removeItem('cursoToken');
+        setCursoToken(curso)
+        localStorage.setItem('cursoToken', cursoToken)
       }
     } catch (error) {
       setError('Hubo un error');

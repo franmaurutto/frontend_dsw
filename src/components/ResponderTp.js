@@ -13,12 +13,15 @@ export const ResponderTp = () => {
     { label: 'Mi cuenta', path: '/mi-cuenta' },
     { label: 'Mis Cursos', path: '/mis-cursos' },
     { label: 'Cursos', path: '/nav-alu' },
+    { label: 'Mis Certificados', path: '/mis-certificados' },
   ];
   const [consigna, setConsigna] = useState('');
   const [rtaConsigna, setRtaConsigna] = useState('');
   const [fechaLimite, setFechaLimite] = useState('');
   const [tp, setTp] = useState('');
   const [respuestaExistente, setRespuestaExistente] = useState(null);
+  const [mensajeExito, setMensajeExito] = useState('');
+  const [mensajeError, setMensajeError] = useState('');
   const cursoToken = localStorage.getItem('cursoToken');
   const decodedcursoToken = cursoToken ? jwtDecode(cursoToken) : null;
   const tpId = decodedcursoToken ? decodedcursoToken.tpId : null;
@@ -65,7 +68,8 @@ export const ResponderTp = () => {
     e.preventDefault();
 
     if (rtaConsigna.trim() === '') {
-      alert('Por favor, ingrese una respuesta.');
+      setMensajeError('Por favor, ingrese una respuesta');
+      setTimeout(() => setMensajeError(''), 5000);
       return;
     }
 
@@ -82,12 +86,14 @@ export const ResponderTp = () => {
       if (respuestaExistente) {
         await updateRtaTp(respuestaExistente.id, rtaTp.rtaConsignaTP);
         setRespuestaExistente({ ...respuestaExistente, rtaConsignaTP: rtaConsigna });
+        setMensajeExito('Respuesta modificada con éxito');
+        setTimeout(() => setMensajeExito(''), 5000);
       } else {
         await createRtaTp(rtaTp);
         setRespuestaExistente({ rtaConsignaTP: rtaConsigna, inscripcion: inscripcionId });
+        setMensajeExito('Respuesta enviada con éxito');
+        setTimeout(() => setMensajeExito(''), 5000);
       }
-
-      navigate('/mis-cursos');
     } catch (error) {
       console.error('Error al enviar o modificar la respuesta:', error);
     }
@@ -99,6 +105,8 @@ export const ResponderTp = () => {
         await deleteRtaTp(respuestaExistente.id);
         setRtaConsigna('');
         setRespuestaExistente(null);
+        setMensajeExito('Respuesta borrada con éxito');
+        setTimeout(() => setMensajeExito(''), 5000);
       }
     } catch (error) {
       console.error('Error al eliminar la respuesta:', error);
@@ -108,6 +116,8 @@ export const ResponderTp = () => {
   return (
     <div className="respuesta-container">
       <NavBar links={aluLinks} />
+      {mensajeExito && <p className="mensaje-exito">{mensajeExito}</p>}
+      {mensajeError && <p className="mensaje-error">{mensajeError}</p>}
       <div className="rta-tp">
         <h1>Trabajo practico: </h1>
 

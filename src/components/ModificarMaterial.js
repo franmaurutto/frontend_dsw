@@ -24,19 +24,16 @@ export const ModificarMaterial = () => {
   ];
 
   useEffect(() => {
+    const usuarioToken = localStorage.getItem('authToken');
+    const decodedUsuarioToken = usuarioToken ? jwtDecode(usuarioToken) : null;
+    
       try {
-        const usuarioToken = localStorage.getItem('authToken');
-        const decodedUsuarioToken = usuarioToken ? jwtDecode(usuarioToken) : null;
-        if (!usuarioToken || !decodedUsuarioToken) {
-          localStorage.removeItem('authToken');
-          navigate('/');
-        }
         if (decodedMaterialToken) {
           setTitulo(decodedMaterialToken.titulo || '');
           setDescripcion(decodedMaterialToken.descripcion || '');
           setMaterialId(decodedMaterialToken.id || null);
         }
-        if (!decodedUsuarioToken || decodedUsuarioToken.rol !== 'alumno') {
+        if (!decodedUsuarioToken || decodedUsuarioToken.rol !== 'profesor') {
           localStorage.removeItem('authToken');
           navigate('/');
           return;

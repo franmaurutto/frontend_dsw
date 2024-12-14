@@ -179,7 +179,7 @@ return (
           <p>No hay alumnos inscritos en este curso.</p>
         </div>
       )}
-      <button onClick={() => navigate('/nav-alu')} className="boton-volver">
+      <button onClick={() => navigate('/datos-curso')} className="boton-volver">
           Volver
         </button>
     </div>

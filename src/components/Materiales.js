@@ -26,6 +26,7 @@ export const Materiales = () => {
       localStorage.removeItem('authToken');
       navigate('/');
     }
+    console.log('todo bien')
     const fetchMateriales = async () => {
       try {
         const data = await getMateriales();
@@ -36,7 +37,7 @@ export const Materiales = () => {
     };
 
     fetchMateriales();
-  }, [navigate]);
+  }, []);
 
   const handleEliminarMaterial = async (materialId) => {
     const confirmation = window.confirm('¿Estás seguro de que deseas eliminar este material? Esta acción no se puede deshacer.');

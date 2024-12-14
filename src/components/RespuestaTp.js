@@ -7,9 +7,6 @@ import { getRtaTpdeTp } from '../services/TpServices.js';
 import { deleteRtaTp, getInscripcionDeRtaTp } from '../services/RtaTpServices.js';
 import { getAlumnoDeInscripcion } from '../services/InscripcionServices.js';
 
-const cursoToken = localStorage.getItem('cursoToken');
-  const decodedCursoToken = cursoToken ? jwtDecode(cursoToken) : null;
-  const tpId = decodedCursoToken ? decodedCursoToken.tpId : null;
 export const RespuestaTp = () => {
 
   const [rtas, setRtas] = useState([]);

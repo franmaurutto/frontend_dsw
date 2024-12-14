@@ -254,11 +254,12 @@
   .auth-buttons {
     display: flex;
     gap: 10px;
+    text-align: center;
   }
 
   .btn {
     white-space: nowrap;
-    width: 130px;
+    width: 160px;
     height: 25px;
     color: #fff;
     border-radius: 5px;
@@ -277,6 +278,7 @@
     background: #c23864;
     background: linear-gradient(0deg, #f4d3dd 0%, #e9abbf 100%);
     border: none;
+    text-align: center;
   }
 
   .btn:before {

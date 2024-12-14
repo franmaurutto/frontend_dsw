@@ -57,6 +57,7 @@ const getUserFromToken = () => {
         { label: 'Mi cuenta', path: '/mi-cuenta' },
         { label: 'Mis Cursos', path: '/mis-cursos' },
         { label: 'Cursos', path: '/nav-alu' },
+        { label: 'Mis Certificados', path: '/mis-certificados' },
       ];
 
   
