@@ -85,10 +85,18 @@ const getUserFromToken = () => {
       setNombreCompleto(updatedData.nombreCompleto);
       setMail(updatedData.mail);
       setTelefono(updatedData.telefono);
-      
-
       setMensajeExito('Datos actualizados correctamente');
-      setTimeout(() => setMensajeExito(''), 5000);
+      if (usuario.rol==='profesor'){
+        setTimeout(() => {
+          setMensajeExito('');
+          navigate('/nav-prof');
+        }, 5000);
+      }else{
+        setTimeout(() => {
+          setMensajeExito('');
+          navigate('/mis-cursos');
+        }, 5000);
+      }
     })
     .catch((error) => {
       setMensajeError('No se puedieron actualizar los datos')
@@ -107,8 +115,18 @@ const handleCambiarContrasenia = (e) => {
     try {
       cambiarContrasenia(usuario.id, contraseñaActual, nuevaContraseña);
       setMensajeExito('Contraseña cambiada exitosamente.');
-      setTimeout(() => setMensajeExito(''), 5000);
       setMostrarFormulario(false);
+      if (usuario.rol==='profesor'){
+        setTimeout(() => {
+          setMensajeExito('');
+          navigate('/nav-prof');
+        }, 5000);
+      }else{
+        setTimeout(() => {
+          setMensajeExito('');
+          navigate('/mis-cursos');
+        }, 5000);
+      }
     } catch (error) {
         console.error('Error al cambiar la contraseña:', error.message);
         setMensajeError(`Error: ${error.message}`);

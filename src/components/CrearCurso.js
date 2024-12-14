@@ -90,7 +90,7 @@ const handleInputChange = (e) => {
           <label>Descripcion:</label>
           <input type='text' placeholder='Descripcion' value={formData.descripcion} name='descripcion' onChange={handleInputChange} required></input>
           <label>Cantidad de cupos</label>
-          <input type='number' placeholder='Cantidad de cupos' value={formData.cantCupos} name='cantCupos' onChange={handleInputChange} required></input>
+          <input type='number' placeholder='Cantidad de cupos' value={formData.cantCupos} name='cantCupos' onChange={handleInputChange} required min="0"></input>
           <label>Fecha de inicio:</label>
           <input type='date' placeholder='Fecha inicio curso' value={formData.fechaInicio} name='fechaInicio' onChange={handleInputChange} required></input>
           <label>Fecha de finalizacion:</label>

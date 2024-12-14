@@ -82,20 +82,28 @@ export const ResponderTp = () => {
     try {
       const respuestas = await getRtaTpdeTp(tpId);
       const respuestaExistente = respuestas.find(rta => rta.inscripcion === inscripcionId);
-
       if (respuestaExistente) {
-        await updateRtaTp(respuestaExistente.id, rtaTp.rtaConsignaTP);
-        setRespuestaExistente({ ...respuestaExistente, rtaConsignaTP: rtaConsigna });
-        setMensajeExito('Respuesta modificada con éxito');
-        setTimeout(() => setMensajeExito(''), 5000);
+        const resp=await updateRtaTp(respuestaExistente.id, rtaTp.rtaConsignaTP);
+        console.log(resp)
+        if (resp.id){
+          setRespuestaExistente({ ...respuestaExistente, rtaConsignaTP: rtaConsigna });
+          setMensajeExito('Respuesta modificada con éxito');
+          setTimeout(() => setMensajeExito(''), 5000);
+        }
       } else {
-        await createRtaTp(rtaTp);
-        setRespuestaExistente({ rtaConsignaTP: rtaConsigna, inscripcion: inscripcionId });
-        setMensajeExito('Respuesta enviada con éxito');
-        setTimeout(() => setMensajeExito(''), 5000);
+        const resp=await createRtaTp(rtaTp);
+        console.log(resp)
+        if (resp.id){
+          setRespuestaExistente({ rtaConsignaTP: rtaConsigna, inscripcion: inscripcionId });
+          setMensajeExito('Respuesta enviada con éxito');
+          setTimeout(() => setMensajeExito(''), 5000);
+        }
+
       }
     } catch (error) {
       console.error('Error al enviar o modificar la respuesta:', error);
+      setMensajeError('Error al enviar o modificar la respuesta');
+      setTimeout(() => setMensajeError(''), 5000);
     }
   };
 

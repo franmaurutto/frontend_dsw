@@ -20,10 +20,7 @@ export const Parcial = () => {
   const [horaFin, setHoraFin] = useState('');
   const [mensajeExito, setMensajeExito] = useState('');
   const [cursoToken, setCursoToken]=useState(localStorage.getItem('cursoToken'))
-  //setCursoToken(localStorage.getItem('cursoToken'))
-  //const cursoToken = localStorage.getItem('cursoToken'); 
   const decodedCursoToken = cursoToken ? jwtDecode(cursoToken) : null;
-  //const parcialId = decodedCursoToken?.parcialId || null;
   const usuarioToken = localStorage.getItem('authToken');
   const decodedUsuarioToken = usuarioToken ? jwtDecode(usuarioToken) : null;
   const currentTime = Math.floor(Date.now() / 1000);
@@ -81,12 +78,22 @@ export const Parcial = () => {
 
     try {
       if (parcial) {
-        await updateParcial(parcialId, parcialData);
+        const resp = await updateParcial(parcialId, parcialData);
+        console.log(resp)
+        if (resp.message!=='parcial actualizado'){
+          setError('Hubo un error');
+          return
+        }
         setMensajeExito('Parcial actualizado');
         setTimeout(() => setMensajeExito(''), 5000);
         setError('');
       } else {
         const resp = await createParcial(parcialData);
+        console.log(resp)
+        if (!resp.data.id){
+          setError('Hubo un error');
+          return
+        }
         setMensajeExito('Parcial creado');
         setTimeout(() => setMensajeExito(''), 5000);
         setError('');
