@@ -125,7 +125,7 @@
 
 .password-input {
   width: 100%;
-  padding: 10px 30px 10px 10px; /* Ajuste el padding para dar espacio al ícono */
+  padding: 10px 30px 10px 10px; 
   font-size: 16px;
   border-radius: 8px;
   border: 1px solid #ccc;
@@ -134,14 +134,14 @@
 
 .eye-button {
   position: absolute;
-  right: 8px; /* Lo posicionamos cerca del borde derecho */
+  right: 8px; 
   top: 50%;
-  transform: translateY(-80%); /* Centrado vertical */
+  transform: translateY(-80%); 
   background: transparent;
   border: none;
   cursor: pointer;
-  width: 20px; /* Tamaño pequeño */
-  height: 20px; /* Tamaño pequeño */
+  width: 20px;
+  height: 20px; 
   display: flex;
   align-items: center;
   justify-content: center;
@@ -149,13 +149,13 @@
 }
 
 .eye-button svg {
-  width: 40px; /* Ícono pequeño */
-  height: 40px; /* Ícono pequeño */
-  color: #e396b7; /* Color del ícono */
+  width: 40px; 
+  height: 40px; 
+  color: #e396b7;
 }
 
 .eye-button:hover svg {
-  color: #c93766; /* Cambiar color al pasar el mouse */
+  color: #c93766;
 }
 
 

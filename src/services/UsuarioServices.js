@@ -45,7 +45,7 @@ export const addUsuario = async (usuario) => {
   });
 
   if (!response.ok) {
-      const errorData = await response.json(); // Lee el mensaje de error del servidor
+      const errorData = await response.json();
       console.error('Error del servidor:', errorData);
       throw new Error(errorData.message || 'Error al actualizar el usuario');
   }
@@ -71,11 +71,28 @@ export const getUsuario = async (usuarioId) => {
   }
 };
 
+export const getByEmail = async (mail) => {
+  const response = await fetch(`${API_URL}/validar`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ mail}),
+  });
+
+  if (!response.ok) {
+    const errorData = await response.json(); 
+    console.error('Error del servidor:', errorData.message); 
+    throw new Error(errorData.message || 'Error al actualizar el usuario');
+  }
+  const data = await response.json();
+  return data;
+};
 
 export const updateUsuario = async (usuarioId, usuario) => {
   const response = await fetch(`${API_URL}/${usuarioId}`, {
     method: 'PUT',
-    headers:getHeaders(),
+    headers: getHeaders(),
     body: JSON.stringify(usuario),
   });
 

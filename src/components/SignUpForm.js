@@ -4,7 +4,7 @@ import '../styles/SignUpForm.css';
 import { useState } from 'react';
 import {addUsuario} from '../services/UsuarioServices.js'
 import { useNavigate } from 'react-router-dom';
-
+import { getByEmail } from '../services/UsuarioServices.js';
 
 const SignUpForm =() =>{
 
@@ -24,13 +24,17 @@ const [formData, setFormData] = useState({
 });
 
 
-
+const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 const navigate=useNavigate();
 
 const [error, setError] = useState(null);
 
 const handleToggle = () => {
   setMostrarFormulario((prev) => (prev === "alu" ? "prof" : "alu"));
+};
+
+const togglePasswordVisibility = () => {
+  setIsPasswordVisible((prevState) => !prevState);
 };
 
 const handleInputChange = (e) => { 
@@ -41,35 +45,39 @@ const handleInputChange = (e) => {
   }));
 };
 
-
-
 const handleSubmit = async (e) => {
   e.preventDefault();
   setError(null);
 
-  let dataToSend;
-
-  if (mostrarFormulario === "alu") {
-    dataToSend = {
-      ...formData,
-      rol: "alumno",  
-    };
-  } else {
-    dataToSend = {
-      ...formData,
-      rol: "profesor",  
-    };
-  }
-
   try {
-    await addUsuario(dataToSend);
-    navigate('/');  
-  } catch (err) {
-    setError(mostrarFormulario === "alu" ? 'Hubo un error al registrar al alumno' : 'Hubo un error al registrar al profesor');
-    console.error(mostrarFormulario === "alu" ? 'Error al registrar alumno:' : 'Error al registrar profesor:', err);
-  }
-};
+    console.log(formData.mail)
+    const existingUser = await getByEmail(formData.mail);
+    if (existingUser) {
+      setError('El email ya está registrado');
+      return;
+    }
 
+    let dataToSend;
+    console.log(existingUser)
+    if (mostrarFormulario === "alu") {
+      dataToSend = {
+        ...formData,
+        rol: "alumno",  
+      };
+    } else {
+      dataToSend = {
+        ...formData,
+        rol: "profesor",  
+      };
+    }
+    console.log('USERRR',existingUser);
+    await addUsuario(dataToSend);
+        navigate('/');
+    } catch (err) {
+        setError(mostrarFormulario === "alu" ? 'Hubo un error al registrar al alumno' : 'Hubo un error al registrar al profesor');
+        console.error(mostrarFormulario === "alu" ? 'Error al registrar alumno:' : 'Error al registrar profesor:', err);
+    }
+  };
 
   return (
     <div className="form-container">
@@ -84,7 +92,18 @@ const handleSubmit = async (e) => {
           <input type="text" placeholder="Nombre Completo" value={formData.nombreCompleto} onChange={handleInputChange} name='nombreCompleto' required></input>
           <input type="email" placeholder="Email" value={formData.mail} onChange={handleInputChange} name='mail' required></input>
           <input type="tel" placeholder="Telefono" value={formData.telefono} onChange={handleInputChange} name='telefono' required></input>
-          <input type="password" placeholder="Contraseña" value={formData.contrasenia} onChange={handleInputChange} name='contrasenia' required></input>
+          <div className="relative password-field">
+            <input type={isPasswordVisible ? "text" : "password"} 
+              placeholder="Contraseña" 
+              value={formData.contrasenia} 
+              onChange={handleInputChange} 
+              name="contrasenia" 
+              required />
+            <button type="button" onClick={togglePasswordVisibility} className="eye-button">
+              { isPasswordVisible ? "🔒" : "👀" }
+            </button>
+
+          </div>
           <button type='submit'>Registrarse</button>
         </form>
         <div className='separadorAlu'>
@@ -98,7 +117,18 @@ const handleSubmit = async (e) => {
           <input type="text" placeholder="Nombre Completo" value={formData.nombreCompleto} onChange={handleInputChange} name='nombreCompleto' required></input>
           <input type="email" placeholder="Email" value={formData.mail} onChange={handleInputChange} name='mail' required></input>
           <input type="tel" placeholder="Telefono" value={formData.telefono} onChange={handleInputChange} name='telefono' required></input>
-          <input type="password" placeholder="Contraseña" value={formData.contrasenia} onChange={handleInputChange} name='contrasenia' required></input>
+          <div className="relative password-field">
+            <input type={isPasswordVisible ? "text" : "password"} 
+              placeholder="Contraseña" 
+              value={formData.contrasenia} 
+              onChange={handleInputChange} 
+              name="contrasenia" 
+              required />
+            <button type="button" onClick={togglePasswordVisibility} className="eye-button">
+              { isPasswordVisible ? "🔒" : "👀" }
+            </button>
+
+          </div>
           <button type='submit'>Registrarse</button>
         </form>
         <div className='separadorProf'>
