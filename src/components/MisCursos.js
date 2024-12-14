@@ -17,6 +17,7 @@ export const MisCursos = () => {
   const navigate= useNavigate();
   const [cursos, setCursos] = useState([]);
   const [mensajeExito, setMensajeExito] = useState('');
+  const currentTime = Math.floor(Date.now() / 1000);
 
 
   const aluLinks = [
@@ -27,7 +28,7 @@ export const MisCursos = () => {
     ];
 
   useEffect(() => {
-    if (!decodedUsuarioToken || decodedUsuarioToken.rol !== 'alumno') {
+    if (decodedUsuarioToken.exp < currentTime) {
       localStorage.removeItem('authToken');
       navigate('/');
       return;
@@ -114,7 +115,6 @@ export const MisCursos = () => {
     const decodedToken2 = jwtDecode(data2);
     if (!decodedToken2) throw new Error('No se recibió token del curso.');
     localStorage.setItem('parcialToken', data2);
-    console.log(decodedToken1.rtaparcialId)
     if (decodedToken1.rtaparcialId) {
       navigate('/ver-parcial', { state: { id: decodedToken1.rtaparcialId
       } });

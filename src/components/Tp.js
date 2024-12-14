@@ -21,6 +21,7 @@ export const Tp = () => {
   const usuarioToken = localStorage.getItem('authToken');
   const decodedUsuarioToken = usuarioToken ? jwtDecode(usuarioToken) : null;
   const decodedCursoToken = cursoToken ? jwtDecode(cursoToken) : null;
+  const currentTime = Math.floor(Date.now() / 1000);
   const navigate=useNavigate()
   
 
@@ -39,7 +40,7 @@ export const Tp = () => {
       setCursoToken(storedCursoToken); // Only set the token on component mount
     }, []);
   useEffect(() => {
-    if (!usuarioToken || !decodedUsuarioToken) {
+    if (decodedUsuarioToken.exp<currentTime) {
       localStorage.removeItem('authToken');
       navigate('/');
     }

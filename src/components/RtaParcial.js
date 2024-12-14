@@ -25,9 +25,10 @@ export const RtaParcial = () => {
   const decodedUsuarioToken = usuarioToken ? jwtDecode(usuarioToken) : null;
   const [mensajeExito, setMensajeExito] = useState('');
   const [mensajeError, setMensajeError] = useState('');
+  const currentTime = Math.floor(Date.now() / 1000);
 
   useEffect(() => {
-    if (!usuarioToken || !decodedUsuarioToken) {
+    if (decodedUsuarioToken.exp<currentTime) {
       localStorage.removeItem('authToken');
       navigate('/');
     }
@@ -59,7 +60,10 @@ export const RtaParcial = () => {
       const response = await createRtaParcial(rtaParcial);
       if (response) {
         setMensajeExito('Respuesta enviada con éxito');
-        setTimeout(() => setMensajeExito(''), 5000);
+        setTimeout(() => {
+          setMensajeExito('');
+          navigate('/mis-cursos');
+        }, 5000);
       }
     } catch (error) {
       setMensajeError('Hubo un error al enviar la respuesta');

@@ -27,12 +27,12 @@ export const ResponderTp = () => {
   const tpId = decodedcursoToken ? decodedcursoToken.tpId : null;
   const inscripcionToken = localStorage.getItem('inscripcionToken');
   const decodedInscripcionToken = inscripcionToken ? jwtDecode(inscripcionToken) : null;
-
+  const currentTime = Math.floor(Date.now() / 1000);
   const inscripcionId = decodedInscripcionToken ? decodedInscripcionToken.id : null;;
   const usuarioToken = localStorage.getItem('authToken');
   const decodedUsuarioToken = usuarioToken ? jwtDecode(usuarioToken) : null;
   useEffect(() => {
-    if (!usuarioToken || !decodedUsuarioToken) {
+    if (decodedUsuarioToken.exp<currentTime) {
       localStorage.removeItem('authToken');
       navigate('/');
     }

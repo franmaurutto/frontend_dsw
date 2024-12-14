@@ -10,6 +10,7 @@ import { cambiarContrasenia, updateUsuario } from '../services/UsuarioServices.j
 export const MiCuenta = () => {
 
 const getToken = () => localStorage.getItem('authToken');
+const currentTime = Math.floor(Date.now() / 1000);
 
 const getUserFromToken = () => {
   const token = getToken();
@@ -26,7 +27,7 @@ const getUserFromToken = () => {
   const usuario = getUserFromToken();
   const navigate=useNavigate()
   useEffect(() => {
-    if (!usuario) {
+    if (usuario.exp<currentTime) {
       localStorage.removeItem('authToken');
       navigate('/'); 
     }

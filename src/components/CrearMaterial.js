@@ -16,6 +16,7 @@ export const CrearMaterial = () => {
   const navigate = useNavigate()
   const[error,setError]= useState()
   const[mensajeExito,setMensajeExito]=useState()
+  const currentTime = Math.floor(Date.now() / 1000);
 
   const [formData, setFormData] = useState({
   descripcion: '',
@@ -24,7 +25,7 @@ export const CrearMaterial = () => {
   useEffect(() => {
     const usuarioToken = localStorage.getItem('authToken');
     const decodedUsuarioToken = usuarioToken ? jwtDecode(usuarioToken) : null;
-    if (!usuarioToken || !decodedUsuarioToken) {
+    if (decodedUsuarioToken.exp<currentTime) {
       localStorage.removeItem('authToken');
       navigate('/');
     }

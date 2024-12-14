@@ -14,6 +14,7 @@ export const CursoDetalle = () => {
   const cursoToken = localStorage.getItem('cursoToken');
   const decodedCursoToken = cursoToken ? jwtDecode(cursoToken) : null;
   const navigate=useNavigate()
+  const currentTime = Math.floor(Date.now() / 1000);
   const { cursoId } = useParams();  
   const [curso, setCurso] = useState(null);
   const [mensajeExito, setMensajeExito] = useState('');
@@ -21,11 +22,10 @@ export const CursoDetalle = () => {
   useEffect(() => {
     if (decodedCursoToken) {
       setCurso(decodedCursoToken); 
-      console.log('decodedCursoToken:', decodedCursoToken);
     } else {
       setMensajeError('No se encontró información del curso.');
     }
-    if (!usuarioToken || !decodedUsuarioToken) {
+    if (decodedUsuarioToken.exp<currentTime) {
       localStorage.removeItem('authToken');
       navigate('/');
       return;

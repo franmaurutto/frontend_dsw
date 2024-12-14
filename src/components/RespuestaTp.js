@@ -18,12 +18,12 @@ export const RespuestaTp = () => {
   const tpId = decodedCursoToken ? decodedCursoToken.tpId : null;
   const usuarioToken = localStorage.getItem('authToken');
   const decodedUsuarioToken = usuarioToken ? jwtDecode(usuarioToken) : null;
-
+  const currentTime = Math.floor(Date.now() / 1000);
 
 
   useEffect(() => {
     setLoading(false);
-    if (!usuarioToken || !decodedUsuarioToken) {
+    if (decodedUsuarioToken.exp<currentTime) {
       localStorage.removeItem('authToken');
       navigate('/');
     }

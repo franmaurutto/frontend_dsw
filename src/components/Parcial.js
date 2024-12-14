@@ -11,7 +11,6 @@ import { useLocation } from 'react-router-dom';
 export const Parcial = () => {
   const location = useLocation();
   const parcialId = location.state?.id;
-  console.log(parcialId)
   const [parcial, setParcial] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true); 
@@ -27,10 +26,11 @@ export const Parcial = () => {
   //const parcialId = decodedCursoToken?.parcialId || null;
   const usuarioToken = localStorage.getItem('authToken');
   const decodedUsuarioToken = usuarioToken ? jwtDecode(usuarioToken) : null;
+  const currentTime = Math.floor(Date.now() / 1000);
   const navigate=useNavigate()
   useEffect(() => {
     const storedCursoToken = localStorage.getItem('cursoToken');
-    setCursoToken(storedCursoToken); // Only set the token on component mount
+    setCursoToken(storedCursoToken);
   }, []);
 
   const profLinks = [
@@ -43,7 +43,7 @@ export const Parcial = () => {
 
   useEffect(() => {
     const fetchParcial = async () => {
-      if (!usuarioToken || !decodedUsuarioToken) {
+      if (decodedUsuarioToken.exp<currentTime) {
         localStorage.removeItem('authToken');
         navigate('/');
       }
@@ -53,8 +53,6 @@ export const Parcial = () => {
           const response = await getParcial(parcialId); 
           const decodedParcialToken = response ? jwtDecode(response) : null;
           setParcial(decodedParcialToken);
-          //const cursoToken = localStorage.getItem('cursoToken'); 
-          //const decodedCursoToken = cursoToken ? jwtDecode(cursoToken) : null;
         } else {
           throw new Error('No se encontró un idParcial en el token.');
         }
@@ -65,7 +63,7 @@ export const Parcial = () => {
       }
     };
     fetchParcial();
-  }, [cursoToken]);//le saque parcialId
+  }, [cursoToken]);
 
   useEffect(() => {
     if (parcial) {
@@ -87,11 +85,8 @@ export const Parcial = () => {
         setMensajeExito('Parcial actualizado');
         setTimeout(() => setMensajeExito(''), 5000);
         setError('');
-        //const cursoToken1 = localStorage.setItem('cursoToken', curso); 
-        //const decodedCursoToken1 = cursoToken1 ? jwtDecode(cursoToken1) : null;
       } else {
         const resp = await createParcial(parcialData);
-        console.log(resp)
         setMensajeExito('Parcial creado');
         setTimeout(() => setMensajeExito(''), 5000);
         setError('');

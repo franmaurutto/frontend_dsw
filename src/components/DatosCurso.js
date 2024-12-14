@@ -14,12 +14,7 @@ export const DatosCurso = () => {
   const usuarioId = decodedUsuarioToken ? decodedUsuarioToken.id : null;
   const cursoToken = localStorage.getItem('cursoToken');
   const decodedCursoToken = cursoToken ? jwtDecode(cursoToken) : null;
-  console.log(cursoToken)
-  console.log(decodedCursoToken, 'esta es la linea 17')
   const cursoid=decodedCursoToken.id;
-  if (decodedCursoToken){console.log(cursoid)}
-
-  
   const [cursos, setCurso] = useState([]);
   const [nombre, setNombre] = useState('');
   const [descripcion, setDescripcion] = useState('');
@@ -35,6 +30,7 @@ export const DatosCurso = () => {
   const [mensajeExito, setMensajeExito] = useState('');
   const [materiales, setMateriales] = useState([]); 
   const [mensajeError, setMensajeError] = useState('');
+  const currentTime = Math.floor(Date.now() / 1000);
   const navigate = useNavigate();
 
   const profLinks = [
@@ -47,7 +43,7 @@ export const DatosCurso = () => {
 
   useEffect(() => {
     const fetchData = async ()=>{
-      if (!usuarioToken || !decodedUsuarioToken) {
+      if (decodedUsuarioToken.exp<currentTime) {
         localStorage.removeItem('authToken');
         navigate('/');
         return;
@@ -55,7 +51,6 @@ export const DatosCurso = () => {
       const curso = await getCurso(cursoid)
       localStorage.removeItem('cursoToken');
       localStorage.setItem('cursoToken', curso) 
-      console.log(JSON.stringify(curso))
       const decodedCursoToken1 = curso ? jwtDecode(curso) : null;
       if (decodedCursoToken1) {
       setNombre(decodedCursoToken1.nombre || '');
@@ -66,8 +61,6 @@ export const DatosCurso = () => {
       setHoraInicio(decodedCursoToken1.horaInicio || '');
       setHoraFin(decodedCursoToken1.horaFin || '');
       setDias(decodedCursoToken1.dias || '');
-      console.log(decodedCursoToken1.parcialId)
-      console.log(decodedCursoToken1)
       if (decodedCursoToken1.parcialId) {
         try {
           const response = await getParcial(decodedCursoToken1.parcialId);
@@ -156,7 +149,6 @@ export const DatosCurso = () => {
   };
   const handleParcial = (parcialId) => {
     if (parcialId) {
-      console.log(parcialId)
       navigate('/parcial', { state: { id: parcialId } });
     } else {
       navigate('/parcial');

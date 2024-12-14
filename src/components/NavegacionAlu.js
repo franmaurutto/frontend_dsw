@@ -11,6 +11,7 @@ export const NavegacionAlu = () => {
   const decodedUsuarioToken = usuarioToken ? jwtDecode(usuarioToken) : null;
   const usuarioId = decodedUsuarioToken ? decodedUsuarioToken.id : null;
   const [cursos, setCursos] = useState([]);
+  const currentTime = Math.floor(Date.now() / 1000);
   const navigate = useNavigate();
 
   const aluLinks = [
@@ -21,7 +22,7 @@ export const NavegacionAlu = () => {
   ];
 
   useEffect(() => {
-    if (!usuarioToken || !decodedUsuarioToken) {
+    if (decodedUsuarioToken.exp<currentTime) {
       localStorage.removeItem('authToken');
       navigate('/');
     }

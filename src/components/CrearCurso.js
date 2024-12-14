@@ -10,10 +10,12 @@ export const CrearCurso = () => {
 
 const getToken = () => localStorage.getItem('authToken');
 const navigate = useNavigate();
+const currentTime = Math.floor(Date.now() / 1000);
 const getUserFromToken = () => {
   const token = getToken();
   if (!token) return null;
-  if (!token) {
+  const decodedUsuarioToken = token ? jwtDecode(token) : null;
+  if (decodedUsuarioToken.exp<currentTime) {
     localStorage.removeItem('authToken');
     navigate('/');
     return;

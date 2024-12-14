@@ -10,6 +10,8 @@ import '../styles/InscripcionesCurso.css';
 
 
 const InscripcionesCurso = () => {
+  const usuarioToken = localStorage.getItem('authToken');
+  const decodedUsuarioToken = usuarioToken ? jwtDecode(usuarioToken) : null;
   const [alumnos, setAlumnos] = useState([]);
   const [cargando, setCargando] = useState(false);
   const [inscripciones, setInscripciones] = useState([]);
@@ -21,6 +23,7 @@ const InscripcionesCurso = () => {
   const decodedCursoToken = cursoToken ? jwtDecode(cursoToken) : null;
   const cursoId = decodedCursoToken?.id || null;
   const cursoNombre = decodedCursoToken?.nombre || null;
+  const currentTime = Math.floor(Date.now() / 1000);
 
   const navigate = useNavigate();
   const profLinks = [
@@ -33,6 +36,11 @@ const InscripcionesCurso = () => {
 
 
     const fetchAlumnos = async () => {
+      if (decodedUsuarioToken.exp<currentTime) {
+        localStorage.removeItem('authToken');
+        navigate('/');
+        return;
+      }
       if (cursoId) {
         try {
           const inscripcionesData = await getInscripcionesCurso(cursoId);

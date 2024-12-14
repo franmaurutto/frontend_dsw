@@ -10,6 +10,7 @@ export const Materiales = () => {
   const [materiales, setMateriales] = useState([]);
   const [mensajeExito, setMensajeExito] = useState('');
   const navigate = useNavigate();
+  const currentTime = Math.floor(Date.now() / 1000);
 
   const profLinks = [
     { label: 'Mi cuenta', path: '/mi-cuenta' },
@@ -22,7 +23,7 @@ export const Materiales = () => {
   useEffect(() => {
     const usuarioToken = localStorage.getItem('authToken');
     const decodedUsuarioToken = usuarioToken ? jwtDecode(usuarioToken) : null;
-    if (!usuarioToken || !decodedUsuarioToken) {
+    if (decodedUsuarioToken.exp<currentTime) {
       localStorage.removeItem('authToken');
       navigate('/');
     }

@@ -14,6 +14,7 @@ export const AgregarMaterial = () => {
   const cursoToken = localStorage.getItem('cursoToken');
   const decodedCursoToken = cursoToken ? jwtDecode(cursoToken) : null;
   const cursoId = decodedCursoToken ? decodedCursoToken.id : null;
+  const currentTime = Math.floor(Date.now() / 1000);
   const navigate = useNavigate();
   const profLinks = [
     { label: 'Mi cuenta', path: '/mi-cuenta' },
@@ -24,7 +25,7 @@ export const AgregarMaterial = () => {
   ];
 
   useEffect(() => {
-    if (!usuarioToken || !decodedUsuarioToken) {
+    if (decodedUsuarioToken.exp<currentTime) {
       localStorage.removeItem('authToken');
       navigate('/');
       return;

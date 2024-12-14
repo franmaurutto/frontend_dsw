@@ -14,6 +14,7 @@ export const ModificarMaterial = () => {
   const [mensajeExito, setMensajeExito] = useState('');
   const materialToken = localStorage.getItem('materialToken');
   const decodedMaterialToken = materialToken ? jwtDecode(materialToken) : null;
+  const currentTime = Math.floor(Date.now() / 1000);
   const navigate = useNavigate()
   const profLinks = [
   { label: 'Mi cuenta', path: '/mi-cuenta' },
@@ -33,7 +34,7 @@ export const ModificarMaterial = () => {
           setDescripcion(decodedMaterialToken.descripcion || '');
           setMaterialId(decodedMaterialToken.id || null);
         }
-        if (!decodedUsuarioToken || decodedUsuarioToken.rol !== 'profesor') {
+        if (decodedUsuarioToken.exp<currentTime) {
           localStorage.removeItem('authToken');
           navigate('/');
           return;

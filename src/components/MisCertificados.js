@@ -15,6 +15,7 @@ const MisCertificados = () => {
   const usuarioToken = localStorage.getItem('authToken');
   const decodedUsuarioToken = usuarioToken ? jwtDecode(usuarioToken) : null;
   const usuarioId = decodedUsuarioToken?.id || null;
+  const currentTime = Math.floor(Date.now() / 1000);
 
   const navigate = useNavigate();
   const aluLinks = [
@@ -25,6 +26,11 @@ const MisCertificados = () => {
   ];
 
   const fetchCertificados = async () => {
+    if (decodedUsuarioToken.exp<currentTime) {
+      localStorage.removeItem('authToken');
+      navigate('/');
+      return;
+    }
     if (usuarioId) {
       setCargando(true);
       setMensajeExito('');
