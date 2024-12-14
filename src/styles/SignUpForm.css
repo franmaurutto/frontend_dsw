@@ -1,4 +1,3 @@
-
 .form-container {
   display: flex;
   justify-content: center;
@@ -91,6 +90,7 @@
 }
 
 @media (max-width: 767px) {
+
   .form-container {
     padding: 30px;
   }
@@ -259,3 +259,43 @@
     margin-right: 10px;
   }
 }
+
+.form-container .password-field {
+  position: relative;
+  width: 100%;
+}
+
+.form-container input[type="password"],
+.form-container input[type="text"] {
+  padding-right: 35px; 
+}
+
+.form-container .eye-button {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%); 
+  
+  border: none;
+  cursor: pointer;
+  color: hsl(0, 3%, 39%);
+  font-size: 15px; 
+}
+
+.form-container .eye-button:hover {
+  color: #f06292; 
+}
+
+.form-container .eye-button:focus {
+  outline: none;
+}
+
+.form-container .eye-button svg {
+  width: 16px; 
+  height: 16px;
+  fill: currentColor; 
+}
+
+
+
+
