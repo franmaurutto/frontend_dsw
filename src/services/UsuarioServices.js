@@ -50,7 +50,8 @@ export const addUsuario = async (usuario) => {
       throw new Error(errorData.message || 'Error al actualizar el usuario');
   }
 
-  return response.json();}
+  const text = await response.text(); // Leer como texto
+  return text ? JSON.parse(text) : null;}
 
 export const getUsuario = async (usuarioId) => {
   try {
@@ -79,7 +80,7 @@ export const getByEmail = async (mail) => {
     },
     body: JSON.stringify({ mail}),
   });
-
+  console.log(response)
   if (!response.ok) {
     const errorData = await response.json(); 
     console.error('Error del servidor:', errorData.message); 
