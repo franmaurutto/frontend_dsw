@@ -86,8 +86,8 @@ export const getByEmail = async (mail) => {
     console.error('Error del servidor:', errorData.message); 
     throw new Error(errorData.message || 'Error al actualizar el usuario');
   }
-  const data = await response.json();
-  return data;
+  const text = await response.text(); // Leer como texto
+  return text ? JSON.parse(text) : null;;
 };
 
 export const updateUsuario = async (usuarioId, usuario) => {
