@@ -84,7 +84,6 @@ export const ResponderTp = () => {
       const respuestaExistente = respuestas.find(rta => rta.inscripcion === inscripcionId);
       if (respuestaExistente) {
         const resp=await updateRtaTp(respuestaExistente.id, rtaTp.rtaConsignaTP);
-        console.log(resp)
         if (resp.id){
           setRespuestaExistente({ ...respuestaExistente, rtaConsignaTP: rtaConsigna });
           setMensajeExito('Respuesta modificada con éxito');
@@ -92,7 +91,6 @@ export const ResponderTp = () => {
         }
       } else {
         const resp=await createRtaTp(rtaTp);
-        console.log(resp)
         if (resp.id){
           setRespuestaExistente({ rtaConsignaTP: rtaConsigna, inscripcion: inscripcionId });
           setMensajeExito('Respuesta enviada con éxito');

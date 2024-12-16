@@ -18,6 +18,8 @@ export const MisCursos = () => {
   const [cursos, setCursos] = useState([]);
   const [mensajeExito, setMensajeExito] = useState('');
   const currentTime = Math.floor(Date.now() / 1000);
+  const [mensajeError, setMensajeError] = useState('');
+
 
 
   const aluLinks = [
@@ -70,18 +72,32 @@ export const MisCursos = () => {
     fetchCursos();
   }, [usuarioId]);
 
-  const handleTp = async (cursoId, inscripcionId, tpId) => {
-    const data = await getCurso(cursoId);
-    const decodedToken = jwtDecode(data);
-    if (!decodedToken) throw new Error('No se recibió token del curso.');
-    localStorage.setItem('cursoToken', data);
-    const data1 = await getInscripcion(inscripcionId);
-    const decodedToken1 = jwtDecode(data1);
-    if (!decodedToken1) throw new Error('No se recibió token de la inscripcion.');
-    localStorage.setItem('inscripcionToken', data1);
-    const tp = await getTp(decodedToken.tpId)
-    if (!tp) throw new Error('No se recibió el tp.');
-    navigate('/rta-tp');
+  const handleTp = async (cursoId, inscripcionId) => {
+    try {
+      const cursoData = await getCurso(cursoId);
+      const decodedCursoToken = jwtDecode(cursoData);
+
+      if (!decodedCursoToken) throw new Error('No se recibió token del curso.');
+      localStorage.setItem('cursoToken', cursoData);
+
+      const inscripcionData = await getInscripcion(inscripcionId);
+      const decodedInscripcionToken = jwtDecode(inscripcionData);
+
+      if (!decodedInscripcionToken) throw new Error('No se recibió token de la inscripción.');
+      localStorage.setItem('inscripcionToken', inscripcionData);
+
+      const tp = await getTp(decodedCursoToken.tpId);
+
+      if (!tp) {
+        throw new Error('No se encontró el TP asociado al curso.');
+      }
+
+      navigate('/rta-tp');
+    } catch (error) {
+      console.error('Error al manejar el TP:', error.message);
+      setMensajeError(error.message);
+      setTimeout(() => setMensajeError(''), 5000);
+    }
   };
 
   const handleAnularInscripcion = async (inscripcionId) => {
@@ -102,24 +118,39 @@ export const MisCursos = () => {
     navigate('/nav-alu')
   }
 
-  const handleVerParcial = async (cursoId, inscripcionId, parcialId) => {
-    const data = await getCurso(cursoId);
-    const decodedToken = jwtDecode(data);
-    if (!decodedToken) throw new Error('No se recibió token del curso.');
-    localStorage.setItem('cursoToken', data);
-    const data1 = await getInscripcion(inscripcionId);
-    const decodedToken1 = jwtDecode(data1);
-    if (!decodedToken1) throw new Error('No se recibió token del curso.');
-    localStorage.setItem('inscripcionToken', data1);
-    const data2 = await getParcial(parcialId);
-    const decodedToken2 = jwtDecode(data2);
-    if (!decodedToken2) throw new Error('No se recibió token del curso.');
-    localStorage.setItem('parcialToken', data2);
-    if (decodedToken1.rtaparcialId) {
-      navigate('/ver-parcial', { state: { id: decodedToken1.rtaparcialId
-      } });
-    } else {
-      navigate('/ver-parcial');
+  const handleVerParcial = async (cursoId, inscripcionId) => {
+    try {
+      const cursoData = await getCurso(cursoId);
+      const decodedCursoToken = jwtDecode(cursoData);
+
+      if (!decodedCursoToken) throw new Error('No se recibió token del curso.');
+      localStorage.setItem('cursoToken', cursoData);
+
+      const inscripcionData = await getInscripcion(inscripcionId);
+      const decodedInscripcionToken = jwtDecode(inscripcionData);
+
+      if (!decodedInscripcionToken) throw new Error('No se recibió token de la inscripción.');
+      localStorage.setItem('inscripcionToken', inscripcionData);
+
+      const parcialId = decodedCursoToken.parcialId;
+
+      if (!parcialId) {
+        throw new Error('El curso no tiene un parcial asociado.');
+      }
+
+      const parcialData = await getParcial(parcialId);
+      const decodedParcialToken = jwtDecode(parcialData);
+
+      if (!decodedParcialToken) throw new Error('No se recibió token del parcial.');
+      localStorage.setItem('parcialToken', parcialData);
+
+      const rtaParcialId = decodedInscripcionToken.rtaparcialId;
+
+      navigate('/ver-parcial', { state: { id: rtaParcialId || null } });
+    } catch (error) {
+      console.error('Error al manejar el parcial:', error.message);
+      setMensajeError(error.message);
+      setTimeout(() => setMensajeError(''), 5000);
     }
   };
 
@@ -129,6 +160,7 @@ export const MisCursos = () => {
       <div className='lista-mis-cursos'>
         <h1>Mis Cursos</h1>
         {mensajeExito && <p className="mensaje-exito">{mensajeExito}</p>}
+        {mensajeError && <p className="mensaje-error">{mensajeError}</p>}
         {Array.isArray(cursos) && cursos.length > 0 ? (
           <ul className='list-cursos'>
             {cursos.map((curso, index) => (

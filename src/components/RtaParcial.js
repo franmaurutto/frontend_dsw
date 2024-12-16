@@ -18,7 +18,6 @@ export const RtaParcial = () => {
   const parcialToken = localStorage.getItem('parcialToken');
   const decodedParcialToken = parcialToken ? jwtDecode(parcialToken) : null;
   const parcialId = decodedParcialToken ? decodedParcialToken.id : null;
-  console.log(parcialId)
   const inscripcionToken = localStorage.getItem('inscripcionToken');
   const decodedInscripcionToken = inscripcionToken ? jwtDecode(inscripcionToken) : null;
   const inscripcionId = decodedInscripcionToken?.id || null;
@@ -44,8 +43,6 @@ export const RtaParcial = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(parcialId)
-    console.log(inscripcionId)
     
     if (rtaConsigna.trim() === '') {
       setMensajeError('Por favor, ingrese una respuesta');
@@ -61,7 +58,6 @@ export const RtaParcial = () => {
 
     try {
       const response = await createRtaParcial(rtaParcial);
-      console.log(response)
       if (response.data.id) {
         setMensajeExito('Respuesta enviada con éxito');
         setTimeout(() => {

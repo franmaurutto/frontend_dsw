@@ -38,7 +38,6 @@ export const CrearMaterial = () => {
   setError(null);
   try {
     const response = await createMaterial(materialData);
-    console.log('Material registrado:', response);
     setMensajeExito('Se ha registrado el material')
   } catch (err) {
     setError('Hubo un error al registrar el material');

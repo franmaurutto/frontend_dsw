@@ -45,7 +45,6 @@ export const AgregarMaterial = () => {
   async function handleSelectMaterial(material) {
     try {
       const result = await addMaterialToCurso(material.id, cursoId);
-      console.log('Material agregado al curso:', result);
       setMensajeExito('Material agregado al curso con éxito!');
       setMensajeError(''); 
       const updatedMateriales = await findMatSinCurso();

@@ -41,7 +41,6 @@ const HomePage = () => {
       if (!usuariotoken) throw new Error('No se recibió token de autenticación.');
       const decodedToken = jwtDecode(usuariotoken);
       localStorage.setItem('authToken', usuariotoken);
-      console.log(decodedToken)
       if (decodedToken.rol === 'profesor') {
         navigate('/nav-prof');
       } else {

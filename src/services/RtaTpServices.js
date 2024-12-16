@@ -6,7 +6,6 @@ const getToken = () => localStorage.getItem('authToken');
 
 const getHeaders = () => {
   const token = getToken();
-  console.log('Token en headers:', token);
   return {
     'Content-Type': 'application/json',
     ...(token && { Authorization: `Bearer ${token}` }), 
@@ -16,7 +15,6 @@ const getHeaders = () => {
 export const getRtasTp = async () => {
   const response = await fetch(API_URL);
   const tp1 = await response.json();  
-  console.log(tp1.data);  
   return tp1.data;
 };
 
@@ -36,11 +34,9 @@ export const createRtaTp = async (rtaTp) => {
     console.error('Error en la respuesta:', response.statusText);
     console.error('Error en la respuesta completa:', await response.text());
 
-    console.log('entra al if')
     return;
   }
   const tp1 = await response.json();
-  console.log('Respuesta recibidaaaa:', tp1.data);  
   return tp1.data;
 };
 
@@ -56,7 +52,6 @@ export const getRtaTp = async (tpId, inscripcionId) => {
     }
 
     const data = await response.json();
-    console.log('Respuesta del TP:', data);
     return data;
   } catch (error) {
     console.error('Error al obtener la respuesta:', error);
@@ -80,7 +75,6 @@ export const updateRtaTp = async (rtaTpId, rtaConsignaTP) => {
   }
 
   const tp1 = await response.json();
-  console.log('Respuesta actualizada:', tp1.data);
   return tp1.data;
 };
 

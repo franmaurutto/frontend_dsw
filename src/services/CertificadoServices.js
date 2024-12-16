@@ -36,7 +36,6 @@ export const getCertificado = async (certificadoId) => {
 
 export const createCertificado = async (certificadoData) => {
   try {
-    console.log("Datos del certificado:", certificadoData);
     const response = await fetch(API_URL, {
       method: 'POST',
       headers: getHeaders(),

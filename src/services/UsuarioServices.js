@@ -24,7 +24,6 @@ const getToken = () => localStorage.getItem('authToken');
 
 const getHeaders = () => {
   const token = getToken();
-  console.log('Token en headers:', token);
   return {
     'Content-Type': 'application/json',
     ...(token && { Authorization: `Bearer ${token}` }), 
@@ -141,7 +140,6 @@ export const getInscripcionesAlumno = async (usuarioId) => {
         throw new Error(errorData.message || 'Error al actualizar el usuario');
     }
     const data = await response.json();
-    console.log (data);
     return data;  
   } catch (error) {
     console.error('Error al obtener inscripciones:', error);
