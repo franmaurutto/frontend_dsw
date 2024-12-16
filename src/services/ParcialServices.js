@@ -34,8 +34,6 @@ export const getParcial = async (id) => {
     throw new Error('Error al obtener el parcial');
   }
   const data = await response.json()
-  console.log(data.token)
-  console.log(data)
   return data.parcialToken;
 };
 

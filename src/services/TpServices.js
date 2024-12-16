@@ -11,7 +11,6 @@ const getToken = () => localStorage.getItem('authToken');
 
 const getHeaders = () => {
   const token = getToken();
-  console.log('Token en headers:', token);
   return {
     'Content-Type': 'application/json',
     ...(token && { Authorization: `Bearer ${token}` }), 
@@ -69,13 +68,8 @@ export const getRtaTpdeTp = async (tpId) => {
     headers: getHeaders(), 
   }); 
   if (!response.ok) {
-    console.log(response);
-  
-    console.log('MAAAAAALL')
     throw new Error('Error al obtener las rtastp');
   }
   const { data } = await response.json();
-  console.log('DATAAA', data)
-  console.log('Error:', data.message);  
   return data;
 };

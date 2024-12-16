@@ -45,7 +45,6 @@ export const Tp = () => {
       navigate('/');
     }
     const fetchTp = async () => {
-      console.log(tpId)
       setLoading(true);
       try {
         if (tpId) {
@@ -78,7 +77,6 @@ export const Tp = () => {
     try {
       if (tp) {
         const resp = await updateTp(tpId, tpData);
-        console.log(resp)
         setMensajeExito('Trabajo Practico actualizado');
         setTimeout(() => setMensajeExito(''), 5000);
         setError('');

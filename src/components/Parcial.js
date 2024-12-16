@@ -79,7 +79,6 @@ export const Parcial = () => {
     try {
       if (parcial) {
         const resp = await updateParcial(parcialId, parcialData);
-        console.log(resp)
         if (resp.message!=='parcial actualizado'){
           setError('Hubo un error');
           return
@@ -89,7 +88,6 @@ export const Parcial = () => {
         setError('');
       } else {
         const resp = await createParcial(parcialData);
-        console.log(resp)
         if (!resp.data.id){
           setError('Hubo un error');
           return

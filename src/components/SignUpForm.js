@@ -50,7 +50,6 @@ const handleSubmit = async (e) => {
   setError(null);
 
   try {
-    console.log(formData.mail)
     const existingUser = await getByEmail(formData.mail);
     if (existingUser) {
       setError('El email ya está registrado');
@@ -58,7 +57,6 @@ const handleSubmit = async (e) => {
     }
 
     let dataToSend;
-    console.log(existingUser)
     if (mostrarFormulario === "alu") {
       dataToSend = {
         ...formData,
@@ -70,7 +68,6 @@ const handleSubmit = async (e) => {
         rol: "profesor",  
       };
     }
-    console.log('USERRR',existingUser);
     await addUsuario(dataToSend);
         navigate('/');
     } catch (err) {

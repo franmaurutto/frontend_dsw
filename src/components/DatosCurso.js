@@ -157,7 +157,6 @@ export const DatosCurso = () => {
 
   const handleTp = (tpId) => {
     if (tpId) {
-      console.log(tpId)
       navigate('/tp', { state: { id: tpId } });
     } else {
       navigate('/tp');

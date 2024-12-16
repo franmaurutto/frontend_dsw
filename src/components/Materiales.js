@@ -27,7 +27,6 @@ export const Materiales = () => {
       localStorage.removeItem('authToken');
       navigate('/');
     }
-    console.log('todo bien')
     const fetchMateriales = async () => {
       try {
         const data = await getMateriales();
