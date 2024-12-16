@@ -56,6 +56,7 @@ const handleSubmit = async (e) => {
       return;
     }
 
+
     let dataToSend;
     if (mostrarFormulario === "alu") {
       dataToSend = {
@@ -68,7 +69,8 @@ const handleSubmit = async (e) => {
         rol: "profesor",  
       };
     }
-    await addUsuario(dataToSend);
+    const resp =await addUsuario(dataToSend);
+    console.log(resp)
         navigate('/');
     } catch (err) {
         setError(mostrarFormulario === "alu" ? 'Hubo un error al registrar al alumno' : 'Hubo un error al registrar al profesor');
