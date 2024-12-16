@@ -1,4 +1,6 @@
-const API_URL = 'http://localhost:3000/api/rtaParciales';
+
+const apiUrl = process.env.REACT_APP_API_URL;
+const API_URL = `${apiUrl}/rtaParciales`
 
 const getToken = () => localStorage.getItem('authToken');
 

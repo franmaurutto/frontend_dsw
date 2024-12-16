@@ -1,4 +1,5 @@
-const API_URL = 'http://localhost:3000/api/usuarios';
+const apiUrl = process.env.REACT_APP_API_URL;
+const API_URL = `${apiUrl}/usuarios`
 
 
 export const authUsuario = async (mail, contrasenia) => {

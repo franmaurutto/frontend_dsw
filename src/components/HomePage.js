@@ -41,7 +41,7 @@ const HomePage = () => {
       if (!usuariotoken) throw new Error('No se recibió token de autenticación.');
       const decodedToken = jwtDecode(usuariotoken);
       localStorage.setItem('authToken', usuariotoken);
-
+      console.log(decodedToken)
       if (decodedToken.rol === 'profesor') {
         navigate('/nav-prof');
       } else {
@@ -70,7 +70,7 @@ const HomePage = () => {
             <input type={isVisible ? "text" : "Password"} 
              className='inp password-input' 
              placeholder='Contraseña' name='contrasenia' value={contrasenia} onChange={handleContraseniaChange}/>
-            <button type="button" onClick={handleClick} className='eye-button'>
+            <button type="button" data-testid="toggle-password" onClick={handleClick} className='eye-button'>
               {
                 isVisible ? <EyeOffIcon /> : <EyeIcon />
               }

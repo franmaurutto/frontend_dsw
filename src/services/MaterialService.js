@@ -1,4 +1,7 @@
-const API_URL = 'http://localhost:3000/api/materiales';
+
+const apiUrl = process.env.REACT_APP_API_URL;
+const API_URL = `${apiUrl}/materiales`
+
 const getToken = () => localStorage.getItem('authToken');
 
 const getHeaders = () => {

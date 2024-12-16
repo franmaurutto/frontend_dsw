@@ -1,4 +1,6 @@
-const API_URL = 'http://localhost:3000/api/certificados';
+
+const apiUrl = process.env.REACT_APP_API_URL;
+const API_URL = `${apiUrl}/certificados`
 
 export const getCertificados = async () => {
   const response = await fetch(API_URL);

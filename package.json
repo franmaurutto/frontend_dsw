@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@testing-library/jest-dom": "^5.17.0",
-    "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
+    "cross-env": "^7.0.3",
+    "dotenv": "^16.4.7",
     "jwt-decode": "^4.0.0",
     "lucide-react": "^0.468.0",
     "react": "^18.3.1",
@@ -19,7 +19,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "start:dev": "cross-env REACT_APP_ENV=development react-scripts start",
+    "start:prod": "cross-env REACT_APP_ENV=production react-scripts start"
   },
   "proxy": "http://localhost:3000",
   "eslintConfig": {
@@ -39,5 +41,11 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "^5.17.0",
+    "@testing-library/react": "^16.1.0",
+    "jest": "^29.7.0",
+    "msw": "^2.6.8"
   }
 }

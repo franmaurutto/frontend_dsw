@@ -1,4 +1,6 @@
-const API_URL = 'http://localhost:3000/api/rtaTps';
+
+const apiUrl = process.env.REACT_APP_API_URL;
+const API_URL = `${apiUrl}/rtaTps`
 
 const getToken = () => localStorage.getItem('authToken');
 

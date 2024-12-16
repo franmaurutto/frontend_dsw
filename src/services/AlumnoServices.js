@@ -1,4 +1,5 @@
-const API_URL = 'http://localhost:3000/api/alumnos';
+const apiUrl = process.env.REACT_APP_API_URL;
+const API_URL = `${apiUrl}/usuarios`
 
 export const getAlumnos = async () => {
   const response = await fetch(API_URL);
